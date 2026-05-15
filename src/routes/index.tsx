@@ -7,6 +7,8 @@ import tinyTots from "@/assets/tiny-tots.jpg";
 import juniors from "@/assets/juniors.jpg";
 import teensAdults from "@/assets/teens-adults.jpg";
 import chaitanya from "@/assets/chaitanya.jpg";
+import groupDance from "@/assets/group-dance.jpg";
+import freestyleDance from "@/assets/freestyle-dance.jpg";
 
 const PHONE = "16132189417";
 const WHATSAPP = `https://wa.me/${PHONE}?text=Hi%20Chaitanya%20Master%2C%20I%27m%20interested%20in%20joining%20Dansvilla%20Studio%20dance%20classes.`;
@@ -87,10 +89,10 @@ function Index() {
             <div className="relative">
               <div className="absolute -inset-6 bg-primary/30 blur-3xl rounded-full" />
               <div className="relative grid grid-cols-2 gap-3 max-w-md">
-                <img src={tinyTots} alt="Tiny tots dancing" loading="lazy" width={400} height={400} className="rounded-2xl object-cover aspect-square translate-y-6" />
+                <img src={groupDance} alt="Bollywood group performance" loading="lazy" width={400} height={400} className="rounded-2xl object-cover aspect-square translate-y-6" />
                 <img src={teensAdults} alt="Teen adults dance class" loading="lazy" width={400} height={400} className="rounded-2xl object-cover aspect-square" />
                 <img src={juniors} alt="Junior dancers" loading="lazy" width={400} height={400} className="rounded-2xl object-cover aspect-square" />
-                <img src={heroDance} alt="Performance" loading="lazy" width={400} height={400} className="rounded-2xl object-cover aspect-square translate-y-6" />
+                <img src={freestyleDance} alt="Freestyle dancer mid-leap" loading="lazy" width={400} height={400} className="rounded-2xl object-cover aspect-square translate-y-6" />
               </div>
             </div>
           </div>
@@ -105,7 +107,7 @@ function Index() {
             <BatchCard img={tinyTots} time="11–12 PM" name="Tiny Tots" age="Ages 3–7" />
             <BatchCard img={juniors} time="12–1 PM" name="Juniors" age="Ages 8–12" />
             <BatchCard img={teensAdults} time="1–2 PM" name="Teens & Adults" age="Beginner · 13+" />
-            <BatchCard img={heroDance} time="2–3 PM" name="Teens & Adults" age="Advanced · 13+" />
+            <BatchCard img={groupDance} time="2–3 PM" name="Teens & Adults" age="Advanced · 13+" />
           </div>
 
           <div className="mt-16 grid md:grid-cols-2 gap-6">
