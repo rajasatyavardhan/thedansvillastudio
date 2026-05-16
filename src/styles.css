@@ -61,6 +61,10 @@
   --gradient-hero: linear-gradient(135deg, oklch(0.45 0.22 350) 0%, oklch(0.35 0.20 20) 50%, oklch(0.25 0.15 60) 100%);
   --gradient-primary: linear-gradient(135deg, oklch(0.62 0.25 0), oklch(0.78 0.17 60));
   --shadow-glow: 0 20px 60px -15px oklch(0.62 0.25 0 / 0.5);
+
+  --neon-pink: #ff2bd1;
+  --neon-cyan: #00e5ff;
+  --neon-gold: #ffd166;
 }
 
 .dark { color-scheme: dark; }
@@ -73,4 +77,131 @@
     font-family: "Inter", system-ui, sans-serif;
   }
   h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0.02em; }
+}
+
+/* ============ NEON EFFECTS ============ */
+
+@keyframes neon-pulse {
+  0%, 100% {
+    text-shadow:
+      0 0 8px var(--neon-pink),
+      0 0 20px var(--neon-pink),
+      0 0 40px rgba(255, 43, 209, 0.6),
+      0 0 80px rgba(255, 43, 209, 0.3);
+  }
+  50% {
+    text-shadow:
+      0 0 12px var(--neon-cyan),
+      0 0 30px var(--neon-pink),
+      0 0 60px rgba(255, 43, 209, 0.8),
+      0 0 100px rgba(0, 229, 255, 0.4);
+  }
+}
+
+@keyframes neon-flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 6px var(--neon-pink)) drop-shadow(0 0 14px var(--neon-pink));
+  }
+  20%, 24%, 55% { opacity: 0.6; filter: drop-shadow(0 0 2px var(--neon-pink)); }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes beat-pulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 43, 209, 0.5), 0 0 40px rgba(255, 43, 209, 0.3); }
+  50% { transform: scale(1.04); box-shadow: 0 0 30px rgba(255, 43, 209, 0.9), 0 0 60px rgba(0, 229, 255, 0.4); }
+}
+
+@keyframes float-up {
+  0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { transform: translateY(-100px) translateX(50px) rotate(360deg); opacity: 0; }
+}
+
+@keyframes border-shimmer {
+  0%, 100% { box-shadow: 0 0 10px var(--neon-pink), inset 0 0 10px rgba(255, 43, 209, 0.2); }
+  50% { box-shadow: 0 0 25px var(--neon-cyan), inset 0 0 15px rgba(0, 229, 255, 0.2); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glow-sweep {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.neon-title {
+  color: #fff;
+  animation: neon-pulse 2.5s ease-in-out infinite;
+}
+
+.neon-flicker { animation: neon-flicker 4s infinite; }
+
+.neon-border {
+  border: 2px solid var(--neon-pink);
+  animation: border-shimmer 3s ease-in-out infinite;
+}
+
+.neon-cyan-border {
+  border: 2px solid var(--neon-cyan);
+  box-shadow: 0 0 15px var(--neon-cyan), inset 0 0 15px rgba(0, 229, 255, 0.15);
+}
+
+.beat-pulse { animation: beat-pulse 1.4s ease-in-out infinite; }
+
+.marquee-track {
+  animation: marquee 25s linear infinite;
+  display: inline-flex;
+  white-space: nowrap;
+}
+
+.reveal-on-scroll {
+  opacity: 0;
+  animation: fade-up 0.9s ease-out forwards;
+  animation-timeline: view();
+  animation-range: entry 0% cover 35%;
+}
+
+.neon-divider {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--neon-pink), var(--neon-cyan), var(--neon-pink), transparent);
+  box-shadow: 0 0 12px var(--neon-pink), 0 0 24px var(--neon-cyan);
+}
+
+.spotlight {
+  background: radial-gradient(circle 400px at var(--mx, 50%) var(--my, 50%), rgba(255, 43, 209, 0.25), transparent 70%);
+  pointer-events: none;
+}
+
+.neon-text-cyan {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 8px var(--neon-cyan), 0 0 18px rgba(0, 229, 255, 0.6);
+}
+
+.neon-text-pink {
+  color: var(--neon-pink);
+  text-shadow: 0 0 8px var(--neon-pink), 0 0 18px rgba(255, 43, 209, 0.6);
+}
+
+.tilt-on-hover { transition: transform 0.4s ease, box-shadow 0.4s ease; }
+.tilt-on-hover:hover {
+  transform: perspective(800px) rotateX(4deg) rotateY(-4deg) scale(1.03);
+  box-shadow: 0 0 30px rgba(255, 43, 209, 0.6), 0 0 60px rgba(0, 229, 255, 0.3);
+}
+
+.floating-note {
+  position: absolute;
+  bottom: -50px;
+  animation: float-up linear infinite;
+  color: var(--neon-pink);
+  filter: drop-shadow(0 0 8px var(--neon-pink));
+  pointer-events: none;
 }
