@@ -474,3 +474,55 @@ function Testimonial({ quote, name }: { quote: string; name: string }) {
     </Card>
   );
 }
+
+function HeroSwipe() {
+  const slides: Array<
+    | { type: "photo"; src: string; alt: string; caption: string }
+    | { type: "review"; quote: string; name: string }
+  > = [
+    { type: "photo", src: groupDance, alt: "Bollywood group performance at Dansvilla Studio", caption: "Group performance · @dansvilla_studio" },
+    { type: "review", quote: "Chaitanya Master is incredibly patient and the kids LOVE his classes. Best studio in Barrhaven!", name: "Google Review · ★★★★★" },
+    { type: "photo", src: freestyleDance, alt: "Freestyle dancer mid-leap", caption: "Freestyle batch · @dansvilla_studio" },
+    { type: "review", quote: "Amazing energy, brilliant choreography. My daughter cannot wait for every class.", name: "Google Review · ★★★★★" },
+    { type: "photo", src: teensAdults, alt: "Teens and adults dance class", caption: "Teens & Adults · @dansvilla_studio" },
+    { type: "review", quote: "Joined as a complete beginner — felt welcomed from day one. Highly recommend!", name: "Google Review · ★★★★★" },
+  ];
+
+  return (
+    <Carousel
+      opts={{ loop: true, align: "start" }}
+      plugins={[Autoplay({ delay: 3800, stopOnInteraction: false, stopOnMouseEnter: true })]}
+      className="w-full"
+    >
+      <CarouselContent>
+        {slides.map((s, i) => (
+          <CarouselItem key={i} className="basis-full">
+            {s.type === "photo" ? (
+              <div className="relative aspect-square w-full">
+                <img src={s.src} alt={s.alt} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
+                <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-background/90 to-transparent">
+                  <div className="flex items-center gap-2 text-xs">
+                    <Instagram className="size-4 text-[var(--neon-pink)]" />
+                    <span className="text-foreground/90 font-medium">{s.caption}</span>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="relative aspect-square w-full flex flex-col justify-center p-6 md:p-8 bg-gradient-to-br from-[var(--neon-pink)]/15 via-card to-[var(--neon-cyan)]/15">
+                <div className="flex gap-1 text-[var(--neon-gold)] mb-3" style={{ filter: "drop-shadow(0 0 6px var(--neon-gold))" }}>
+                  {Array.from({ length: 5 }).map((_, j) => <Star key={j} className="size-4 fill-current" />)}
+                </div>
+                <p className="text-foreground/95 italic leading-relaxed text-base md:text-lg">"{s.quote}"</p>
+                <p className="mt-4 text-xs font-semibold neon-text-cyan tracking-widest">{s.name}</p>
+                <a href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-[var(--neon-cyan)] w-fit">
+                  Read on Google <ExternalLink className="size-3" />
+                </a>
+              </div>
+            )}
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+    </Carousel>
+  );
+}
+
