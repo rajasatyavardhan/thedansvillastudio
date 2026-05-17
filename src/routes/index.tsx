@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
-import { Phone, MapPin, Instagram, MessageCircle, Star, Music, Users, Heart, Sparkles } from "lucide-react";
+import { Phone, MapPin, Instagram, MessageCircle, Star, Music, Users, Heart, Sparkles, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 import heroDance from "@/assets/hero-dance.jpg";
 import tinyTots from "@/assets/tiny-tots.jpg";
 import juniors from "@/assets/juniors.jpg";
@@ -10,6 +12,10 @@ import teensAdults from "@/assets/teens-adults.jpg";
 import chaitanya from "@/assets/chaitanya.jpg";
 import groupDance from "@/assets/group-dance.jpg";
 import freestyleDance from "@/assets/freestyle-dance.jpg";
+import dansvillaNeon from "@/assets/dansvilla-neon-sign.jpg";
+
+const INSTAGRAM_URL = "https://www.instagram.com/dansvilla_studio/";
+const GOOGLE_REVIEWS_URL = "https://maps.app.goo.gl/Zdo8BycCBqZErtNn8";
 
 const PHONE = "16132189417";
 const wa = (msg: string) => `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
