@@ -381,7 +381,7 @@ function Index() {
       {/* FOOTER */}
       <footer className="py-10 px-6 border-t border-border">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
-          <p className="font-display text-2xl neon-text-pink tracking-widest">DANSVILLA</p>
+          <img src={dansvillaNeon} alt="The Dansvilla Studio" width={140} height={56} className="h-10 w-auto object-contain drop-shadow-[0_0_10px_var(--neon-pink)]" />
           <p>© {new Date().getFullYear()} Dansvilla Studio · Nepean, Ontario</p>
           <div className="flex gap-4">
             <a href="https://www.instagram.com/dansvilla_studio/" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--neon-pink)]"><Instagram className="size-5" /></a>
