@@ -66,19 +66,28 @@ function Index() {
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* NAV */}
       <header className="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-background/70 border-b border-border">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <a href="#top" className="font-display text-2xl tracking-widest neon-text-pink">DANSVILLA</a>
+        <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between gap-3">
+          <a href="#top" className="flex items-center gap-2 shrink-0">
+            <img src={dansvillaNeon} alt="The Dansvilla Studio neon sign" width={120} height={48} className="h-9 md:h-10 w-auto object-contain drop-shadow-[0_0_10px_var(--neon-pink)]" />
+          </a>
           <nav className="hidden md:flex gap-8 text-sm font-medium">
             <a href="#schedule" className="hover:text-[var(--neon-cyan)] transition">Schedule</a>
             <a href="#pricing" className="hover:text-[var(--neon-cyan)] transition">Pricing</a>
             <a href="#about" className="hover:text-[var(--neon-cyan)] transition">About</a>
             <a href="#contact" className="hover:text-[var(--neon-cyan)] transition">Contact</a>
           </nav>
-          <a href={wa(MSG.general)} target="_blank" rel="noopener noreferrer">
-            <Button className="bg-[oklch(0.65_0.18_150)] hover:bg-[oklch(0.6_0.18_150)] text-white beat-pulse">
-              <MessageCircle className="size-4" /> WhatsApp
-            </Button>
-          </a>
+          <div className="flex items-center gap-2">
+            <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <Button size="icon" variant="outline" className="neon-cyan-border bg-transparent text-[var(--neon-pink)] hover:bg-[var(--neon-pink)] hover:text-white">
+                <Instagram className="size-4" />
+              </Button>
+            </a>
+            <a href={wa(MSG.general)} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+              <Button className="bg-[oklch(0.65_0.18_150)] hover:bg-[oklch(0.6_0.18_150)] text-white beat-pulse">
+                <MessageCircle className="size-4" /> <span className="hidden sm:inline">WhatsApp</span>
+              </Button>
+            </a>
+          </div>
         </div>
       </header>
 
