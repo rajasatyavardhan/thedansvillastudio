@@ -289,9 +289,16 @@ function Index() {
         <div className="max-w-7xl mx-auto">
           <SectionTitle eyebrow="Loved by Families" title="WHAT STUDENTS SAY" subtitle="Our 5★ Google rating, in their words." />
           <div className="grid md:grid-cols-3 gap-6 mt-12">
-            <Testimonial quote="Chaitanya Master is incredibly patient and energetic. My daughter loves every Saturday class — she dances around the house all week!" name="Parent · Tiny Tots" />
+            <Testimonial quote="Chaitanya Master is incredibly patient and energetic. My daughter loves every class — she dances around the house all week!" name="Parent · Tiny Tots" />
             <Testimonial quote="Best dance studio in Barrhaven. The choreography is fresh, the vibe is fun, and you genuinely improve. Highly recommend." name="Adult Student" />
             <Testimonial quote="Joined as a complete beginner. Within a few months I was performing on stage with confidence. Thank you Dansvilla!" name="Teen Student" />
+          </div>
+          <div className="mt-10 text-center">
+            <a href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer">
+              <Button variant="outline" className="neon-cyan-border bg-transparent text-[var(--neon-cyan)] hover:bg-[var(--neon-cyan)] hover:text-background">
+                <Star className="size-4" /> More reviews on Google <ExternalLink className="size-3" />
+              </Button>
+            </a>
           </div>
         </div>
       </section>
