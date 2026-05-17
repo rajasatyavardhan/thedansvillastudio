@@ -197,39 +197,54 @@ function Index() {
       {/* SCHEDULE */}
       <section id="schedule" className="py-24 px-6 reveal-on-scroll">
         <div className="max-w-7xl mx-auto">
-          <SectionTitle eyebrow="Saturday Sessions" title="DANCE WITH US" subtitle="Four batches every Saturday — find the one that fits you." />
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
-            <BatchCard img={tinyTots} time="11–12 PM" name="Tiny Tots" age="Ages 3–7" />
-            <BatchCard img={juniors} time="12–1 PM" name="Juniors" age="Ages 8–12" />
-            <BatchCard img={teensAdults} time="1–2 PM" name="Teens & Adults" age="Beginner · 13+" />
-            <BatchCard img={groupDance} time="2–3 PM" name="Teens & Adults" age="Advanced · 13+" />
+          <SectionTitle eyebrow="Class Schedule" title="DANCE WITH US" subtitle="Weekday and weekend batches for every age." />
+
+          {/* Weekend Batches */}
+          <div className="mt-14">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="px-3 py-1 rounded-full text-xs font-bold tracking-widest bg-[var(--neon-cyan)]/15 text-[var(--neon-cyan)] border border-[var(--neon-cyan)]">WEEKEND BATCHES</span>
+              <span className="h-px flex-1 bg-gradient-to-r from-[var(--neon-cyan)]/60 to-transparent" />
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <BatchCard img={tinyTots} time="11–12 PM" name="Tiny Tots" age="Ages 3–7" />
+              <BatchCard img={juniors} time="12–1 PM" name="Juniors" age="Ages 8–12" />
+              <BatchCard img={teensAdults} time="1–2 PM" name="Teens & Adults" age="Beginner · 13+" />
+              <BatchCard img={groupDance} time="2–3 PM" name="Teens & Adults" age="Advanced · 13+" />
+            </div>
           </div>
 
-          <div className="mt-16 grid md:grid-cols-2 gap-6">
-            <Card className="p-8 bg-card border-border tilt-on-hover">
-              <div className="flex items-center gap-3 mb-2">
-                <Music className="text-[var(--neon-pink)]" />
-                <h3 className="text-2xl">Monday — Bollywood</h3>
-              </div>
-              <p className="text-muted-foreground mb-4">High-energy Bollywood choreography across three age batches.</p>
-              <ul className="space-y-2 text-sm">
-                <li className="flex justify-between border-b border-border pb-2"><span>Tiny Tots (3–7)</span><span className="neon-text-cyan">5–6 PM</span></li>
-                <li className="flex justify-between border-b border-border pb-2"><span>Juniors (8–12)</span><span className="neon-text-cyan">6–7 PM</span></li>
-                <li className="flex justify-between"><span>Teens & Adults (13+)</span><span className="neon-text-cyan">7–8 PM</span></li>
-              </ul>
-            </Card>
-            <Card className="p-8 bg-card border-border tilt-on-hover">
-              <div className="flex items-center gap-3 mb-2">
-                <Sparkles className="text-[var(--neon-cyan)]" />
-                <h3 className="text-2xl">Wednesday — Freestyle</h3>
-              </div>
-              <p className="text-muted-foreground mb-4">Hip-hop infused freestyle and contemporary moves.</p>
-              <ul className="space-y-2 text-sm">
-                <li className="flex justify-between border-b border-border pb-2"><span>Tiny Tots (3–7)</span><span className="neon-text-pink">5–6 PM</span></li>
-                <li className="flex justify-between border-b border-border pb-2"><span>Juniors (8–12)</span><span className="neon-text-pink">6–7 PM</span></li>
-                <li className="flex justify-between"><span>Teens & Adults (13+)</span><span className="neon-text-pink">7–8 PM</span></li>
-              </ul>
-            </Card>
+          {/* Weekday Batches */}
+          <div className="mt-16">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="px-3 py-1 rounded-full text-xs font-bold tracking-widest bg-[var(--neon-pink)]/15 text-[var(--neon-pink)] border border-[var(--neon-pink)]">WEEKDAY BATCHES</span>
+              <span className="h-px flex-1 bg-gradient-to-r from-[var(--neon-pink)]/60 to-transparent" />
+            </div>
+            <div className="grid md:grid-cols-2 gap-6">
+              <Card className="p-8 bg-card border-border tilt-on-hover">
+                <div className="flex items-center gap-3 mb-2">
+                  <Music className="text-[var(--neon-pink)]" />
+                  <h3 className="text-2xl">Monday — Bollywood</h3>
+                </div>
+                <p className="text-muted-foreground mb-4">High-energy Bollywood choreography across three age batches.</p>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex justify-between border-b border-border pb-2"><span>Tiny Tots (3–7)</span><span className="neon-text-cyan">5–6 PM</span></li>
+                  <li className="flex justify-between border-b border-border pb-2"><span>Juniors (8–12)</span><span className="neon-text-cyan">6–7 PM</span></li>
+                  <li className="flex justify-between"><span>Teens & Adults (13+)</span><span className="neon-text-cyan">7–8 PM</span></li>
+                </ul>
+              </Card>
+              <Card className="p-8 bg-card border-border tilt-on-hover">
+                <div className="flex items-center gap-3 mb-2">
+                  <Sparkles className="text-[var(--neon-cyan)]" />
+                  <h3 className="text-2xl">Wednesday — Freestyle</h3>
+                </div>
+                <p className="text-muted-foreground mb-4">Hip-hop infused freestyle and contemporary moves.</p>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex justify-between border-b border-border pb-2"><span>Tiny Tots (3–7)</span><span className="neon-text-pink">5–6 PM</span></li>
+                  <li className="flex justify-between border-b border-border pb-2"><span>Juniors (8–12)</span><span className="neon-text-pink">6–7 PM</span></li>
+                  <li className="flex justify-between"><span>Teens & Adults (13+)</span><span className="neon-text-pink">7–8 PM</span></li>
+                </ul>
+              </Card>
+            </div>
           </div>
         </div>
       </section>
