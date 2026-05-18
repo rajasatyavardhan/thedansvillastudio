@@ -76,9 +76,11 @@ function Index() {
           <a href="#top" className="flex items-center gap-2 shrink-0">
             <img src={dansvillaNeon} alt="The Dansvilla Studio neon sign" width={120} height={48} className="h-9 md:h-10 w-auto object-contain drop-shadow-[0_0_10px_var(--neon-pink)]" />
           </a>
-          <nav className="hidden md:flex gap-8 text-sm font-medium">
+          <nav className="hidden md:flex gap-6 text-sm font-medium">
             <a href="#schedule" className="hover:text-[var(--neon-cyan)] transition">Schedule</a>
             <a href="#pricing" className="hover:text-[var(--neon-cyan)] transition">Pricing</a>
+            <a href="#gallery" className="hover:text-[var(--neon-cyan)] transition">Gallery</a>
+            <a href="#events" className="hover:text-[var(--neon-cyan)] transition">Events</a>
             <a href="#about" className="hover:text-[var(--neon-cyan)] transition">About</a>
             <a href="#contact" className="hover:text-[var(--neon-cyan)] transition">Contact</a>
           </nav>
@@ -426,7 +428,7 @@ function Index() {
       <footer className="py-10 px-6 border-t border-border">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
           <img src={dansvillaNeon} alt="The Dansvilla Studio" width={140} height={56} className="h-10 w-auto object-contain drop-shadow-[0_0_10px_var(--neon-pink)]" />
-          <p>© {new Date().getFullYear()} Dansvilla Studio · Nepean, Ontario</p>
+          <p>© {new Date().getFullYear()} Dansvilla Studio · Nepean, Ontario · <Link to="/admin" className="hover:text-[var(--neon-cyan)] opacity-60">Admin</Link></p>
           <div className="flex gap-4">
             <a href="https://www.instagram.com/dansvilla_studio/" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--neon-pink)]"><Instagram className="size-5" /></a>
             <a href={`tel:+${PHONE}`} className="hover:text-[var(--neon-cyan)]"><Phone className="size-5" /></a>
