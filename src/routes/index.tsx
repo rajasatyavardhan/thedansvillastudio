@@ -1,11 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
-import { Phone, MapPin, Instagram, MessageCircle, Star, Music, Users, Heart, Sparkles, ExternalLink } from "lucide-react";
+import { Phone, MapPin, Instagram, MessageCircle, Star, Music, Users, Heart, Sparkles, ExternalLink, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import heroDance from "@/assets/hero-dance.jpg";
+import { InstagramEmbed } from "@/components/InstagramEmbed";
+import { useMedia } from "@/hooks/use-media";
 import tinyTots from "@/assets/tiny-tots.jpg";
 import juniors from "@/assets/juniors.jpg";
 import teensAdults from "@/assets/teens-adults.jpg";
@@ -13,6 +14,11 @@ import chaitanya from "@/assets/chaitanya.jpg";
 import groupDance from "@/assets/group-dance.jpg";
 import freestyleDance from "@/assets/freestyle-dance.jpg";
 import dansvillaNeon from "@/assets/dansvilla-neon-sign.jpg";
+
+// Real Instagram posts from @dansvilla_studio — add more URLs here anytime
+const INSTAGRAM_POSTS: string[] = [
+  "https://www.instagram.com/dansvilla_studio/p/DKTCr8jpj29/",
+];
 
 const INSTAGRAM_URL = "https://www.instagram.com/dansvilla_studio/";
 const GOOGLE_REVIEWS_URL = "https://maps.app.goo.gl/Zdo8BycCBqZErtNn8";
@@ -93,10 +99,15 @@ function Index() {
 
       {/* HERO */}
       <section id="top" ref={heroRef} className="relative pt-16 min-h-screen flex items-center overflow-hidden">
-        <img src={heroDance} alt="Dansvilla Studio dancers" width={1920} height={1080}
-          className="absolute inset-0 w-full h-full object-cover opacity-40" />
-        <div className="absolute inset-0" style={{ background: "var(--gradient-hero)", mixBlendMode: "multiply" }} />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+        {/* clean dark background — no AI photo, no filters */}
+        <div className="absolute inset-0 bg-background" />
+        <div
+          className="absolute inset-0 opacity-60"
+          style={{
+            background:
+              "radial-gradient(circle at 20% 20%, rgba(255,43,209,0.18), transparent 50%), radial-gradient(circle at 80% 70%, rgba(0,229,255,0.15), transparent 55%)",
+          }}
+        />
         <div className="absolute inset-0 spotlight" />
 
         {/* Floating music notes */}
