@@ -1,4 +1,4 @@
-<!-- DANSVILLA UPDATE V31: V28 full stable base + smart Find Your Best Batch form; all original sections preserved -->
+<!-- DANSVILLA UPDATE V33: V32 live form + clean conditional submissions + required fields + mobile form-first polish -->
 <!-- DANSVILLA UPDATE V27: V26 stable base + Studio Space Rentals section + rental WhatsApp CTA -->
 <!-- DANSVILLA UPDATE V26: class detail focus lines + two-course combo chooser + simplified pricing help CTA -->
 <!-- DANSVILLA UPDATE V24: V23 safe base + Sangeeth image changed to IMG_3201 + studio photos album link + preview.jpg support -->
@@ -2895,6 +2895,7 @@ nav{min-height:82px !important;}
   text-transform:uppercase;
   color:var(--cyan);
 }
+.optional-label{font-size:.58rem;color:var(--muted);letter-spacing:.8px;text-transform:none;font-weight:700;margin-left:4px;}
 .enquiry-field input,
 .enquiry-field select,
 .enquiry-field textarea{
@@ -2947,8 +2948,8 @@ nav{min-height:82px !important;}
 .enquiry-hp{position:absolute; left:-9999px; opacity:0; pointer-events:none;}
 @media(max-width:900px){
   .enquiry-layout{grid-template-columns:1fr; gap:20px;}
-  .enquiry-copy{padding:24px 20px;}
-  .enquiry-form-card{padding:22px 18px;}
+  .enquiry-copy{padding:24px 20px; order:2;}
+  .enquiry-form-card{padding:22px 18px; order:1;}
 }
 @media(max-width:560px){
   .enquiry-form-grid{grid-template-columns:1fr;}
@@ -3516,7 +3517,7 @@ document.addEventListener('DOMContentLoaded', function () {
               <input id="leadPhone" name="phone" type="tel" placeholder="Your phone number" required>
             </div>
             <div class="enquiry-field full">
-              <label for="leadEmail">Email</label>
+              <label for="leadEmail">Email <span class="optional-label">optional</span></label>
               <input id="leadEmail" name="email" type="email" placeholder="Optional email">
             </div>
 
@@ -3525,11 +3526,11 @@ document.addEventListener('DOMContentLoaded', function () {
               <div class="form-mode-desc">For one student joining one class/course.</div>
               <div class="form-mode-grid">
                 <div class="enquiry-field">
-                  <label for="leadAge">Student Age</label>
+                  <label for="leadAge">Student Age *</label>
                   <input id="leadAge" name="studentAge" type="text" placeholder="Example: 7 yrs / Adult">
                 </div>
                 <div class="enquiry-field">
-                  <label for="leadCourse">Course</label>
+                  <label for="leadCourse">Course *</label>
                   <select id="leadCourse" name="course">
                     <option value="Not sure - need guidance">Not sure - need guidance</option>
                     <option value="Bollywood Burst 🎬">Bollywood Burst 🎬</option>
@@ -3538,7 +3539,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   </select>
                 </div>
                 <div class="enquiry-field">
-                  <label for="leadDay">Preferred Day</label>
+                  <label for="leadDay">Preferred Day *</label>
                   <select id="leadDay" name="preferredDay">
                     <option value="Not sure">Not sure</option>
                     <option value="Monday — Bollywood Burst 🎬">Monday — Bollywood Burst 🎬</option>
@@ -3548,7 +3549,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   </select>
                 </div>
                 <div class="enquiry-field">
-                  <label for="leadBatch">Preferred Batch</label>
+                  <label for="leadBatch">Preferred Batch *</label>
                   <select id="leadBatch" name="preferredBatch">
                     <option value="Not sure">Not sure</option>
                     <option value="5:00–6:00 PM">5:00–6:00 PM</option>
@@ -3561,7 +3562,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   </select>
                 </div>
                 <div class="enquiry-field full">
-                  <label for="leadPlan">Pricing Interest</label>
+                  <label for="leadPlan">Pricing Interest *</label>
                   <select id="leadPlan" name="pricingOption">
                     <option value="Need guidance">Need guidance</option>
                     <option value="$15 single class">$15 single class</option>
@@ -3578,11 +3579,11 @@ document.addEventListener('DOMContentLoaded', function () {
               <div class="form-mode-grid">
                 <div class="form-price-note combo"><strong>2-Course Combo — $100/month</strong><br>$50 per course when you take two. Save $20 compared to two single courses.</div>
                 <div class="enquiry-field">
-                  <label for="comboAge">Student Age</label>
+                  <label for="comboAge">Student Age *</label>
                   <input id="comboAge" name="comboStudentAge" type="text" placeholder="Example: 10 yrs / Adult">
                 </div>
                 <div class="enquiry-field">
-                  <label for="comboPreferredDays">Preferred Days</label>
+                  <label for="comboPreferredDays">Preferred Days *</label>
                   <select id="comboPreferredDays" name="comboPreferredDays">
                     <option value="Not sure - need guidance">Not sure - need guidance</option>
                     <option value="Monday + Thursday">Monday + Thursday</option>
@@ -3591,7 +3592,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   </select>
                 </div>
                 <div class="enquiry-field">
-                  <label for="comboCourse1">Course 1</label>
+                  <label for="comboCourse1">Course 1 *</label>
                   <select id="comboCourse1" name="comboCourse1">
                     <option value="Bollywood Burst 🎬">Bollywood Burst 🎬</option>
                     <option value="Freestyle Freak ⚡">Freestyle Freak ⚡</option>
@@ -3600,7 +3601,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   </select>
                 </div>
                 <div class="enquiry-field">
-                  <label for="comboCourse2">Course 2</label>
+                  <label for="comboCourse2">Course 2 *</label>
                   <select id="comboCourse2" name="comboCourse2">
                     <option value="Freestyle Freak ⚡">Freestyle Freak ⚡</option>
                     <option value="Bollywood Burst 🎬">Bollywood Burst 🎬</option>
@@ -3616,20 +3617,20 @@ document.addEventListener('DOMContentLoaded', function () {
               <div class="form-mode-desc">For two people joining together.</div>
               <div class="form-mode-grid">
                 <div class="form-price-note family"><strong>Family / Duo — $100/month total</strong><br>$50 per person / month. Valid when 2 join together.</div>
-                <div class="enquiry-field"><label for="person1Name">Person 1 Name</label><input id="person1Name" name="person1Name" type="text" placeholder="Name"></div>
-                <div class="enquiry-field"><label for="person1Age">Person 1 Age</label><input id="person1Age" name="person1Age" type="text" placeholder="Age"></div>
-                <div class="enquiry-field"><label for="person2Name">Person 2 Name</label><input id="person2Name" name="person2Name" type="text" placeholder="Name"></div>
-                <div class="enquiry-field"><label for="person2Age">Person 2 Age</label><input id="person2Age" name="person2Age" type="text" placeholder="Age"></div>
+                <div class="enquiry-field"><label for="person1Name">Person 1 Name *</label><input id="person1Name" name="person1Name" type="text" placeholder="Name"></div>
+                <div class="enquiry-field"><label for="person1Age">Person 1 Age *</label><input id="person1Age" name="person1Age" type="text" placeholder="Age"></div>
+                <div class="enquiry-field"><label for="person2Name">Person 2 Name *</label><input id="person2Name" name="person2Name" type="text" placeholder="Name"></div>
+                <div class="enquiry-field"><label for="person2Age">Person 2 Age *</label><input id="person2Age" name="person2Age" type="text" placeholder="Age"></div>
                 <div class="enquiry-field">
-                  <label for="relationship">Relationship</label>
+                  <label for="relationship">Relationship *</label>
                   <select id="relationship" name="relationship"><option>Siblings</option><option>Parent & Child</option><option>Couple</option><option>Friends</option><option>Other</option></select>
                 </div>
                 <div class="enquiry-field">
-                  <label for="familyCourseInterest">Course Interest</label>
+                  <label for="familyCourseInterest">Course Interest *</label>
                   <select id="familyCourseInterest" name="familyCourseInterest"><option>Same course for both</option><option>Different courses</option><option>Not sure - need guidance</option></select>
                 </div>
                 <div class="enquiry-field full">
-                  <label for="familyPreferredDay">Preferred Day</label>
+                  <label for="familyPreferredDay">Preferred Day *</label>
                   <select id="familyPreferredDay" name="familyPreferredDay"><option>Not sure</option><option>Monday — Bollywood Burst 🎬</option><option>Thursday — Freestyle Freak ⚡</option><option>Thursday — Desi Diva 💃</option><option>Saturday — Freestyle Freak ⚡</option></select>
                 </div>
               </div>
@@ -3640,11 +3641,11 @@ document.addEventListener('DOMContentLoaded', function () {
               <div class="form-mode-desc">For dance practice, fitness/yoga, workshops, photography and private-use rental enquiries.</div>
               <div class="form-mode-grid">
                 <div class="form-price-note rental"><strong>Studio Rental Rates</strong><br>Off-Peak: $40–$45/hr · Peak: $55–$70/hr · Bulk 10+ hours: $40–$50/hr · Capacity: 20 kids / 15 adults.</div>
-                <div class="enquiry-field"><label for="rentalPurpose">Rental Purpose</label><select id="rentalPurpose" name="rentalPurpose"><option>Dance practice</option><option>Fitness / Yoga</option><option>Workshop</option><option>Photography</option><option>Private event</option><option>Other</option></select></div>
-                <div class="enquiry-field"><label for="rentalPeople">Expected People</label><input id="rentalPeople" name="rentalPeople" type="text" placeholder="Example: 10 people"></div>
-                <div class="enquiry-field"><label for="rentalDate">Preferred Date</label><input id="rentalDate" name="rentalDate" type="date"></div>
-                <div class="enquiry-field"><label for="rentalTime">Preferred Time</label><input id="rentalTime" name="rentalTime" type="text" placeholder="Example: 6 PM"></div>
-                <div class="enquiry-field full"><label for="rentalDuration">Duration Needed</label><select id="rentalDuration" name="rentalDuration"><option>1 hour</option><option>2 hours</option><option>3 hours</option><option>4+ hours</option><option>Bulk booking / recurring</option><option>Not sure</option></select></div>
+                <div class="enquiry-field"><label for="rentalPurpose">Rental Purpose *</label><select id="rentalPurpose" name="rentalPurpose"><option>Dance practice</option><option>Fitness / Yoga</option><option>Workshop</option><option>Photography</option><option>Private event</option><option>Other</option></select></div>
+                <div class="enquiry-field"><label for="rentalPeople">Expected People *</label><input id="rentalPeople" name="rentalPeople" type="text" placeholder="Example: 10 people"></div>
+                <div class="enquiry-field"><label for="rentalDate">Preferred Date *</label><input id="rentalDate" name="rentalDate" type="date"></div>
+                <div class="enquiry-field"><label for="rentalTime">Preferred Time *</label><input id="rentalTime" name="rentalTime" type="text" placeholder="Example: 6 PM"></div>
+                <div class="enquiry-field full"><label for="rentalDuration">Duration Needed *</label><select id="rentalDuration" name="rentalDuration"><option>1 hour</option><option>2 hours</option><option>3 hours</option><option>4+ hours</option><option>Bulk booking / recurring</option><option>Not sure</option></select></div>
               </div>
             </div>
 
@@ -3652,10 +3653,10 @@ document.addEventListener('DOMContentLoaded', function () {
               <div class="form-mode-title">🎉 Private Event / Workshop</div>
               <div class="form-mode-desc">For sangeeth choreography, birthdays, private dance, corporate/community events and workshops.</div>
               <div class="form-mode-grid">
-                <div class="enquiry-field"><label for="eventType">Event Type</label><select id="eventType" name="eventType"><option>Sangeeth</option><option>Birthday</option><option>Private dance choreography</option><option>Corporate / community event</option><option>Workshop</option><option>Other</option></select></div>
-                <div class="enquiry-field"><label for="eventPeople">Number of People</label><input id="eventPeople" name="eventPeople" type="text" placeholder="Example: 8 dancers"></div>
-                <div class="enquiry-field"><label for="eventDate">Event Date</label><input id="eventDate" name="eventDate" type="date"></div>
-                <div class="enquiry-field"><label for="eventLocation">Location</label><select id="eventLocation" name="eventLocation"><option>At The Dansvilla Studio</option><option>Outside venue</option><option>Not sure</option></select></div>
+                <div class="enquiry-field"><label for="eventType">Event Type *</label><select id="eventType" name="eventType"><option>Sangeeth</option><option>Birthday</option><option>Private dance choreography</option><option>Corporate / community event</option><option>Workshop</option><option>Other</option></select></div>
+                <div class="enquiry-field"><label for="eventPeople">Number of People *</label><input id="eventPeople" name="eventPeople" type="text" placeholder="Example: 8 dancers"></div>
+                <div class="enquiry-field"><label for="eventDate">Event Date *</label><input id="eventDate" name="eventDate" type="date"></div>
+                <div class="enquiry-field"><label for="eventLocation">Location *</label><select id="eventLocation" name="eventLocation"><option>At The Dansvilla Studio</option><option>Outside venue</option><option>Not sure</option></select></div>
               </div>
             </div>
 
@@ -3663,13 +3664,13 @@ document.addEventListener('DOMContentLoaded', function () {
               <div class="form-mode-title">✨ Not Sure — Need Guidance</div>
               <div class="form-mode-desc">For parents/students who want Master to suggest the right class, batch or plan.</div>
               <div class="form-mode-grid">
-                <div class="enquiry-field"><label for="guidanceAge">Student Age / Group</label><input id="guidanceAge" name="guidanceAge" type="text" placeholder="Example: 5 yrs / Teen / Adult"></div>
-                <div class="enquiry-field"><label for="guidanceInterest">Interest</label><select id="guidanceInterest" name="guidanceInterest"><option>Dance classes</option><option>Pricing / plan help</option><option>Studio rental</option><option>Private event</option><option>Not sure</option></select></div>
+                <div class="enquiry-field"><label for="guidanceAge">Student Age / Group *</label><input id="guidanceAge" name="guidanceAge" type="text" placeholder="Example: 5 yrs / Teen / Adult"></div>
+                <div class="enquiry-field"><label for="guidanceInterest">Interest *</label><select id="guidanceInterest" name="guidanceInterest"><option>Dance classes</option><option>Pricing / plan help</option><option>Studio rental</option><option>Private event</option><option>Not sure</option></select></div>
               </div>
             </div>
 
             <div class="enquiry-field full">
-              <label for="leadMessage">Message</label>
+              <label for="leadMessage">Message <span class="optional-label">optional</span></label>
               <textarea id="leadMessage" name="message" placeholder="Tell us anything important: experience level, preferred dates, rental hours, event date, or questions."></textarea>
             </div>
           </div>
@@ -4349,7 +4350,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 <script>
-/* DANSVILLA UPDATE V31: Smart form behavior + connect schedule, pricing, rental, contact CTAs */
+/* DANSVILLA UPDATE V33: Smart form behavior + clean conditional payload + required active fields */
 (function(){
   const form = document.getElementById('dansvillaLeadForm');
   if(!form) return;
@@ -4373,9 +4374,27 @@ document.addEventListener('DOMContentLoaded', function () {
     'Not Sure — Need Guidance':'guidance'
   };
 
+  const modeRequiredFields = {
+    dance:['leadAge','leadCourse','leadDay','leadBatch','leadPlan'],
+    combo:['comboAge','comboPreferredDays','comboCourse1','comboCourse2'],
+    family:['person1Name','person1Age','person2Name','person2Age','relationship','familyCourseInterest','familyPreferredDay'],
+    rental:['rentalPurpose','rentalPeople','rentalDate','rentalTime','rentalDuration'],
+    event:['eventType','eventPeople','eventDate','eventLocation'],
+    guidance:['guidanceAge','guidanceInterest']
+  };
+
+  function updateRequiredFields(mode){
+    const alwaysRequired = ['leadType','leadName','leadPhone'];
+    form.querySelectorAll('input, select, textarea').forEach(el => {
+      if(el.name === 'website' || el.type === 'hidden') return;
+      el.required = alwaysRequired.includes(el.id) || (modeRequiredFields[mode] || []).includes(el.id);
+    });
+  }
+
   function setVisibleMode(){
     const mode = modeByType[leadType.value] || 'dance';
     modeBoxes.forEach(box => box.classList.toggle('active', box.getAttribute('data-form-mode') === mode));
+    updateRequiredFields(mode);
   }
 
   function setSelect(id, value){
@@ -4505,96 +4524,212 @@ document.addEventListener('DOMContentLoaded', function () {
     status.className = 'enquiry-status show ' + type;
     status.innerHTML = message;
   }
-  function buildWhatsAppLink(data){
-    const lines = [
-      'Hi Chaitanya Master, I want to enquire/register from The Dansvilla Studio website.',
-      '',
-      'Name: ' + (data.name || ''),
-      'Phone: ' + (data.phone || ''),
-      'Email: ' + (data.email || 'Not provided'),
-      'Enquiry Type: ' + (data.enquiryType || ''),
-      'Course: ' + (data.course || data.comboCourse1 || data.familyCourseInterest || ''),
-      'Course 2: ' + (data.comboCourse2 || ''),
-      'Preferred Day: ' + (data.preferredDay || data.comboPreferredDays || data.familyPreferredDay || ''),
-      'Preferred Batch: ' + (data.preferredBatch || ''),
-      'Pricing Interest: ' + (data.pricingOption || ''),
-      'Student Age: ' + (data.studentAge || data.comboStudentAge || data.guidanceAge || ''),
-      'Person 1: ' + ((data.person1Name || '') + ' ' + (data.person1Age || '')),
-      'Person 2: ' + ((data.person2Name || '') + ' ' + (data.person2Age || '')),
-      'Rental Purpose: ' + (data.rentalPurpose || ''),
-      'Rental Date/Time: ' + ((data.rentalDate || '') + ' ' + (data.rentalTime || '')),
-      'Rental Duration: ' + (data.rentalDuration || ''),
-      'Event Type/Date: ' + ((data.eventType || '') + ' ' + (data.eventDate || '')),
-      'Message: ' + (data.message || 'No extra message')
-    ];
-    return 'https://wa.me/' + masterPhone + '?text=' + encodeURIComponent(lines.join('\n'));
+  function addLine(lines, label, value){
+    const clean = String(value || '').trim();
+    if(clean) lines.push(label + ': ' + clean);
   }
 
-  function enrichFormData(data){
-    const type = data.enquiryType || '';
-    const enriched = Object.assign({}, data);
+  function getValue(id){
+    const el = document.getElementById(id);
+    return el ? String(el.value || '').trim() : '';
+  }
+
+  function getCleanLeadData(rawData){
+    const type = rawData.enquiryType || '';
+    const base = {
+      enquiryType: type,
+      name: rawData.name || '',
+      phone: rawData.phone || '',
+      email: rawData.email || '',
+      message: rawData.message || '',
+      pageUrl: rawData.pageUrl || window.location.href
+    };
 
     if(type === 'Dance Class Registration'){
-      enriched.studentAge = data.studentAge || '';
-      enriched.course = data.course || '';
-      enriched.preferredDay = data.preferredDay || '';
-      enriched.preferredBatch = data.preferredBatch || '';
-      enriched.pricingInterest = data.pricingOption || '';
+      return Object.assign(base, {
+        studentAge: rawData.studentAge || '',
+        course: rawData.course || '',
+        preferredDay: rawData.preferredDay || '',
+        preferredBatch: rawData.preferredBatch || '',
+        pricingInterest: rawData.pricingOption || ''
+      });
     }
 
     if(type === '2-Course Combo'){
-      enriched.studentAge = data.comboStudentAge || '';
-      enriched.course = [data.comboCourse1, data.comboCourse2].filter(Boolean).join(' + ');
-      enriched.preferredDay = data.comboPreferredDays || '';
-      enriched.preferredBatch = 'Combo enquiry - confirm with Master';
-      enriched.pricingInterest = '2-Course Combo - $100/month · $50 per course';
+      return Object.assign(base, {
+        studentAge: rawData.comboStudentAge || '',
+        course1: rawData.comboCourse1 || '',
+        course2: rawData.comboCourse2 || '',
+        course: [rawData.comboCourse1, rawData.comboCourse2].filter(Boolean).join(' + '),
+        preferredDay: rawData.comboPreferredDays || '',
+        preferredBatch: 'Combo enquiry - confirm exact batch with Master',
+        pricingInterest: '2-Course Combo - $100/month · $50 per course'
+      });
     }
 
     if(type === 'Family / Duo Joining'){
-      enriched.studentAge = [data.person1Age, data.person2Age].filter(Boolean).join(' / ');
-      enriched.course = data.familyCourseInterest || '';
-      enriched.preferredDay = data.familyPreferredDay || '';
-      enriched.preferredBatch = 'Family/Duo enquiry - confirm with Master';
-      enriched.pricingInterest = 'Family / Duo - $100 total/month · $50 per person';
+      return Object.assign(base, {
+        person1Name: rawData.person1Name || '',
+        person1Age: rawData.person1Age || '',
+        person2Name: rawData.person2Name || '',
+        person2Age: rawData.person2Age || '',
+        relationship: rawData.relationship || '',
+        courseInterest: rawData.familyCourseInterest || '',
+        course: rawData.familyCourseInterest || '',
+        preferredDay: rawData.familyPreferredDay || '',
+        preferredBatch: 'Family/Duo enquiry - confirm exact batch with Master',
+        pricingInterest: 'Family / Duo - $100 total/month · $50 per person'
+      });
     }
 
     if(type === 'Studio Space Rental'){
-      enriched.studentAge = '';
-      enriched.course = data.rentalPurpose || 'Studio Space Rental';
-      enriched.preferredDay = data.rentalDate || '';
-      enriched.preferredBatch = [data.rentalTime, data.rentalDuration].filter(Boolean).join(' · ');
-      enriched.pricingInterest = 'Studio rental rates - off-peak/peak/bulk as applicable';
+      return Object.assign(base, {
+        rentalPurpose: rawData.rentalPurpose || '',
+        expectedPeople: rawData.rentalPeople || '',
+        rentalDate: rawData.rentalDate || '',
+        rentalTime: rawData.rentalTime || '',
+        rentalDuration: rawData.rentalDuration || '',
+        course: rawData.rentalPurpose || 'Studio Space Rental',
+        preferredDay: rawData.rentalDate || '',
+        preferredBatch: [rawData.rentalTime, rawData.rentalDuration].filter(Boolean).join(' · '),
+        pricingInterest: 'Studio rental rates - off-peak/peak/bulk as applicable'
+      });
     }
 
     if(type === 'Private Event / Workshop'){
-      enriched.studentAge = '';
-      enriched.course = data.eventType || 'Private Event / Workshop';
-      enriched.preferredDay = data.eventDate || '';
-      enriched.preferredBatch = data.eventLocation || '';
-      enriched.pricingInterest = 'Private event/workshop enquiry';
+      return Object.assign(base, {
+        eventType: rawData.eventType || '',
+        eventPeople: rawData.eventPeople || '',
+        eventDate: rawData.eventDate || '',
+        eventLocation: rawData.eventLocation || '',
+        course: rawData.eventType || 'Private Event / Workshop',
+        preferredDay: rawData.eventDate || '',
+        preferredBatch: rawData.eventLocation || '',
+        pricingInterest: 'Private event/workshop enquiry'
+      });
     }
 
     if(type === 'Not Sure — Need Guidance'){
-      enriched.studentAge = data.guidanceAge || '';
-      enriched.course = data.guidanceInterest || 'Need guidance';
-      enriched.preferredDay = 'Not sure - need guidance';
-      enriched.preferredBatch = 'Not sure - need guidance';
-      enriched.pricingInterest = 'Need guidance';
+      return Object.assign(base, {
+        studentAge: rawData.guidanceAge || '',
+        interest: rawData.guidanceInterest || '',
+        course: rawData.guidanceInterest || 'Need guidance',
+        preferredDay: 'Not sure - need guidance',
+        preferredBatch: 'Not sure - need guidance',
+        pricingInterest: 'Need guidance'
+      });
     }
 
-    return enriched;
+    return base;
+  }
+
+  function validateCleanData(data){
+    const missing = [];
+    if(!data.name) missing.push('Name');
+    if(!data.phone) missing.push('Phone');
+    if(!data.enquiryType) missing.push('Enquiry type');
+
+    if(data.enquiryType === 'Dance Class Registration'){
+      if(!data.studentAge) missing.push('Student age');
+      if(!data.course) missing.push('Course');
+      if(!data.preferredDay) missing.push('Preferred day');
+      if(!data.preferredBatch) missing.push('Preferred batch');
+      if(!data.pricingInterest) missing.push('Pricing interest');
+    }
+    if(data.enquiryType === '2-Course Combo'){
+      if(!data.studentAge) missing.push('Student age');
+      if(!data.course1) missing.push('Course 1');
+      if(!data.course2) missing.push('Course 2');
+      if(!data.preferredDay) missing.push('Preferred days');
+      if(data.course1 && data.course2 && data.course1 === data.course2 && !/not sure/i.test(data.course1)) missing.push('Course 2 must be different from Course 1');
+    }
+    if(data.enquiryType === 'Family / Duo Joining'){
+      if(!data.person1Name) missing.push('Person 1 name');
+      if(!data.person1Age) missing.push('Person 1 age');
+      if(!data.person2Name) missing.push('Person 2 name');
+      if(!data.person2Age) missing.push('Person 2 age');
+      if(!data.relationship) missing.push('Relationship');
+      if(!data.courseInterest) missing.push('Course interest');
+      if(!data.preferredDay) missing.push('Preferred day');
+    }
+    if(data.enquiryType === 'Studio Space Rental'){
+      if(!data.rentalPurpose) missing.push('Rental purpose');
+      if(!data.expectedPeople) missing.push('Expected people');
+      if(!data.rentalDate) missing.push('Preferred date');
+      if(!data.rentalTime) missing.push('Preferred time');
+      if(!data.rentalDuration) missing.push('Duration');
+    }
+    if(data.enquiryType === 'Private Event / Workshop'){
+      if(!data.eventType) missing.push('Event type');
+      if(!data.eventPeople) missing.push('Number of people');
+      if(!data.eventDate) missing.push('Event date');
+      if(!data.eventLocation) missing.push('Location');
+    }
+    if(data.enquiryType === 'Not Sure — Need Guidance'){
+      if(!data.studentAge) missing.push('Student age / group');
+      if(!data.interest) missing.push('Interest');
+    }
+    return missing;
+  }
+
+  function buildWhatsAppLink(data){
+    const lines = ['Hi Chaitanya Master, I want to enquire/register from The Dansvilla Studio website.', ''];
+    addLine(lines, 'Enquiry Type', data.enquiryType);
+    addLine(lines, 'Name', data.name);
+    addLine(lines, 'Phone', data.phone);
+    if(data.email) addLine(lines, 'Email', data.email);
+
+    if(data.enquiryType === 'Dance Class Registration'){
+      addLine(lines, 'Student Age', data.studentAge);
+      addLine(lines, 'Course', data.course);
+      addLine(lines, 'Preferred Day', data.preferredDay);
+      addLine(lines, 'Preferred Batch', data.preferredBatch);
+      addLine(lines, 'Pricing Interest', data.pricingInterest);
+    } else if(data.enquiryType === '2-Course Combo'){
+      addLine(lines, 'Student Age', data.studentAge);
+      addLine(lines, 'Course 1', data.course1);
+      addLine(lines, 'Course 2', data.course2);
+      addLine(lines, 'Preferred Days', data.preferredDay);
+      addLine(lines, 'Pricing Interest', data.pricingInterest);
+    } else if(data.enquiryType === 'Family / Duo Joining'){
+      addLine(lines, 'Person 1', [data.person1Name, data.person1Age].filter(Boolean).join(' - '));
+      addLine(lines, 'Person 2', [data.person2Name, data.person2Age].filter(Boolean).join(' - '));
+      addLine(lines, 'Relationship', data.relationship);
+      addLine(lines, 'Course Interest', data.courseInterest);
+      addLine(lines, 'Preferred Day', data.preferredDay);
+      addLine(lines, 'Pricing Interest', data.pricingInterest);
+    } else if(data.enquiryType === 'Studio Space Rental'){
+      addLine(lines, 'Rental Purpose', data.rentalPurpose);
+      addLine(lines, 'Expected People', data.expectedPeople);
+      addLine(lines, 'Preferred Date', data.rentalDate);
+      addLine(lines, 'Preferred Time', data.rentalTime);
+      addLine(lines, 'Duration', data.rentalDuration);
+      addLine(lines, 'Rate Interest', data.pricingInterest);
+    } else if(data.enquiryType === 'Private Event / Workshop'){
+      addLine(lines, 'Event Type', data.eventType);
+      addLine(lines, 'Number of People', data.eventPeople);
+      addLine(lines, 'Event Date', data.eventDate);
+      addLine(lines, 'Location', data.eventLocation);
+    } else if(data.enquiryType === 'Not Sure — Need Guidance'){
+      addLine(lines, 'Student Age / Group', data.studentAge);
+      addLine(lines, 'Interest', data.interest);
+    }
+
+    if(data.message) addLine(lines, 'Message', data.message);
+    return 'https://wa.me/' + masterPhone + '?text=' + encodeURIComponent(lines.join('\n'));
   }
 
   form.addEventListener('submit', async function(e){
     e.preventDefault();
     const rawData = Object.fromEntries(new FormData(form).entries());
     if(rawData.website){ form.reset(); return; }
-    if(!rawData.name || !rawData.phone || !rawData.enquiryType){
-      setStatus('error', 'Please add your name, phone number and enquiry type.');
+    const data = getCleanLeadData(rawData);
+    const missing = validateCleanData(data);
+    if(missing.length){
+      setStatus('error', 'Please complete: ' + missing.join(', ') + '. Email and message are optional.');
       return;
     }
 
-    const data = enrichFormData(rawData);
     const waLink = buildWhatsAppLink(data);
     const submitBtn = form.querySelector('button[type="submit"]');
 
@@ -4608,7 +4743,7 @@ document.addEventListener('DOMContentLoaded', function () {
       submitBtn.disabled = true;
       submitBtn.textContent = 'Sending...';
     }
-    setStatus('info', 'Sending your enquiry securely...');
+    setStatus('loading', 'Sending your enquiry securely...');
 
     try{
       const response = await fetch('/api/send-enquiry', {
