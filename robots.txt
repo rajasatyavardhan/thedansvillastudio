@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://thedansvillastudio.com/sitemap.xml
+Sitemap: https://www.thedansvillastudio.com/sitemap.xml
