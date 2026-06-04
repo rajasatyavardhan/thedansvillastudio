@@ -1,6 +1,8 @@
 <!-- DANSVILLA UPDATE V33: V32 live form + clean conditional submissions + required fields + mobile form-first polish -->
 <!-- DANSVILLA UPDATE V27: V26 stable base + Studio Space Rentals section + rental WhatsApp CTA -->
+<!-- DANSVILLA UPDATE V37: submit continues to WhatsApp + studio Gmail + Instagram chooser popup -->
 <!-- DANSVILLA UPDATE V26: class detail focus lines + two-course combo chooser + simplified pricing help CTA -->
+<!-- DANSVILLA UPDATE V35: 2-course combo separate day/batch per course + stronger combo validation -->
 <!-- DANSVILLA UPDATE V24: V23 safe base + Sangeeth image changed to IMG_3201 + studio photos album link + preview.jpg support -->
 <!DOCTYPE html>
 <html lang="en">
@@ -2984,6 +2986,36 @@ nav{min-height:82px !important;}
 /* DANSVILLA UPDATE V34: form rule note */
 .form-rule-note{grid-column:1/-1;border:1px solid rgba(255,215,0,.35);background:rgba(255,215,0,.08);color:rgba(255,255,255,.9);border-radius:12px;padding:10px 12px;font-size:.78rem;line-height:1.5;}
 .form-rule-note.error{border-color:rgba(255,45,142,.45);background:rgba(255,45,142,.1);}
+
+
+/* ── DANSVILLA UPDATE V37: Instagram choice modal ── */
+.instagram-choice-backdrop{
+  position:fixed; inset:0; z-index:9999; display:none; align-items:center; justify-content:center;
+  padding:22px; background:rgba(5,7,19,.78); backdrop-filter:blur(10px);
+}
+.instagram-choice-backdrop.open{display:flex;}
+.instagram-choice-modal{
+  width:min(460px,100%); border-radius:22px; padding:24px;
+  background:linear-gradient(135deg, rgba(17,24,39,.98), rgba(13,17,32,.98));
+  border:1px solid rgba(255,255,255,.14); box-shadow:0 24px 80px rgba(0,0,0,.58),0 0 42px rgba(255,45,142,.18);
+  position:relative; text-align:left;
+}
+.instagram-choice-close{
+  position:absolute; right:14px; top:12px; width:34px; height:34px; border-radius:50%;
+  border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.06); color:white; cursor:pointer; font-size:1.1rem;
+}
+.instagram-choice-title{font-family:'Bebas Neue',sans-serif; letter-spacing:2px; font-size:2rem; color:var(--cyan); text-shadow:var(--cyan-glow); margin-bottom:6px;}
+.instagram-choice-sub{font-size:.84rem; color:var(--muted); line-height:1.6; margin-bottom:18px;}
+.instagram-choice-links{display:grid; gap:12px;}
+.instagram-choice-link{
+  display:flex; align-items:center; justify-content:space-between; gap:14px; text-decoration:none; color:white;
+  padding:16px; border-radius:16px; background:rgba(255,255,255,.055); border:1px solid rgba(255,255,255,.1); transition:.22s;
+}
+.instagram-choice-link:hover{transform:translateY(-2px); border-color:rgba(255,45,142,.55); background:rgba(255,45,142,.12);}
+.instagram-choice-link strong{display:block; font-size:.9rem; letter-spacing:.5px;}
+.instagram-choice-link span{display:block; font-size:.73rem; color:var(--muted); margin-top:4px; line-height:1.4;}
+.instagram-choice-arrow{font-size:1.25rem; color:var(--pink);}
+
 </style>
 </head>
 <body>
@@ -3010,7 +3042,7 @@ nav{min-height:82px !important;}
     <span></span><span></span><span></span>
   </button>
   <div class="nav-icons">
-    <a href="https://www.instagram.com/dansvilla_studio/" target="_blank" rel="noopener" title="Instagram">
+    <a href="https://www.instagram.com/dansvilla_studio/" data-open-instagram-choice title="Instagram">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
     </a>
     <a href="https://wa.me/16132189417?text=Hi%20Chaitanya%20Master%2C%20I'm%20interested%20in%20joining%20The%20Dansvilla%20Studio%20dance%20classes." target="_blank" rel="noopener" class="wa" title="WhatsApp">
@@ -3110,7 +3142,7 @@ nav{min-height:82px !important;}
     <p>Dance classes for every age and every level — taught with energy, heart, and a little filmy magic by Chaitanya Master in Barrhaven, Nepean.</p>
     <div class="hero-btns">
       <a href="https://wa.me/16132189417?text=Hi%20Chaitanya%20Master%2C%20I'm%20interested%20in%20joining%20The%20Dansvilla%20Studio%20dance%20classes." target="_blank" class="btn-primary">Book Now</a>
-      <a href="https://www.instagram.com/dansvilla_studio/" target="_blank" rel="noopener" class="btn-outline">Instagram</a>
+      <a href="https://www.instagram.com/dansvilla_studio/" data-open-instagram-choice class="btn-outline">Instagram</a>
       <a href="tel:+16132189417" class="btn-outline">Call</a>
     </div>
   </div>
@@ -3603,15 +3635,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     <option value="Prefer not to say">Prefer not to say</option>
                   </select>
                 </div>
-                <div class="enquiry-field">
-                  <label for="comboPreferredDays">Preferred Days *</label>
-                  <select id="comboPreferredDays" name="comboPreferredDays">
-                    <option value="" selected disabled>Select preferred days</option>
-                    <option value="Not sure - need guidance">Not sure - need guidance</option>
-                    <option value="Monday + Thursday">Monday + Thursday</option>
-                    <option value="Thursday + Saturday">Thursday + Saturday</option>
-                    <option value="Monday + Saturday">Monday + Saturday</option>
-                  </select>
+                <div class="enquiry-field full">
+                  <div class="form-rule-note" style="display:block;">Choose two different courses. You can pick the same day only when the two courses are different and the batches do not clash.</div>
                 </div>
                 <div class="enquiry-field">
                   <label for="comboCourse1">Course 1 *</label>
@@ -3624,6 +3649,23 @@ document.addEventListener('DOMContentLoaded', function () {
                   </select>
                 </div>
                 <div class="enquiry-field">
+                  <label for="comboDay1">Course 1 Day *</label>
+                  <select id="comboDay1" name="comboDay1">
+                    <option value="" selected disabled>Select day for Course 1</option>
+                    <option value="Not sure - need guidance">Not sure - need guidance</option>
+                    <option value="Monday — Bollywood Burst 🎬">Monday — Bollywood Burst 🎬</option>
+                    <option value="Thursday — Freestyle Freak ⚡">Thursday — Freestyle Freak ⚡</option>
+                    <option value="Thursday — Desi Diva 💃">Thursday — Desi Diva 💃</option>
+                    <option value="Saturday — Freestyle Freak ⚡">Saturday — Freestyle Freak ⚡</option>
+                  </select>
+                </div>
+                <div class="enquiry-field">
+                  <label for="comboBatch1">Course 1 Batch *</label>
+                  <select id="comboBatch1" name="comboBatch1">
+                    <option value="" selected disabled>Select Course 1 day first</option>
+                  </select>
+                </div>
+                <div class="enquiry-field">
                   <label for="comboCourse2">Course 2 *</label>
                   <select id="comboCourse2" name="comboCourse2">
                     <option value="" selected disabled>Select Course 2</option>
@@ -3631,6 +3673,23 @@ document.addEventListener('DOMContentLoaded', function () {
                     <option value="Bollywood Burst 🎬">Bollywood Burst 🎬</option>
                     <option value="Desi Diva 💃">Desi Diva 💃</option>
                     <option value="Not sure - guide me">Not sure - guide me</option>
+                  </select>
+                </div>
+                <div class="enquiry-field">
+                  <label for="comboDay2">Course 2 Day *</label>
+                  <select id="comboDay2" name="comboDay2">
+                    <option value="" selected disabled>Select day for Course 2</option>
+                    <option value="Not sure - need guidance">Not sure - need guidance</option>
+                    <option value="Monday — Bollywood Burst 🎬">Monday — Bollywood Burst 🎬</option>
+                    <option value="Thursday — Freestyle Freak ⚡">Thursday — Freestyle Freak ⚡</option>
+                    <option value="Thursday — Desi Diva 💃">Thursday — Desi Diva 💃</option>
+                    <option value="Saturday — Freestyle Freak ⚡">Saturday — Freestyle Freak ⚡</option>
+                  </select>
+                </div>
+                <div class="enquiry-field">
+                  <label for="comboBatch2">Course 2 Batch *</label>
+                  <select id="comboBatch2" name="comboBatch2">
+                    <option value="" selected disabled>Select Course 2 day first</option>
                   </select>
                 </div>
               </div>
@@ -3703,8 +3762,8 @@ document.addEventListener('DOMContentLoaded', function () {
           <input type="hidden" name="pageUrl" id="leadPageUrl">
           <div class="enquiry-note">By submitting, you are asking The Dansvilla Studio to contact you about your enquiry. This form does not collect payments.</div>
           <div class="enquiry-actions">
-            <button type="submit" class="btn-primary">Submit Enquiry</button>
-            <a id="enquiryWhatsAppFallback" class="btn-outline" style="display:none;" target="_blank" rel="noopener">Send on WhatsApp Too</a>
+            <button type="submit" class="btn-primary">Submit & Continue to WhatsApp</button>
+            <a id="enquiryWhatsAppFallback" class="btn-outline" style="display:none;" target="_blank" rel="noopener">Open WhatsApp Again</a>
           </div>
           <div id="enquiryStatus" class="enquiry-status" role="status" aria-live="polite"></div>
         </form>
@@ -3815,7 +3874,7 @@ document.addEventListener('DOMContentLoaded', function () {
         <h2 class="section-title">GALLERY ALBUMS</h2>
         <p class="section-sub">Performance albums, class memories, and stage moments from The Dansvilla Studio.</p>
       </div>
-      <a href="https://www.instagram.com/dansvilla_studio/" target="_blank" rel="noopener" class="insta-follow-btn">Follow on Instagram</a>
+      <a href="https://www.instagram.com/dansvilla_studio/" data-open-instagram-choice class="insta-follow-btn">Follow on Instagram</a>
     </div>
     <div class="gallery-folder-grid">
       <a href="https://drive.google.com/drive/folders/1jP72uoxdNkjqRnMDnDwAx373F-081dYW" target="_blank" rel="noopener" class="gallery-folder-card">
@@ -3966,7 +4025,7 @@ document.addEventListener('DOMContentLoaded', function () {
         </div>
         <div style="display:flex; gap:12px; flex-wrap:wrap;">
           <a href="https://wa.me/16132189417?text=Hi%20Chaitanya%20Master%2C%20I'd%20love%20to%20know%20more%20about%20your%20classes." target="_blank" class="btn-primary">Message Chaitanya</a>
-          <a href="https://www.instagram.com/dansvilla_studio/" target="_blank" rel="noopener" class="btn-outline">Follow on Instagram</a>
+          <a href="https://www.instagram.com/dansvilla_studio/" data-open-instagram-choice class="btn-outline">Follow on Instagram</a>
         </div>
       </div>
     </div>
@@ -4067,15 +4126,22 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
           </div>
           <div class="contact-item">
+            <div class="contact-icon">✉️</div>
+            <div>
+              <div class="contact-label">Studio Email</div>
+              <div class="contact-value"><a href="mailto:dansvilla2k19@gmail.com">dansvilla2k19@gmail.com</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
             <div class="contact-icon">📸</div>
             <div>
               <div class="contact-label">Instagram</div>
-              <div class="contact-value"><a href="https://www.instagram.com/dansvilla_studio/" target="_blank" rel="noopener">@dansvilla_studio</a></div>
+              <div class="contact-value"><a href="https://www.instagram.com/dansvilla_studio/" data-open-instagram-choice>@dansvilla_studio</a></div>
             </div>
           </div>
         </div>
         <div class="social-row">
-          <a href="https://www.instagram.com/dansvilla_studio/" target="_blank" rel="noopener" class="social-btn insta">
+          <a href="https://www.instagram.com/dansvilla_studio/" data-open-instagram-choice class="social-btn insta">
             <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
             @dansvilla_studio
           </a>
@@ -4116,7 +4182,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <a href="#contact">Contact</a>
   </div>
   <div class="footer-social-links">
-    <a href="https://www.instagram.com/dansvilla_studio/" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.instagram.com/dansvilla_studio/" data-open-instagram-choice>Instagram</a>
     <a href="tel:+16132189417">613-218-9417</a>
     <a href="https://wa.me/16132189417" target="_blank" rel="noopener">WhatsApp</a>
     <a href="https://maps.app.goo.gl/Zdo8BycCBqZErtNn8" target="_blank" rel="noopener">Google Reviews</a>
@@ -4376,7 +4442,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 <script>
-/* DANSVILLA UPDATE V34: safer smart form defaults + gender rules + clean batch options */
+/* DANSVILLA UPDATE V35: safer smart form defaults + gender rules + separate combo day/batch rules */
 (function(){
   const form = document.getElementById('dansvillaLeadForm');
   if(!form) return;
@@ -4388,6 +4454,10 @@ document.addEventListener('DOMContentLoaded', function () {
   const leadGender = document.getElementById('leadGender');
   const comboCourse1 = document.getElementById('comboCourse1');
   const comboCourse2 = document.getElementById('comboCourse2');
+  const comboDay1 = document.getElementById('comboDay1');
+  const comboDay2 = document.getElementById('comboDay2');
+  const comboBatch1 = document.getElementById('comboBatch1');
+  const comboBatch2 = document.getElementById('comboBatch2');
   const comboGender = document.getElementById('comboGender');
   const familyCourseInterest = document.getElementById('familyCourseInterest');
   const familyPreferredDay = document.getElementById('familyPreferredDay');
@@ -4414,7 +4484,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const modeRequiredFields = {
     dance:['leadAge','leadGender','leadCourse','leadDay','leadBatch','leadPlan'],
-    combo:['comboAge','comboGender','comboPreferredDays','comboCourse1','comboCourse2'],
+    combo:['comboAge','comboGender','comboCourse1','comboDay1','comboBatch1','comboCourse2','comboDay2','comboBatch2'],
     family:['person1Name','person1Age','person1Gender','person2Name','person2Age','person2Gender','relationship','familyCourseInterest','familyPreferredDay'],
     rental:['rentalPurpose','rentalPeople','rentalDate','rentalTime','rentalDuration'],
     event:['eventType','eventPeople','eventDate','eventLocation'],
@@ -4488,14 +4558,30 @@ document.addEventListener('DOMContentLoaded', function () {
     if(previousValue && options.some(([value]) => value === previousValue)) select.value = previousValue;
   }
 
+  function updateBatchOptionsFor(daySelect, batchSelect, emptyLabel){
+    if(!daySelect || !batchSelect) return;
+    const previous = batchSelect.value;
+    const day = daySelect.value || '';
+    if(/Saturday/i.test(day)) fillSelectOptions(batchSelect, saturdayBatches, previous);
+    else if(/Monday|Thursday/i.test(day)) fillSelectOptions(batchSelect, weekdayBatches, previous);
+    else if(/Not sure/i.test(day)) fillSelectOptions(batchSelect, notSureBatches, previous);
+    else fillSelectOptions(batchSelect, [['', emptyLabel || 'Select preferred day first']], previous);
+  }
+
   function updateLeadBatchOptions(){
-    if(!leadBatch || !leadDay) return;
-    const previous = leadBatch.value;
-    const day = leadDay.value || '';
-    if(/Saturday/i.test(day)) fillSelectOptions(leadBatch, saturdayBatches, previous);
-    else if(/Monday|Thursday/i.test(day)) fillSelectOptions(leadBatch, weekdayBatches, previous);
-    else if(/Not sure/i.test(day)) fillSelectOptions(leadBatch, notSureBatches, previous);
-    else fillSelectOptions(leadBatch, [['','Select preferred day first']], previous);
+    updateBatchOptionsFor(leadDay, leadBatch, 'Select preferred day first');
+    updateBatchOptionsFor(comboDay1, comboBatch1, 'Select Course 1 day first');
+    updateBatchOptionsFor(comboDay2, comboBatch2, 'Select Course 2 day first');
+  }
+
+  function courseMatchesDay(course, day){
+    course = String(course || '');
+    day = String(day || '');
+    if(!course || !day || /not sure/i.test(course) || /not sure/i.test(day)) return true;
+    if(/Bollywood/i.test(course)) return /Monday/i.test(day) && /Bollywood/i.test(day);
+    if(/Desi Diva/i.test(course)) return /Thursday/i.test(day) && /Desi Diva/i.test(day);
+    if(/Freestyle/i.test(course)) return /Freestyle/i.test(day) && (/Thursday|Saturday/i.test(day));
+    return true;
   }
 
   function hasDesiDiva(value){ return /Desi Diva/i.test(String(value || '')); }
@@ -4508,9 +4594,17 @@ document.addEventListener('DOMContentLoaded', function () {
       note = '💃 Desi Diva is currently a ladies-only batch. Please select Female as the student gender to continue.';
       isError = !!(leadGender && leadGender.value && !isFemale(leadGender.value));
     }
-    if(leadType.value === '2-Course Combo' && (hasDesiDiva(comboCourse1 && comboCourse1.value) || hasDesiDiva(comboCourse2 && comboCourse2.value))){
-      note = '💃 Desi Diva can be included in a 2-Course Combo only for female students.';
-      isError = !!(comboGender && comboGender.value && !isFemale(comboGender.value));
+    if(leadType.value === '2-Course Combo'){
+      if(comboCourse1 && comboCourse2 && comboCourse1.value && comboCourse2.value && comboCourse1.value === comboCourse2.value && !/not sure/i.test(comboCourse1.value)){
+        note = '🔥 For the 2-Course Combo, Course 1 and Course 2 must be different.';
+        isError = true;
+      } else if((hasDesiDiva(comboCourse1 && comboCourse1.value) || hasDesiDiva(comboCourse2 && comboCourse2.value))){
+        note = '💃 Desi Diva can be included in a 2-Course Combo only for female students.';
+        isError = !!(comboGender && comboGender.value && !isFemale(comboGender.value));
+      } else if(comboDay1 && comboDay2 && comboBatch1 && comboBatch2 && comboDay1.value && comboDay2.value && comboBatch1.value && comboBatch2.value && comboDay1.value === comboDay2.value && comboBatch1.value === comboBatch2.value && !/not sure/i.test(comboBatch1.value)){
+        note = '⏰ If both combo courses are on the same day, choose different batches so the times do not clash.';
+        isError = true;
+      }
     }
     if(leadType.value === 'Family / Duo Joining' && (hasDesiDiva(familyPreferredDay && familyPreferredDay.value) || hasDesiDiva(familyCourseInterest && familyCourseInterest.value))){
       note = '💃 Desi Diva is a ladies-only batch. For Family / Duo enquiries selecting Desi Diva, both participants must be Female.';
@@ -4545,6 +4639,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     updateLeadBatchOptions();
     if(fields.leadBatch) setSelect('leadBatch', fields.leadBatch);
+    if(fields.comboBatch1) setSelect('comboBatch1', fields.comboBatch1);
+    if(fields.comboBatch2) setSelect('comboBatch2', fields.comboBatch2);
     updateFormRuleNote();
     showBanner(banner);
     scrollToForm();
@@ -4616,7 +4712,7 @@ document.addEventListener('DOMContentLoaded', function () {
       document.body.style.overflow = '';
 
       if(text.includes('combo') || modalBtn.classList.contains('combo-course-btn')){
-        const fields = {comboCourse1: course};
+        const fields = {comboCourse1: course, comboDay1: day, comboBatch1: batch};
         const strong = modalBtn.querySelector('strong');
         if(strong && !/not sure/i.test(strong.textContent)) setTimeout(() => setSelect('comboCourse2', strong.textContent.trim()), 150);
         openForm('2-Course Combo', fields, course + ' selected for 2-Course Combo. Choose/confirm second course.');
@@ -4629,7 +4725,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }, true);
 
   leadType.addEventListener('change', setVisibleMode);
-  [leadDay, leadCourse, leadGender, comboCourse1, comboCourse2, comboGender, familyCourseInterest, familyPreferredDay, person1Gender, person2Gender].forEach(el => {
+  [leadDay, leadCourse, leadGender, comboCourse1, comboCourse2, comboDay1, comboDay2, comboBatch1, comboBatch2, comboGender, familyCourseInterest, familyPreferredDay, person1Gender, person2Gender].forEach(el => {
     if(el) el.addEventListener('change', function(){ updateLeadBatchOptions(); updateFormRuleNote(); });
   });
   setVisibleMode();
@@ -4672,14 +4768,22 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if(type === '2-Course Combo'){
+      const day1 = rawData.comboDay1 || '';
+      const day2 = rawData.comboDay2 || '';
+      const batch1 = rawData.comboBatch1 || '';
+      const batch2 = rawData.comboBatch2 || '';
       return Object.assign(base, {
         studentAge: rawData.comboStudentAge || '',
         studentGender: rawData.comboStudentGender || '',
         course1: rawData.comboCourse1 || '',
+        course1Day: day1,
+        course1Batch: batch1,
         course2: rawData.comboCourse2 || '',
+        course2Day: day2,
+        course2Batch: batch2,
         course: [rawData.comboCourse1, rawData.comboCourse2].filter(Boolean).join(' + '),
-        preferredDay: rawData.comboPreferredDays || '',
-        preferredBatch: 'Combo enquiry - confirm exact batch with Master',
+        preferredDay: [day1, day2].filter(Boolean).join(' / '),
+        preferredBatch: [batch1, batch2].filter(Boolean).join(' / '),
         pricingInterest: '2-Course Combo - $100/month · $50 per course'
       });
     }
@@ -4761,9 +4865,15 @@ document.addEventListener('DOMContentLoaded', function () {
       if(!data.studentAge) missing.push('Student age');
       if(!data.studentGender) missing.push('Student gender');
       if(!data.course1) missing.push('Course 1');
+      if(!data.course1Day) missing.push('Course 1 day');
+      if(!data.course1Batch) missing.push('Course 1 batch');
       if(!data.course2) missing.push('Course 2');
-      if(!data.preferredDay) missing.push('Preferred days');
+      if(!data.course2Day) missing.push('Course 2 day');
+      if(!data.course2Batch) missing.push('Course 2 batch');
       if(data.course1 && data.course2 && data.course1 === data.course2 && !/not sure/i.test(data.course1)) missing.push('Course 2 must be different from Course 1');
+      if(data.course1 && data.course1Day && !courseMatchesDay(data.course1, data.course1Day)) missing.push('Course 1 day must match Course 1');
+      if(data.course2 && data.course2Day && !courseMatchesDay(data.course2, data.course2Day)) missing.push('Course 2 day must match Course 2');
+      if(data.course1Day && data.course2Day && data.course1Batch && data.course2Batch && data.course1Day === data.course2Day && data.course1Batch === data.course2Batch && !/not sure/i.test(data.course1Batch)) missing.push('For same-day combo, choose different batches');
       if((/Desi Diva/i.test(data.course1) || /Desi Diva/i.test(data.course2)) && data.studentGender !== 'Female') missing.push('Desi Diva is ladies-only; student gender must be Female');
     }
     if(data.enquiryType === 'Family / Duo Joining'){
@@ -4816,8 +4926,11 @@ document.addEventListener('DOMContentLoaded', function () {
       addLine(lines, 'Student Age', data.studentAge);
       addLine(lines, 'Student Gender', data.studentGender);
       addLine(lines, 'Course 1', data.course1);
+      addLine(lines, 'Course 1 Day', data.course1Day);
+      addLine(lines, 'Course 1 Batch', data.course1Batch);
       addLine(lines, 'Course 2', data.course2);
-      addLine(lines, 'Preferred Days', data.preferredDay);
+      addLine(lines, 'Course 2 Day', data.course2Day);
+      addLine(lines, 'Course 2 Batch', data.course2Batch);
       addLine(lines, 'Pricing Interest', data.pricingInterest);
     } else if(data.enquiryType === 'Family / Duo Joining'){
       addLine(lines, 'Person 1', [data.person1Name, data.person1Age, data.person1Gender].filter(Boolean).join(' - '));
@@ -4864,14 +4977,14 @@ document.addEventListener('DOMContentLoaded', function () {
     if(fallback){
       fallback.href = waLink;
       fallback.style.display = 'none';
-      fallback.textContent = 'Send Details on WhatsApp Too';
+      fallback.textContent = 'Open WhatsApp Again';
     }
 
     if(submitBtn){
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending...';
+      submitBtn.textContent = 'Submitting...';
     }
-    setStatus('loading', 'Sending your enquiry securely...');
+    setStatus('loading', 'Submitting your enquiry securely. WhatsApp will open next...');
 
     try{
       const response = await fetch('/api/send-enquiry', {
@@ -4887,10 +5000,16 @@ document.addEventListener('DOMContentLoaded', function () {
         throw new Error(result.error || 'Unable to send enquiry right now.');
       }
 
-      setStatus('success', '✅ Thank you! Your enquiry has been sent to The Dansvilla Studio. If you entered an email, you should also receive a confirmation email soon.');
+      setStatus('success', '✅ Your form has been submitted. WhatsApp is opening now — please press Send there to notify Chaitanya Master instantly.');
+      let opened = false;
+      try {
+        const waWindow = window.open(waLink, '_blank', 'noopener');
+        opened = !!waWindow;
+      } catch(openErr) {}
       if(fallback){
+        fallback.href = waLink;
         fallback.style.display = 'inline-flex';
-        fallback.textContent = 'Send on WhatsApp Too';
+        fallback.textContent = opened ? 'Open WhatsApp Again' : 'Open WhatsApp to Complete';
       }
       form.reset();
       if(pageUrl) pageUrl.value = window.location.href;
@@ -4905,10 +5024,51 @@ document.addEventListener('DOMContentLoaded', function () {
     } finally {
       if(submitBtn){
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Submit Enquiry';
+        submitBtn.textContent = 'Submit & Continue to WhatsApp';
       }
     }
   });
+})();
+</script>
+
+
+<div class="instagram-choice-backdrop" id="instagramChoiceModal" aria-hidden="true">
+  <div class="instagram-choice-modal" role="dialog" aria-modal="true" aria-labelledby="instagramChoiceTitle">
+    <button type="button" class="instagram-choice-close" id="instagramChoiceClose" aria-label="Close Instagram choices">×</button>
+    <div class="instagram-choice-title" id="instagramChoiceTitle">Follow Dansvilla</div>
+    <div class="instagram-choice-sub">Choose where you want to go — official studio updates or our student/family moments.</div>
+    <div class="instagram-choice-links">
+      <a class="instagram-choice-link" href="https://www.instagram.com/dansvilla_studio/" target="_blank" rel="noopener">
+        <div><strong>Studio Instagram</strong><span>@dansvilla_studio · classes, updates, announcements and studio highlights</span></div>
+        <div class="instagram-choice-arrow">↗</div>
+      </a>
+      <a class="instagram-choice-link" href="https://www.instagram.com/dansvillafam/" target="_blank" rel="noopener">
+        <div><strong>Dansvilla Family</strong><span>@dansvillafam · students, family moments, performances and community memories</span></div>
+        <div class="instagram-choice-arrow">↗</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const modal = document.getElementById('instagramChoiceModal');
+  const closeBtn = document.getElementById('instagramChoiceClose');
+  const triggers = document.querySelectorAll('[data-open-instagram-choice]');
+  if(!modal || !triggers.length) return;
+  function openModal(e){
+    e.preventDefault();
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden','false');
+  }
+  function closeModal(){
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden','true');
+  }
+  triggers.forEach(trigger => trigger.addEventListener('click', openModal));
+  if(closeBtn) closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
 })();
 </script>
 
