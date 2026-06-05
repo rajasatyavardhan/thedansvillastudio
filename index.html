@@ -2,17 +2,18 @@
 <!-- DANSVILLA UPDATE V27: V26 stable base + Studio Space Rentals section + rental WhatsApp CTA -->
 <!-- DANSVILLA UPDATE V37: submit continues to WhatsApp + studio Gmail + Instagram chooser popup -->
 <!-- DANSVILLA UPDATE V26: class detail focus lines + two-course combo chooser + simplified pricing help CTA -->
-<!-- DANSVILLA UPDATE V35: 2-course combo separate day/batch per course + stronger combo validation -->
+<!-- DANSVILLA UPDATE V39: keep $15 single class + add optional alternate batch for dance registrations; V38 base -->
+<!-- DANSVILLA UPDATE V38: professional form dependency audit + course/day/batch lock + SEO ready -->
 <!-- DANSVILLA UPDATE V24: V23 safe base + Sangeeth image changed to IMG_3201 + studio photos album link + preview.jpg support -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Dansvilla Studio — Bollywood, Freestyle & more | Nepean, Ottawa</title>
-<meta name="description" content="Join The Dansvilla Studio in Barrhaven/Nepean for Bollywood, Tollywood, Kollywood & Freestyle dance classes for kids, teens & adults. $15/class. Limited spots — register now.">
-<meta property="og:title" content="The Dansvilla Studio — Dance Classes in Barrhaven, Ottawa">
-<meta property="og:description" content="Bollywood Burst, Freestyle Freak, Desi Diva, workshops and stage shows at The Dansvilla Studio in Barrhaven, Ottawa.">
+<title>The Dansvilla Studio | Bollywood & Freestyle Dance Classes in Barrhaven, Nepean</title>
+<meta name="description" content="Join The Dansvilla Studio in Barrhaven/Nepean for Bollywood Burst, Freestyle Freak, Desi Diva, kids, teens and adults dance classes, studio rentals, workshops and private event choreography in Ottawa.">
+<meta property="og:title" content="The Dansvilla Studio | Dance Classes in Barrhaven, Nepean">
+<meta property="og:description" content="Bollywood Burst, Freestyle Freak, Desi Diva, kids, teens and adults dance classes, studio rentals and private event choreography in Ottawa.">
 <meta property="og:image" content="https://www.thedansvillastudio.com/preview.jpg">
 <meta property="og:url" content="https://www.thedansvillastudio.com/">
 <meta property="og:type" content="website">
@@ -550,6 +551,15 @@
   .about-feat-title { font-size: 0.78rem; font-weight: 700; color: var(--cyan); margin-bottom: 4px; }
   .about-feat-text { font-size: 0.72rem; color: var(--muted); line-height: 1.5; }
 
+
+  .local-seo-section {
+    background: linear-gradient(180deg, var(--dark2), var(--dark));
+    border-top: 1px solid rgba(0,229,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .local-seo-section .section-sub {
+    max-width: 820px;
+  }
   /* ── CONTACT ── */
   #contact { background: var(--dark); }
   .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; margin-top: 48px; }
@@ -3604,6 +3614,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     <option value="" selected disabled>Select preferred day first</option>
                   </select>
                 </div>
+                <div class="enquiry-field">
+                  <label for="leadAlternateBatch">Alternate Batch</label>
+                  <select id="leadAlternateBatch" name="alternateBatch">
+                    <option value="" selected>No alternate batch</option>
+                  </select>
+                </div>
                 <div class="enquiry-field full">
                   <label for="leadPlan">Pricing Interest *</label>
                   <select id="leadPlan" name="pricingOption">
@@ -4442,7 +4458,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 <script>
-/* DANSVILLA UPDATE V35: safer smart form defaults + gender rules + separate combo day/batch rules */
+/* DANSVILLA UPDATE V38: audited smart form dependency rules - course/day/batch locked */
 (function(){
   const form = document.getElementById('dansvillaLeadForm');
   if(!form) return;
@@ -4450,6 +4466,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const leadType = document.getElementById('leadType');
   const leadDay = document.getElementById('leadDay');
   const leadBatch = document.getElementById('leadBatch');
+  const leadAlternateBatch = document.getElementById('leadAlternateBatch');
   const leadCourse = document.getElementById('leadCourse');
   const leadGender = document.getElementById('leadGender');
   const comboCourse1 = document.getElementById('comboCourse1');
@@ -4503,8 +4520,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const mode = modeByType[leadType.value] || '';
     modeBoxes.forEach(box => box.classList.toggle('active', !!mode && box.getAttribute('data-form-mode') === mode));
     updateRequiredFields(mode);
-    updateFormRuleNote();
+    updateAllDayOptions();
     updateLeadBatchOptions();
+    updateFormRuleNote();
   }
 
   function setSelect(id, value){
@@ -4544,6 +4562,17 @@ document.addEventListener('DOMContentLoaded', function () {
     ['','Select preferred batch'],
     ['Not sure','Not sure - need guidance']
   ];
+  const noAlternateBatches = [
+    ['','No alternate batch']
+  ];
+  const allDayOptions = [
+    ['','Select preferred day'],
+    ['Not sure','Not sure'],
+    ['Monday — Bollywood Burst 🎬','Monday — Bollywood Burst 🎬'],
+    ['Thursday — Freestyle Freak ⚡','Thursday — Freestyle Freak ⚡'],
+    ['Thursday — Desi Diva 💃','Thursday — Desi Diva 💃'],
+    ['Saturday — Freestyle Freak ⚡','Saturday — Freestyle Freak ⚡']
+  ];
 
   function fillSelectOptions(select, options, previousValue){
     if(!select) return;
@@ -4558,6 +4587,36 @@ document.addEventListener('DOMContentLoaded', function () {
     if(previousValue && options.some(([value]) => value === previousValue)) select.value = previousValue;
   }
 
+  function courseDayOptions(course, emptyLabel, allowBroadChoices){
+    const c = String(course || '');
+    const empty = [['', emptyLabel || 'Select course first']];
+    if(!c) return empty;
+    if(/Not sure/i.test(c)) return [['','Select preferred day'], ['Not sure','Not sure']];
+    if(allowBroadChoices && /Same course|Different courses/i.test(c)) return allDayOptions;
+    if(/Bollywood/i.test(c)) return [['','Select Bollywood day'], ['Monday — Bollywood Burst 🎬','Monday — Bollywood Burst 🎬'], ['Not sure','Not sure']];
+    if(/Desi Diva/i.test(c)) return [['','Select Desi Diva day'], ['Thursday — Desi Diva 💃','Thursday — Desi Diva 💃'], ['Not sure','Not sure']];
+    if(/Freestyle/i.test(c)) return [['','Select Freestyle Freak day'], ['Thursday — Freestyle Freak ⚡','Thursday — Freestyle Freak ⚡'], ['Saturday — Freestyle Freak ⚡','Saturday — Freestyle Freak ⚡'], ['Not sure','Not sure']];
+    return allDayOptions;
+  }
+
+  function updateDayOptionsForCourse(courseSelect, daySelect, emptyLabel, allowBroadChoices){
+    if(!daySelect) return;
+    const previous = daySelect.value;
+    const courseValue = courseSelect ? courseSelect.value : '';
+    const options = courseDayOptions(courseValue, emptyLabel, allowBroadChoices);
+    fillSelectOptions(daySelect, options, previous);
+    if(previous && !options.some(([value]) => value === previous)){
+      daySelect.value = '';
+    }
+  }
+
+  function updateAllDayOptions(){
+    updateDayOptionsForCourse(leadCourse, leadDay, 'Select course first', false);
+    updateDayOptionsForCourse(comboCourse1, comboDay1, 'Select Course 1 first', false);
+    updateDayOptionsForCourse(comboCourse2, comboDay2, 'Select Course 2 first', false);
+    updateDayOptionsForCourse(familyCourseInterest, familyPreferredDay, 'Select course interest first', true);
+  }
+
   function updateBatchOptionsFor(daySelect, batchSelect, emptyLabel){
     if(!daySelect || !batchSelect) return;
     const previous = batchSelect.value;
@@ -4568,8 +4627,21 @@ document.addEventListener('DOMContentLoaded', function () {
     else fillSelectOptions(batchSelect, [['', emptyLabel || 'Select preferred day first']], previous);
   }
 
+  function updateAlternateBatchOptions(){
+    if(!leadAlternateBatch) return;
+    const previous = leadAlternateBatch.value;
+    const day = leadDay ? (leadDay.value || '') : '';
+    let options = noAlternateBatches.slice();
+    if(/Saturday/i.test(day)) options = options.concat(saturdayBatches.filter(([value]) => value));
+    else if(/Monday|Thursday/i.test(day)) options = options.concat(weekdayBatches.filter(([value]) => value));
+    else if(/Not sure/i.test(day)) options = options.concat([['Not sure','Not sure - need guidance']]);
+    fillSelectOptions(leadAlternateBatch, options, previous);
+    if(previous && !options.some(([value]) => value === previous)) leadAlternateBatch.value = '';
+  }
+
   function updateLeadBatchOptions(){
     updateBatchOptionsFor(leadDay, leadBatch, 'Select preferred day first');
+    updateAlternateBatchOptions();
     updateBatchOptionsFor(comboDay1, comboBatch1, 'Select Course 1 day first');
     updateBatchOptionsFor(comboDay2, comboBatch2, 'Select Course 2 day first');
   }
@@ -4639,6 +4711,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     updateLeadBatchOptions();
     if(fields.leadBatch) setSelect('leadBatch', fields.leadBatch);
+    if(fields.leadAlternateBatch) setSelect('leadAlternateBatch', fields.leadAlternateBatch);
     if(fields.comboBatch1) setSelect('comboBatch1', fields.comboBatch1);
     if(fields.comboBatch2) setSelect('comboBatch2', fields.comboBatch2);
     updateFormRuleNote();
@@ -4725,8 +4798,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }, true);
 
   leadType.addEventListener('change', setVisibleMode);
-  [leadDay, leadCourse, leadGender, comboCourse1, comboCourse2, comboDay1, comboDay2, comboBatch1, comboBatch2, comboGender, familyCourseInterest, familyPreferredDay, person1Gender, person2Gender].forEach(el => {
-    if(el) el.addEventListener('change', function(){ updateLeadBatchOptions(); updateFormRuleNote(); });
+  [leadDay, leadBatch, leadAlternateBatch, leadCourse, leadGender, comboCourse1, comboCourse2, comboDay1, comboDay2, comboBatch1, comboBatch2, comboGender, familyCourseInterest, familyPreferredDay, person1Gender, person2Gender].forEach(el => {
+    if(el) el.addEventListener('change', function(){ updateAllDayOptions(); updateLeadBatchOptions(); updateFormRuleNote(); });
   });
   setVisibleMode();
 
@@ -4763,6 +4836,7 @@ document.addEventListener('DOMContentLoaded', function () {
         course: rawData.course || '',
         preferredDay: rawData.preferredDay || '',
         preferredBatch: rawData.preferredBatch || '',
+        alternateBatch: rawData.alternateBatch || '',
         pricingInterest: rawData.pricingOption || ''
       });
     }
@@ -4859,6 +4933,8 @@ document.addEventListener('DOMContentLoaded', function () {
       if(!data.preferredDay) missing.push('Preferred day');
       if(!data.preferredBatch) missing.push('Preferred batch');
       if(!data.pricingInterest) missing.push('Pricing interest');
+      if(data.alternateBatch && data.preferredBatch && data.alternateBatch === data.preferredBatch && !/not sure/i.test(data.alternateBatch)) missing.push('Alternate batch should be different from preferred batch');
+      if(data.course && data.preferredDay && !courseMatchesDay(data.course, data.preferredDay)) missing.push('Preferred day must match selected course');
       if((/Desi Diva/i.test(data.course) || /Desi Diva/i.test(data.preferredDay)) && data.studentGender !== 'Female') missing.push('Desi Diva is ladies-only; student gender must be Female');
     }
     if(data.enquiryType === '2-Course Combo'){
@@ -4886,6 +4962,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if(!data.relationship) missing.push('Relationship');
       if(!data.courseInterest) missing.push('Course interest');
       if(!data.preferredDay) missing.push('Preferred day');
+      if(data.courseInterest && data.preferredDay && /Bollywood|Freestyle|Desi Diva/i.test(data.courseInterest) && !courseMatchesDay(data.courseInterest, data.preferredDay)) missing.push('Preferred day must match selected course interest');
       if((/Desi Diva/i.test(data.courseInterest) || /Desi Diva/i.test(data.preferredDay)) && (data.person1Gender !== 'Female' || data.person2Gender !== 'Female')) missing.push('Desi Diva is ladies-only; both participants must be Female');
     }
     if(data.enquiryType === 'Studio Space Rental'){
@@ -4921,6 +4998,7 @@ document.addEventListener('DOMContentLoaded', function () {
       addLine(lines, 'Course', data.course);
       addLine(lines, 'Preferred Day', data.preferredDay);
       addLine(lines, 'Preferred Batch', data.preferredBatch);
+      addLine(lines, 'Alternate Batch', data.alternateBatch);
       addLine(lines, 'Pricing Interest', data.pricingInterest);
     } else if(data.enquiryType === '2-Course Combo'){
       addLine(lines, 'Student Age', data.studentAge);
