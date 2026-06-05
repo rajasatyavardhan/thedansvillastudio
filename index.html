@@ -3615,9 +3615,12 @@ document.addEventListener('DOMContentLoaded', function () {
                   </select>
                 </div>
                 <div class="enquiry-field">
-                  <label for="leadAlternateBatch">Alternate Batch</label>
-                  <select id="leadAlternateBatch" name="alternateBatch">
-                    <option value="" selected>No alternate batch</option>
+                  <label for="leadFlexibility">Batch Flexibility *</label>
+                  <select id="leadFlexibility" name="batchFlexibility">
+                    <option value="" selected disabled>Select flexibility</option>
+                    <option value="Preferred batch only">Preferred batch only</option>
+                    <option value="Flexible with another suitable batch">Flexible with another suitable batch</option>
+                    <option value="Need Master’s suggestion">Need Master’s suggestion</option>
                   </select>
                 </div>
                 <div class="enquiry-field full">
@@ -3722,17 +3725,36 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="enquiry-field"><label for="person2Name">Person 2 Name *</label><input id="person2Name" name="person2Name" type="text" placeholder="Name"></div>
                 <div class="enquiry-field"><label for="person2Age">Person 2 Age *</label><input id="person2Age" name="person2Age" type="text" placeholder="Age"></div>
                 <div class="enquiry-field"><label for="person2Gender">Person 2 Gender *</label><select id="person2Gender" name="person2Gender"><option value="" selected disabled>Select gender</option><option value="Female">Female</option><option value="Male">Male</option><option value="Prefer not to say">Prefer not to say</option></select></div>
-                <div class="enquiry-field">
+                <div class="enquiry-field full">
                   <label for="relationship">Relationship *</label>
                   <select id="relationship" name="relationship"><option value="" selected disabled>Select relationship</option><option>Siblings</option><option>Parent & Child</option><option>Couple</option><option>Friends</option><option>Other</option></select>
                 </div>
-                <div class="enquiry-field">
-                  <label for="familyCourseInterest">Course Interest *</label>
-                  <select id="familyCourseInterest" name="familyCourseInterest"><option value="" selected disabled>Select course interest</option><option>Bollywood Burst 🎬</option><option>Freestyle Freak ⚡</option><option>Desi Diva 💃</option><option>Same course for both</option><option>Different courses</option><option>Not sure - need guidance</option></select>
-                </div>
                 <div class="enquiry-field full">
-                  <label for="familyPreferredDay">Preferred Day *</label>
-                  <select id="familyPreferredDay" name="familyPreferredDay"><option value="" selected disabled>Select preferred day</option><option>Not sure</option><option>Monday — Bollywood Burst 🎬</option><option>Thursday — Freestyle Freak ⚡</option><option>Thursday — Desi Diva 💃</option><option>Saturday — Freestyle Freak ⚡</option></select>
+                  <div class="form-rule-note" style="display:block;">Each person can choose their own course, day and age-appropriate batch. This reduces follow-up questions for Master.</div>
+                </div>
+                <div class="enquiry-field">
+                  <label for="person1Course">Person 1 Course *</label>
+                  <select id="person1Course" name="person1Course"><option value="" selected disabled>Select course</option><option>Bollywood Burst 🎬</option><option>Freestyle Freak ⚡</option><option>Desi Diva 💃</option><option>Not sure - need guidance</option></select>
+                </div>
+                <div class="enquiry-field">
+                  <label for="person1Day">Person 1 Day *</label>
+                  <select id="person1Day" name="person1Day"><option value="" selected disabled>Select course first</option></select>
+                </div>
+                <div class="enquiry-field">
+                  <label for="person1Batch">Person 1 Batch *</label>
+                  <select id="person1Batch" name="person1Batch"><option value="" selected disabled>Enter age and day first</option></select>
+                </div>
+                <div class="enquiry-field">
+                  <label for="person2Course">Person 2 Course *</label>
+                  <select id="person2Course" name="person2Course"><option value="" selected disabled>Select course</option><option>Bollywood Burst 🎬</option><option>Freestyle Freak ⚡</option><option>Desi Diva 💃</option><option>Not sure - need guidance</option></select>
+                </div>
+                <div class="enquiry-field">
+                  <label for="person2Day">Person 2 Day *</label>
+                  <select id="person2Day" name="person2Day"><option value="" selected disabled>Select course first</option></select>
+                </div>
+                <div class="enquiry-field">
+                  <label for="person2Batch">Person 2 Batch *</label>
+                  <select id="person2Batch" name="person2Batch"><option value="" selected disabled>Enter age and day first</option></select>
                 </div>
               </div>
             </div>
@@ -4458,17 +4480,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 <script>
-/* DANSVILLA UPDATE V38: audited smart form dependency rules - course/day/batch locked */
+/* DANSVILLA UPDATE V40: age-based batch filtering + family/duo person-specific course/day/batch */
 (function(){
   const form = document.getElementById('dansvillaLeadForm');
   if(!form) return;
 
   const leadType = document.getElementById('leadType');
+  const leadAge = document.getElementById('leadAge');
   const leadDay = document.getElementById('leadDay');
   const leadBatch = document.getElementById('leadBatch');
-  const leadAlternateBatch = document.getElementById('leadAlternateBatch');
+  const leadFlexibility = document.getElementById('leadFlexibility');
   const leadCourse = document.getElementById('leadCourse');
   const leadGender = document.getElementById('leadGender');
+  const leadPlan = document.getElementById('leadPlan');
+  const comboAge = document.getElementById('comboAge');
   const comboCourse1 = document.getElementById('comboCourse1');
   const comboCourse2 = document.getElementById('comboCourse2');
   const comboDay1 = document.getElementById('comboDay1');
@@ -4476,10 +4501,16 @@ document.addEventListener('DOMContentLoaded', function () {
   const comboBatch1 = document.getElementById('comboBatch1');
   const comboBatch2 = document.getElementById('comboBatch2');
   const comboGender = document.getElementById('comboGender');
-  const familyCourseInterest = document.getElementById('familyCourseInterest');
-  const familyPreferredDay = document.getElementById('familyPreferredDay');
+  const person1Age = document.getElementById('person1Age');
+  const person2Age = document.getElementById('person2Age');
   const person1Gender = document.getElementById('person1Gender');
   const person2Gender = document.getElementById('person2Gender');
+  const person1Course = document.getElementById('person1Course');
+  const person2Course = document.getElementById('person2Course');
+  const person1Day = document.getElementById('person1Day');
+  const person2Day = document.getElementById('person2Day');
+  const person1Batch = document.getElementById('person1Batch');
+  const person2Batch = document.getElementById('person2Batch');
   const formRuleNote = document.getElementById('formRuleNote');
   const modeBoxes = Array.from(document.querySelectorAll('.form-mode-box'));
   const formCard = document.getElementById('enquiryFormCard');
@@ -4498,11 +4529,10 @@ document.addEventListener('DOMContentLoaded', function () {
     'Private Event / Workshop':'event',
     'Not Sure — Need Guidance':'guidance'
   };
-
   const modeRequiredFields = {
-    dance:['leadAge','leadGender','leadCourse','leadDay','leadBatch','leadPlan'],
+    dance:['leadAge','leadGender','leadCourse','leadDay','leadBatch','leadFlexibility','leadPlan'],
     combo:['comboAge','comboGender','comboCourse1','comboDay1','comboBatch1','comboCourse2','comboDay2','comboBatch2'],
-    family:['person1Name','person1Age','person1Gender','person2Name','person2Age','person2Gender','relationship','familyCourseInterest','familyPreferredDay'],
+    family:['person1Name','person1Age','person1Gender','person1Course','person1Day','person1Batch','person2Name','person2Age','person2Gender','person2Course','person2Day','person2Batch','relationship'],
     rental:['rentalPurpose','rentalPeople','rentalDate','rentalTime','rentalDuration'],
     event:['eventType','eventPeople','eventDate','eventLocation'],
     guidance:['guidanceAge','guidanceInterest']
@@ -4515,21 +4545,22 @@ document.addEventListener('DOMContentLoaded', function () {
       el.required = alwaysRequired.includes(el.id) || (modeRequiredFields[mode] || []).includes(el.id);
     });
   }
-
   function setVisibleMode(){
     const mode = modeByType[leadType.value] || '';
     modeBoxes.forEach(box => box.classList.toggle('active', !!mode && box.getAttribute('data-form-mode') === mode));
     updateRequiredFields(mode);
-    updateAllDayOptions();
-    updateLeadBatchOptions();
+    updateAllDependentOptions();
     updateFormRuleNote();
   }
-
   function setSelect(id, value){
     const el = document.getElementById(id);
     if(!el || value === undefined || value === null) return;
     const opts = Array.from(el.options || []);
-    const found = opts.find(o => o.value === value || o.textContent.trim() === String(value).trim());
+    let found = opts.find(o => o.value === value || o.textContent.trim() === String(value).trim());
+    if(!found){
+      // Try matching old timing-only values to new batch labels.
+      found = opts.find(o => o.value && String(o.value).includes(String(value).replace('Saturday ', '').replace(' AM', '').replace(' PM', '').split(' ')[0] || '___'));
+    }
     if(found) el.value = found.value;
     else if(el.tagName === 'SELECT') {
       const firstUsable = opts.find(o => !o.disabled && o.value);
@@ -4537,43 +4568,38 @@ document.addEventListener('DOMContentLoaded', function () {
     } else el.value = value;
     el.dispatchEvent(new Event('change', {bubbles:true}));
   }
+  function setInput(id, value){ const el = document.getElementById(id); if(el && value !== undefined && value !== null) el.value = value; }
 
-  function setInput(id, value){
-    const el = document.getElementById(id);
-    if(el && value !== undefined && value !== null) el.value = value;
+  function parseAge(value){
+    const s = String(value || '').toLowerCase();
+    if(/adult|grown|parent/.test(s)) return 18;
+    const match = s.match(/\d+/);
+    return match ? parseInt(match[0], 10) : null;
   }
-
-  const weekdayBatches = [
-    ['','Select preferred batch'],
-    ['5:00–6:00 PM','5:00–6:00 PM'],
-    ['6:00–7:00 PM','6:00–7:00 PM'],
-    ['7:00–8:00 PM','7:00–8:00 PM'],
-    ['Not sure','Not sure']
-  ];
-  const saturdayBatches = [
-    ['','Select preferred Saturday batch'],
-    ['Saturday 11:00 AM–12:00 PM','Saturday 11:00 AM–12:00 PM'],
-    ['Saturday 12:00–1:00 PM','Saturday 12:00–1:00 PM'],
-    ['Saturday 1:00–2:00 PM','Saturday 1:00–2:00 PM'],
-    ['Saturday 2:00–3:00 PM','Saturday 2:00–3:00 PM'],
-    ['Not sure','Not sure']
-  ];
-  const notSureBatches = [
-    ['','Select preferred batch'],
-    ['Not sure','Not sure - need guidance']
-  ];
-  const noAlternateBatches = [
-    ['','No alternate batch']
-  ];
-  const allDayOptions = [
-    ['','Select preferred day'],
-    ['Not sure','Not sure'],
-    ['Monday — Bollywood Burst 🎬','Monday — Bollywood Burst 🎬'],
-    ['Thursday — Freestyle Freak ⚡','Thursday — Freestyle Freak ⚡'],
-    ['Thursday — Desi Diva 💃','Thursday — Desi Diva 💃'],
-    ['Saturday — Freestyle Freak ⚡','Saturday — Freestyle Freak ⚡']
-  ];
-
+  function ageGroup(ageValue){
+    const age = parseAge(ageValue);
+    if(age === null) return null;
+    if(age <= 7) return 'tiny';
+    if(age <= 12) return 'junior';
+    return 'teen';
+  }
+  function batchOptionsFor(day, ageValue, emptyLabel){
+    const d = String(day || '');
+    if(/not sure/i.test(d)) return [['','Select preferred batch'], ['Not sure - need guidance','Not sure — need guidance']];
+    const group = ageGroup(ageValue);
+    if(!group) return [['', emptyLabel || 'Enter age and select day first'], ['Not sure - need guidance','Not sure — need guidance']];
+    const isSat = /Saturday/i.test(d);
+    const isWeek = /Monday|Thursday/i.test(d);
+    if(!isSat && !isWeek) return [['', emptyLabel || 'Select day first']];
+    if(isSat){
+      if(group === 'tiny') return [['','Select batch'], ['Tiny Tots · Sat 11–12 · Ages 3–7','Tiny Tots · Sat 11–12 · Ages 3–7'], ['Not sure - need guidance','Not sure — need guidance']];
+      if(group === 'junior') return [['','Select batch'], ['Juniors · Sat 12–1 · Ages 8–12','Juniors · Sat 12–1 · Ages 8–12'], ['Not sure - need guidance','Not sure — need guidance']];
+      return [['','Select batch'], ['Teens & Adults Beginner · Sat 1–2 · Ages 13+','Teens & Adults Beginner · Sat 1–2 · Ages 13+'], ['Teens & Adults Advanced · Sat 2–3 · Ages 13+','Teens & Adults Advanced · Sat 2–3 · Ages 13+'], ['Not sure - need guidance','Not sure — need guidance']];
+    }
+    if(group === 'tiny') return [['','Select batch'], ['Tiny Tots · 5–6 PM · Ages 3–7','Tiny Tots · 5–6 PM · Ages 3–7'], ['Not sure - need guidance','Not sure — need guidance']];
+    if(group === 'junior') return [['','Select batch'], ['Juniors · 6–7 PM · Ages 8–12','Juniors · 6–7 PM · Ages 8–12'], ['Not sure - need guidance','Not sure — need guidance']];
+    return [['','Select batch'], ['Teens & Adults · 7–8 PM · Ages 13+','Teens & Adults · 7–8 PM · Ages 13+'], ['Not sure - need guidance','Not sure — need guidance']];
+  }
   function fillSelectOptions(select, options, previousValue){
     if(!select) return;
     select.innerHTML = '';
@@ -4586,76 +4612,49 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     if(previousValue && options.some(([value]) => value === previousValue)) select.value = previousValue;
   }
-
-  function courseDayOptions(course, emptyLabel, allowBroadChoices){
+  function courseDayOptions(course, emptyLabel){
     const c = String(course || '');
-    const empty = [['', emptyLabel || 'Select course first']];
-    if(!c) return empty;
+    if(!c) return [['', emptyLabel || 'Select course first']];
     if(/Not sure/i.test(c)) return [['','Select preferred day'], ['Not sure','Not sure']];
-    if(allowBroadChoices && /Same course|Different courses/i.test(c)) return allDayOptions;
     if(/Bollywood/i.test(c)) return [['','Select Bollywood day'], ['Monday — Bollywood Burst 🎬','Monday — Bollywood Burst 🎬'], ['Not sure','Not sure']];
     if(/Desi Diva/i.test(c)) return [['','Select Desi Diva day'], ['Thursday — Desi Diva 💃','Thursday — Desi Diva 💃'], ['Not sure','Not sure']];
     if(/Freestyle/i.test(c)) return [['','Select Freestyle Freak day'], ['Thursday — Freestyle Freak ⚡','Thursday — Freestyle Freak ⚡'], ['Saturday — Freestyle Freak ⚡','Saturday — Freestyle Freak ⚡'], ['Not sure','Not sure']];
-    return allDayOptions;
+    return [['','Select preferred day'], ['Not sure','Not sure']];
   }
-
-  function updateDayOptionsForCourse(courseSelect, daySelect, emptyLabel, allowBroadChoices){
+  function updateDayOptionsForCourse(courseSelect, daySelect, emptyLabel){
     if(!daySelect) return;
     const previous = daySelect.value;
-    const courseValue = courseSelect ? courseSelect.value : '';
-    const options = courseDayOptions(courseValue, emptyLabel, allowBroadChoices);
+    const options = courseDayOptions(courseSelect ? courseSelect.value : '', emptyLabel);
     fillSelectOptions(daySelect, options, previous);
-    if(previous && !options.some(([value]) => value === previous)){
-      daySelect.value = '';
-    }
+    if(previous && !options.some(([value]) => value === previous)) daySelect.value = '';
   }
-
-  function updateAllDayOptions(){
-    updateDayOptionsForCourse(leadCourse, leadDay, 'Select course first', false);
-    updateDayOptionsForCourse(comboCourse1, comboDay1, 'Select Course 1 first', false);
-    updateDayOptionsForCourse(comboCourse2, comboDay2, 'Select Course 2 first', false);
-    updateDayOptionsForCourse(familyCourseInterest, familyPreferredDay, 'Select course interest first', true);
-  }
-
-  function updateBatchOptionsFor(daySelect, batchSelect, emptyLabel){
+  function updateBatchOptionsFor(daySelect, batchSelect, ageInput, emptyLabel){
     if(!daySelect || !batchSelect) return;
     const previous = batchSelect.value;
-    const day = daySelect.value || '';
-    if(/Saturday/i.test(day)) fillSelectOptions(batchSelect, saturdayBatches, previous);
-    else if(/Monday|Thursday/i.test(day)) fillSelectOptions(batchSelect, weekdayBatches, previous);
-    else if(/Not sure/i.test(day)) fillSelectOptions(batchSelect, notSureBatches, previous);
-    else fillSelectOptions(batchSelect, [['', emptyLabel || 'Select preferred day first']], previous);
+    const options = batchOptionsFor(daySelect.value, ageInput ? ageInput.value : '', emptyLabel);
+    fillSelectOptions(batchSelect, options, previous);
+    if(previous && !options.some(([value]) => value === previous)) batchSelect.value = '';
   }
-
-  function updateAlternateBatchOptions(){
-    if(!leadAlternateBatch) return;
-    const previous = leadAlternateBatch.value;
-    const day = leadDay ? (leadDay.value || '') : '';
-    let options = noAlternateBatches.slice();
-    if(/Saturday/i.test(day)) options = options.concat(saturdayBatches.filter(([value]) => value));
-    else if(/Monday|Thursday/i.test(day)) options = options.concat(weekdayBatches.filter(([value]) => value));
-    else if(/Not sure/i.test(day)) options = options.concat([['Not sure','Not sure - need guidance']]);
-    fillSelectOptions(leadAlternateBatch, options, previous);
-    if(previous && !options.some(([value]) => value === previous)) leadAlternateBatch.value = '';
+  function updateAllDependentOptions(){
+    updateDayOptionsForCourse(leadCourse, leadDay, 'Select course first');
+    updateDayOptionsForCourse(comboCourse1, comboDay1, 'Select Course 1 first');
+    updateDayOptionsForCourse(comboCourse2, comboDay2, 'Select Course 2 first');
+    updateDayOptionsForCourse(person1Course, person1Day, 'Select Person 1 course first');
+    updateDayOptionsForCourse(person2Course, person2Day, 'Select Person 2 course first');
+    updateBatchOptionsFor(leadDay, leadBatch, leadAge, 'Enter student age and select day first');
+    updateBatchOptionsFor(comboDay1, comboBatch1, comboAge, 'Enter age and select Course 1 day first');
+    updateBatchOptionsFor(comboDay2, comboBatch2, comboAge, 'Enter age and select Course 2 day first');
+    updateBatchOptionsFor(person1Day, person1Batch, person1Age, 'Enter Person 1 age and day first');
+    updateBatchOptionsFor(person2Day, person2Batch, person2Age, 'Enter Person 2 age and day first');
   }
-
-  function updateLeadBatchOptions(){
-    updateBatchOptionsFor(leadDay, leadBatch, 'Select preferred day first');
-    updateAlternateBatchOptions();
-    updateBatchOptionsFor(comboDay1, comboBatch1, 'Select Course 1 day first');
-    updateBatchOptionsFor(comboDay2, comboBatch2, 'Select Course 2 day first');
-  }
-
   function courseMatchesDay(course, day){
-    course = String(course || '');
-    day = String(day || '');
+    course = String(course || ''); day = String(day || '');
     if(!course || !day || /not sure/i.test(course) || /not sure/i.test(day)) return true;
     if(/Bollywood/i.test(course)) return /Monday/i.test(day) && /Bollywood/i.test(day);
     if(/Desi Diva/i.test(course)) return /Thursday/i.test(day) && /Desi Diva/i.test(day);
     if(/Freestyle/i.test(course)) return /Freestyle/i.test(day) && (/Thursday|Saturday/i.test(day));
     return true;
   }
-
   function hasDesiDiva(value){ return /Desi Diva/i.test(String(value || '')); }
   function isFemale(value){ return String(value || '').toLowerCase() === 'female'; }
   function updateFormRuleNote(){
@@ -4668,90 +4667,48 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     if(leadType.value === '2-Course Combo'){
       if(comboCourse1 && comboCourse2 && comboCourse1.value && comboCourse2.value && comboCourse1.value === comboCourse2.value && !/not sure/i.test(comboCourse1.value)){
-        note = '🔥 For the 2-Course Combo, Course 1 and Course 2 must be different.';
-        isError = true;
+        note = '🔥 For the 2-Course Combo, Course 1 and Course 2 must be different.'; isError = true;
       } else if((hasDesiDiva(comboCourse1 && comboCourse1.value) || hasDesiDiva(comboCourse2 && comboCourse2.value))){
         note = '💃 Desi Diva can be included in a 2-Course Combo only for female students.';
         isError = !!(comboGender && comboGender.value && !isFemale(comboGender.value));
-      } else if(comboDay1 && comboDay2 && comboBatch1 && comboBatch2 && comboDay1.value && comboDay2.value && comboBatch1.value && comboBatch2.value && comboDay1.value === comboDay2.value && comboBatch1.value === comboBatch2.value && !/not sure/i.test(comboBatch1.value)){
-        note = '⏰ If both combo courses are on the same day, choose different batches so the times do not clash.';
-        isError = true;
       }
     }
-    if(leadType.value === 'Family / Duo Joining' && (hasDesiDiva(familyPreferredDay && familyPreferredDay.value) || hasDesiDiva(familyCourseInterest && familyCourseInterest.value))){
-      note = '💃 Desi Diva is a ladies-only batch. For Family / Duo enquiries selecting Desi Diva, both participants must be Female.';
-      isError = !!((person1Gender && person1Gender.value && !isFemale(person1Gender.value)) || (person2Gender && person2Gender.value && !isFemale(person2Gender.value)));
+    if(leadType.value === 'Family / Duo Joining'){
+      const p1Desi = hasDesiDiva(person1Course && person1Course.value) || hasDesiDiva(person1Day && person1Day.value);
+      const p2Desi = hasDesiDiva(person2Course && person2Course.value) || hasDesiDiva(person2Day && person2Day.value);
+      if(p1Desi || p2Desi){
+        note = '💃 Desi Diva is ladies-only. Any participant choosing Desi Diva must be Female.';
+        isError = !!((p1Desi && person1Gender && person1Gender.value && !isFemale(person1Gender.value)) || (p2Desi && person2Gender && person2Gender.value && !isFemale(person2Gender.value)));
+      }
     }
     formRuleNote.textContent = note;
     formRuleNote.style.display = note ? 'block' : 'none';
     formRuleNote.classList.toggle('error', isError);
   }
-
-  function showBanner(text){
-    if(!prefillBanner || !formCard) return;
-    prefillBanner.textContent = text || 'I filled the form based on your selection. Add your name and phone number to submit.';
-    prefillBanner.classList.add('show');
-    formCard.classList.add('prefilled');
-    window.setTimeout(() => formCard.classList.remove('prefilled'), 1800);
-  }
-
-  function scrollToForm(){
-    const section = document.getElementById('enquiry');
-    if(section) section.scrollIntoView({behavior:'smooth', block:'start'});
-  }
-
+  function showBanner(text){ if(!prefillBanner || !formCard) return; prefillBanner.textContent = text || 'I filled the form based on your selection. Add your name and phone number to submit.'; prefillBanner.classList.add('show'); formCard.classList.add('prefilled'); window.setTimeout(() => formCard.classList.remove('prefilled'), 1800); }
+  function scrollToForm(){ const section = document.getElementById('enquiry'); if(section) section.scrollIntoView({behavior:'smooth', block:'start'}); }
   function openForm(type, fields, banner){
     if(type) leadType.value = type;
     setVisibleMode();
     fields = fields || {};
-    Object.entries(fields).forEach(([id, value]) => {
-      const el = document.getElementById(id);
-      if(!el) return;
-      if(el.tagName === 'SELECT') setSelect(id, value); else setInput(id, value);
-    });
-    updateLeadBatchOptions();
-    if(fields.leadBatch) setSelect('leadBatch', fields.leadBatch);
-    if(fields.leadAlternateBatch) setSelect('leadAlternateBatch', fields.leadAlternateBatch);
-    if(fields.comboBatch1) setSelect('comboBatch1', fields.comboBatch1);
-    if(fields.comboBatch2) setSelect('comboBatch2', fields.comboBatch2);
-    updateFormRuleNote();
-    showBanner(banner);
-    scrollToForm();
+    Object.entries(fields).forEach(([id, value]) => { const el = document.getElementById(id); if(!el) return; if(el.tagName === 'SELECT') setSelect(id, value); else setInput(id, value); });
+    updateAllDependentOptions();
+    ['leadBatch','comboBatch1','comboBatch2','person1Batch','person2Batch'].forEach(id => { if(fields[id]) setSelect(id, fields[id]); });
+    updateFormRuleNote(); showBanner(banner); scrollToForm();
   }
-
-  function courseFromTitle(title){
-    if(/desi/i.test(title)) return 'Desi Diva 💃';
-    if(/free/i.test(title)) return 'Freestyle Freak ⚡';
-    return 'Bollywood Burst 🎬';
-  }
-  function dayFromKickerOrMeta(kicker, title){
-    if(/monday/i.test(kicker)) return 'Monday — Bollywood Burst 🎬';
-    if(/thursday/i.test(kicker) && /desi/i.test(title)) return 'Thursday — Desi Diva 💃';
-    if(/thursday/i.test(kicker)) return 'Thursday — Freestyle Freak ⚡';
-    if(/saturday/i.test(kicker)) return 'Saturday — Freestyle Freak ⚡';
-    return 'Not sure';
-  }
+  function courseFromTitle(title){ if(/desi/i.test(title)) return 'Desi Diva 💃'; if(/free/i.test(title)) return 'Freestyle Freak ⚡'; return 'Bollywood Burst 🎬'; }
+  function dayFromKickerOrMeta(kicker, title){ if(/monday/i.test(kicker)) return 'Monday — Bollywood Burst 🎬'; if(/thursday/i.test(kicker) && /desi/i.test(title)) return 'Thursday — Desi Diva 💃'; if(/thursday/i.test(kicker)) return 'Thursday — Freestyle Freak ⚡'; if(/saturday/i.test(kicker)) return 'Saturday — Freestyle Freak ⚡'; return 'Not sure'; }
   function batchFromMeta(meta){
-    const match = meta && meta.match(/(\d{1,2}:\d{2}\s*(?:AM|PM)\s*[–-]\s*\d{1,2}:\d{2}\s*(?:AM|PM)|\d{1,2}:\d{2}\s*[–-]\s*\d{1,2}:\d{2}\s*PM)/i);
-    if(!match) return 'Not sure';
-    let t = match[1].replace(/\s+/g,' ').replace('-', '–');
-    if(/^11:00 AM/i.test(t)) return 'Saturday 11:00 AM–12:00 PM';
-    if(/^12:00/i.test(t)) return 'Saturday 12:00–1:00 PM';
-    if(/^1:00/i.test(t)) return 'Saturday 1:00–2:00 PM';
-    if(/^2:00/i.test(t)) return 'Saturday 2:00–3:00 PM';
-    if(/^5:00/i.test(t)) return '5:00–6:00 PM';
-    if(/^6:00/i.test(t)) return '6:00–7:00 PM';
-    if(/^7:00/i.test(t)) return '7:00–8:00 PM';
-    return t;
+    if(!meta) return 'Not sure - need guidance';
+    if(/tiny/i.test(meta) || /3\s*[–-]\s*7/.test(meta)) return /saturday/i.test(meta) ? 'Tiny Tots · Sat 11–12 · Ages 3–7' : 'Tiny Tots · 5–6 PM · Ages 3–7';
+    if(/junior/i.test(meta) || /8\s*[–-]\s*12/.test(meta)) return /saturday/i.test(meta) ? 'Juniors · Sat 12–1 · Ages 8–12' : 'Juniors · 6–7 PM · Ages 8–12';
+    if(/advanced/i.test(meta)) return 'Teens & Adults Advanced · Sat 2–3 · Ages 13+';
+    if(/beginner/i.test(meta) && /saturday/i.test(meta)) return 'Teens & Adults Beginner · Sat 1–2 · Ages 13+';
+    if(/2:00|2\s*[–-]\s*3/.test(meta)) return 'Teens & Adults Advanced · Sat 2–3 · Ages 13+';
+    if(/1:00|1\s*[–-]\s*2/.test(meta)) return 'Teens & Adults Beginner · Sat 1–2 · Ages 13+';
+    return 'Not sure - need guidance';
   }
-  function planFromElement(el){
-    const text = (el.textContent || '').toLowerCase();
-    if(text.includes('3-month') || text.includes('3 month') || text.includes('best value') || text.includes('$150')) return '$150 for 3 months - Best Value';
-    if(text.includes('single class') || text.includes('$15')) return '$15 single class';
-    if(text.includes('family')) return 'Family / Duo - $100 total/month';
-    if(text.includes('combo') || text.includes('two-course') || text.includes('2-course')) return '2-Course Combo - $100/month';
-    return '$60 monthly - single course';
-  }
+  function planFromElement(el){ const text = (el.textContent || '').toLowerCase(); if(text.includes('3-month') || text.includes('3 month') || text.includes('best value') || text.includes('$150')) return '$150 for 3 months - Best Value'; if(text.includes('single class') || text.includes('$15')) return '$15 single class'; if(text.includes('family')) return 'Family / Duo - $100 total/month'; if(text.includes('combo') || text.includes('two-course') || text.includes('2-course')) return '2-Course Combo - $100/month'; return '$60 monthly - single course'; }
 
   document.addEventListener('click', function(e){
     const presetBtn = e.target.closest('[data-enquiry-preset]');
@@ -4760,14 +4717,13 @@ document.addEventListener('DOMContentLoaded', function () {
       const p = presetBtn.getAttribute('data-enquiry-preset');
       if(p === 'monthly') openForm('Dance Class Registration', {leadPlan:'$60 monthly - single course'}, 'Monthly plan selected. Add student details and preferred class.');
       if(p === 'three-months') openForm('Dance Class Registration', {leadPlan:'$150 for 3 months - Best Value'}, '3 Months Best Value selected. Add student details and preferred class.');
-      if(p === 'combo') openForm('2-Course Combo', {}, '2-Course Combo selected. Choose Course 1 and Course 2.');
+      if(p === 'combo') openForm('2-Course Combo', {}, '2-Course Combo selected. Choose two different courses.');
       if(p === 'family') openForm('Family / Duo Joining', {}, 'Family / Duo selected. Add both participants below.');
       if(p === 'rental') openForm('Studio Space Rental', {}, 'Studio rental selected. Share date, time, duration and purpose.');
       if(p === 'event') openForm('Private Event / Workshop', {}, 'Private event / workshop selected. Add event details below.');
       if(p === 'guidance') openForm('Not Sure — Need Guidance', {}, 'Guidance selected. Master can suggest the right option.');
       return;
     }
-
     const modalBtn = e.target.closest('.modal-price-btn, .combo-course-btn');
     if(modalBtn && document.getElementById('classModal')){
       e.preventDefault();
@@ -4777,334 +4733,113 @@ document.addEventListener('DOMContentLoaded', function () {
       const meta = (document.getElementById('modalMeta') || {}).textContent || '';
       const course = courseFromTitle(title);
       const day = dayFromKickerOrMeta(kicker, title);
-      const batch = batchFromMeta(meta);
+      const batch = batchFromMeta(meta + ' ' + kicker);
       const text = (modalBtn.textContent || '').toLowerCase();
-
-      modal.classList.remove('open');
-      modal.setAttribute('aria-hidden','true');
-      document.body.style.overflow = '';
-
+      modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow = '';
       if(text.includes('combo') || modalBtn.classList.contains('combo-course-btn')){
         const fields = {comboCourse1: course, comboDay1: day, comboBatch1: batch};
         const strong = modalBtn.querySelector('strong');
         if(strong && !/not sure/i.test(strong.textContent)) setTimeout(() => setSelect('comboCourse2', strong.textContent.trim()), 150);
-        openForm('2-Course Combo', fields, course + ' selected for 2-Course Combo. Choose/confirm second course.');
+        openForm('2-Course Combo', fields, course + ' selected for 2-Course Combo. Choose/confirm second course and age.');
       } else if(text.includes('family')){
-        openForm('Family / Duo Joining', {familyPreferredDay: day}, 'Family / Duo selected for ' + title + '. Add both participant details.');
+        openForm('Family / Duo Joining', {person1Course:course, person1Day:day}, 'Family / Duo selected for ' + title + '. Add both participant details.');
       } else {
-        openForm('Dance Class Registration', {leadCourse:course, leadDay:day, leadBatch:batch, leadPlan:planFromElement(modalBtn)}, title + ' selected. Add your name and phone number to submit.');
+        openForm('Dance Class Registration', {leadCourse:course, leadDay:day, leadBatch:batch, leadPlan:planFromElement(modalBtn)}, title + ' selected. Add student age, name and phone number to submit.');
       }
     }
   }, true);
 
   leadType.addEventListener('change', setVisibleMode);
-  [leadDay, leadBatch, leadAlternateBatch, leadCourse, leadGender, comboCourse1, comboCourse2, comboDay1, comboDay2, comboBatch1, comboBatch2, comboGender, familyCourseInterest, familyPreferredDay, person1Gender, person2Gender].forEach(el => {
-    if(el) el.addEventListener('change', function(){ updateAllDayOptions(); updateLeadBatchOptions(); updateFormRuleNote(); });
+  [leadAge, leadDay, leadBatch, leadFlexibility, leadCourse, leadGender, leadPlan, comboAge, comboCourse1, comboCourse2, comboDay1, comboDay2, comboBatch1, comboBatch2, comboGender, person1Age, person2Age, person1Course, person2Course, person1Day, person2Day, person1Batch, person2Batch, person1Gender, person2Gender].forEach(el => {
+    if(el) el.addEventListener('change', function(){ updateAllDependentOptions(); updateFormRuleNote(); });
+    if(el && (el.tagName === 'INPUT')) el.addEventListener('input', function(){ updateAllDependentOptions(); updateFormRuleNote(); });
   });
   setVisibleMode();
 
-  function setStatus(type, message){
-    if(!status) return;
-    status.className = 'enquiry-status show ' + type;
-    status.innerHTML = message;
-  }
-  function addLine(lines, label, value){
-    const clean = String(value || '').trim();
-    if(clean) lines.push(label + ': ' + clean);
-  }
-
-  function getValue(id){
-    const el = document.getElementById(id);
-    return el ? String(el.value || '').trim() : '';
-  }
-
+  function setStatus(type, message){ if(!status) return; status.className = 'enquiry-status show ' + type; status.innerHTML = message; }
+  function addLine(lines, label, value){ const clean = String(value || '').trim(); if(clean) lines.push(label + ': ' + clean); }
   function getCleanLeadData(rawData){
     const type = rawData.enquiryType || '';
-    const base = {
-      enquiryType: type,
-      name: rawData.name || '',
-      phone: rawData.phone || '',
-      email: rawData.email || '',
-      message: rawData.message || '',
-      pageUrl: rawData.pageUrl || window.location.href
-    };
-
-    if(type === 'Dance Class Registration'){
-      return Object.assign(base, {
-        studentAge: rawData.studentAge || '',
-        studentGender: rawData.studentGender || '',
-        course: rawData.course || '',
-        preferredDay: rawData.preferredDay || '',
-        preferredBatch: rawData.preferredBatch || '',
-        alternateBatch: rawData.alternateBatch || '',
-        pricingInterest: rawData.pricingOption || ''
-      });
-    }
-
-    if(type === '2-Course Combo'){
-      const day1 = rawData.comboDay1 || '';
-      const day2 = rawData.comboDay2 || '';
-      const batch1 = rawData.comboBatch1 || '';
-      const batch2 = rawData.comboBatch2 || '';
-      return Object.assign(base, {
-        studentAge: rawData.comboStudentAge || '',
-        studentGender: rawData.comboStudentGender || '',
-        course1: rawData.comboCourse1 || '',
-        course1Day: day1,
-        course1Batch: batch1,
-        course2: rawData.comboCourse2 || '',
-        course2Day: day2,
-        course2Batch: batch2,
-        course: [rawData.comboCourse1, rawData.comboCourse2].filter(Boolean).join(' + '),
-        preferredDay: [day1, day2].filter(Boolean).join(' / '),
-        preferredBatch: [batch1, batch2].filter(Boolean).join(' / '),
-        pricingInterest: '2-Course Combo - $100/month · $50 per course'
-      });
-    }
-
-    if(type === 'Family / Duo Joining'){
-      return Object.assign(base, {
-        person1Name: rawData.person1Name || '',
-        person1Age: rawData.person1Age || '',
-        person1Gender: rawData.person1Gender || '',
-        person2Name: rawData.person2Name || '',
-        person2Age: rawData.person2Age || '',
-        person2Gender: rawData.person2Gender || '',
-        relationship: rawData.relationship || '',
-        courseInterest: rawData.familyCourseInterest || '',
-        course: rawData.familyCourseInterest || '',
-        preferredDay: rawData.familyPreferredDay || '',
-        preferredBatch: 'Family/Duo enquiry - confirm exact batch with Master',
-        pricingInterest: 'Family / Duo - $100 total/month · $50 per person'
-      });
-    }
-
-    if(type === 'Studio Space Rental'){
-      return Object.assign(base, {
-        rentalPurpose: rawData.rentalPurpose || '',
-        expectedPeople: rawData.rentalPeople || '',
-        rentalDate: rawData.rentalDate || '',
-        rentalTime: rawData.rentalTime || '',
-        rentalDuration: rawData.rentalDuration || '',
-        course: rawData.rentalPurpose || 'Studio Space Rental',
-        preferredDay: rawData.rentalDate || '',
-        preferredBatch: [rawData.rentalTime, rawData.rentalDuration].filter(Boolean).join(' · '),
-        pricingInterest: 'Studio rental rates - off-peak/peak/bulk as applicable'
-      });
-    }
-
-    if(type === 'Private Event / Workshop'){
-      return Object.assign(base, {
-        eventType: rawData.eventType || '',
-        eventPeople: rawData.eventPeople || '',
-        eventDate: rawData.eventDate || '',
-        eventLocation: rawData.eventLocation || '',
-        course: rawData.eventType || 'Private Event / Workshop',
-        preferredDay: rawData.eventDate || '',
-        preferredBatch: rawData.eventLocation || '',
-        pricingInterest: 'Private event/workshop enquiry'
-      });
-    }
-
-    if(type === 'Not Sure — Need Guidance'){
-      return Object.assign(base, {
-        studentAge: rawData.guidanceAge || '',
-        interest: rawData.guidanceInterest || '',
-        course: rawData.guidanceInterest || 'Need guidance',
-        preferredDay: 'Not sure - need guidance',
-        preferredBatch: 'Not sure - need guidance',
-        pricingInterest: 'Need guidance'
-      });
-    }
-
+    const base = {enquiryType:type, name:rawData.name || '', phone:rawData.phone || '', email:rawData.email || '', message:rawData.message || '', pageUrl:rawData.pageUrl || window.location.href};
+    if(type === 'Dance Class Registration') return Object.assign(base, {studentAge:rawData.studentAge || '', studentGender:rawData.studentGender || '', course:rawData.course || '', preferredDay:rawData.preferredDay || '', preferredBatch:rawData.preferredBatch || '', batchFlexibility:rawData.batchFlexibility || '', pricingInterest:rawData.pricingOption || ''});
+    if(type === '2-Course Combo') return Object.assign(base, {studentAge:rawData.comboStudentAge || '', studentGender:rawData.comboStudentGender || '', course1:rawData.comboCourse1 || '', course1Day:rawData.comboDay1 || '', course1Batch:rawData.comboBatch1 || '', course2:rawData.comboCourse2 || '', course2Day:rawData.comboDay2 || '', course2Batch:rawData.comboBatch2 || '', course:[rawData.comboCourse1, rawData.comboCourse2].filter(Boolean).join(' + '), preferredDay:[rawData.comboDay1, rawData.comboDay2].filter(Boolean).join(' / '), preferredBatch:[rawData.comboBatch1, rawData.comboBatch2].filter(Boolean).join(' / '), pricingInterest:'2-Course Combo - $100/month · $50 per course'});
+    if(type === 'Family / Duo Joining') return Object.assign(base, {person1Name:rawData.person1Name || '', person1Age:rawData.person1Age || '', person1Gender:rawData.person1Gender || '', person1Course:rawData.person1Course || '', person1Day:rawData.person1Day || '', person1Batch:rawData.person1Batch || '', person2Name:rawData.person2Name || '', person2Age:rawData.person2Age || '', person2Gender:rawData.person2Gender || '', person2Course:rawData.person2Course || '', person2Day:rawData.person2Day || '', person2Batch:rawData.person2Batch || '', relationship:rawData.relationship || '', course:[rawData.person1Course, rawData.person2Course].filter(Boolean).join(' + '), preferredDay:[rawData.person1Day, rawData.person2Day].filter(Boolean).join(' / '), preferredBatch:[rawData.person1Batch, rawData.person2Batch].filter(Boolean).join(' / '), pricingInterest:'Family / Duo - $100 total/month · $50 per person'});
+    if(type === 'Studio Space Rental') return Object.assign(base, {rentalPurpose:rawData.rentalPurpose || '', expectedPeople:rawData.rentalPeople || '', rentalDate:rawData.rentalDate || '', rentalTime:rawData.rentalTime || '', rentalDuration:rawData.rentalDuration || '', course:rawData.rentalPurpose || 'Studio Space Rental', preferredDay:rawData.rentalDate || '', preferredBatch:[rawData.rentalTime, rawData.rentalDuration].filter(Boolean).join(' · '), pricingInterest:'Studio rental rates - off-peak/peak/bulk as applicable'});
+    if(type === 'Private Event / Workshop') return Object.assign(base, {eventType:rawData.eventType || '', eventPeople:rawData.eventPeople || '', eventDate:rawData.eventDate || '', eventLocation:rawData.eventLocation || '', course:rawData.eventType || 'Private Event / Workshop', preferredDay:rawData.eventDate || '', preferredBatch:rawData.eventLocation || '', pricingInterest:'Private event/workshop enquiry'});
+    if(type === 'Not Sure — Need Guidance') return Object.assign(base, {studentAge:rawData.guidanceAge || '', interest:rawData.guidanceInterest || '', course:rawData.guidanceInterest || 'Need guidance', preferredDay:'Not sure - need guidance', preferredBatch:'Not sure - need guidance', pricingInterest:'Need guidance'});
     return base;
   }
-
   function validateCleanData(data){
     const missing = [];
-    if(!data.name) missing.push('Name');
-    if(!data.phone) missing.push('Phone');
-    if(!data.enquiryType) missing.push('Enquiry type');
-
+    if(!data.name) missing.push('Name'); if(!data.phone) missing.push('Phone'); if(!data.enquiryType) missing.push('Enquiry type');
     if(data.enquiryType === 'Dance Class Registration'){
-      if(!data.studentAge) missing.push('Student age');
-      if(!data.studentGender) missing.push('Student gender');
-      if(!data.course) missing.push('Course');
-      if(!data.preferredDay) missing.push('Preferred day');
-      if(!data.preferredBatch) missing.push('Preferred batch');
-      if(!data.pricingInterest) missing.push('Pricing interest');
-      if(data.alternateBatch && data.preferredBatch && data.alternateBatch === data.preferredBatch && !/not sure/i.test(data.alternateBatch)) missing.push('Alternate batch should be different from preferred batch');
+      if(!data.studentAge) missing.push('Student age'); if(!data.studentGender) missing.push('Student gender'); if(!data.course) missing.push('Course'); if(!data.preferredDay) missing.push('Preferred day'); if(!data.preferredBatch) missing.push('Preferred batch'); if(!data.batchFlexibility) missing.push('Batch flexibility'); if(!data.pricingInterest) missing.push('Pricing interest');
       if(data.course && data.preferredDay && !courseMatchesDay(data.course, data.preferredDay)) missing.push('Preferred day must match selected course');
-      if((/Desi Diva/i.test(data.course) || /Desi Diva/i.test(data.preferredDay)) && data.studentGender !== 'Female') missing.push('Desi Diva is ladies-only; student gender must be Female');
+      if((hasDesiDiva(data.course) || hasDesiDiva(data.preferredDay)) && data.studentGender !== 'Female') missing.push('Desi Diva is ladies-only; student gender must be Female');
     }
     if(data.enquiryType === '2-Course Combo'){
-      if(!data.studentAge) missing.push('Student age');
-      if(!data.studentGender) missing.push('Student gender');
-      if(!data.course1) missing.push('Course 1');
-      if(!data.course1Day) missing.push('Course 1 day');
-      if(!data.course1Batch) missing.push('Course 1 batch');
-      if(!data.course2) missing.push('Course 2');
-      if(!data.course2Day) missing.push('Course 2 day');
-      if(!data.course2Batch) missing.push('Course 2 batch');
+      if(!data.studentAge) missing.push('Student age'); if(!data.studentGender) missing.push('Student gender'); if(!data.course1) missing.push('Course 1'); if(!data.course1Day) missing.push('Course 1 day'); if(!data.course1Batch) missing.push('Course 1 batch'); if(!data.course2) missing.push('Course 2'); if(!data.course2Day) missing.push('Course 2 day'); if(!data.course2Batch) missing.push('Course 2 batch');
       if(data.course1 && data.course2 && data.course1 === data.course2 && !/not sure/i.test(data.course1)) missing.push('Course 2 must be different from Course 1');
       if(data.course1 && data.course1Day && !courseMatchesDay(data.course1, data.course1Day)) missing.push('Course 1 day must match Course 1');
       if(data.course2 && data.course2Day && !courseMatchesDay(data.course2, data.course2Day)) missing.push('Course 2 day must match Course 2');
       if(data.course1Day && data.course2Day && data.course1Batch && data.course2Batch && data.course1Day === data.course2Day && data.course1Batch === data.course2Batch && !/not sure/i.test(data.course1Batch)) missing.push('For same-day combo, choose different batches');
-      if((/Desi Diva/i.test(data.course1) || /Desi Diva/i.test(data.course2)) && data.studentGender !== 'Female') missing.push('Desi Diva is ladies-only; student gender must be Female');
+      if((hasDesiDiva(data.course1) || hasDesiDiva(data.course2)) && data.studentGender !== 'Female') missing.push('Desi Diva is ladies-only; student gender must be Female');
     }
     if(data.enquiryType === 'Family / Duo Joining'){
-      if(!data.person1Name) missing.push('Person 1 name');
-      if(!data.person1Age) missing.push('Person 1 age');
-      if(!data.person1Gender) missing.push('Person 1 gender');
-      if(!data.person2Name) missing.push('Person 2 name');
-      if(!data.person2Age) missing.push('Person 2 age');
-      if(!data.person2Gender) missing.push('Person 2 gender');
-      if(!data.relationship) missing.push('Relationship');
-      if(!data.courseInterest) missing.push('Course interest');
-      if(!data.preferredDay) missing.push('Preferred day');
-      if(data.courseInterest && data.preferredDay && /Bollywood|Freestyle|Desi Diva/i.test(data.courseInterest) && !courseMatchesDay(data.courseInterest, data.preferredDay)) missing.push('Preferred day must match selected course interest');
-      if((/Desi Diva/i.test(data.courseInterest) || /Desi Diva/i.test(data.preferredDay)) && (data.person1Gender !== 'Female' || data.person2Gender !== 'Female')) missing.push('Desi Diva is ladies-only; both participants must be Female');
+      ['person1Name','person1Age','person1Gender','person1Course','person1Day','person1Batch','person2Name','person2Age','person2Gender','person2Course','person2Day','person2Batch','relationship'].forEach(k => { if(!data[k]) missing.push(k.replace(/([A-Z])/g,' $1').replace(/^./, c => c.toUpperCase())); });
+      if(data.person1Course && data.person1Day && !courseMatchesDay(data.person1Course, data.person1Day)) missing.push('Person 1 day must match Person 1 course');
+      if(data.person2Course && data.person2Day && !courseMatchesDay(data.person2Course, data.person2Day)) missing.push('Person 2 day must match Person 2 course');
+      if((hasDesiDiva(data.person1Course) || hasDesiDiva(data.person1Day)) && data.person1Gender !== 'Female') missing.push('Person 1 Desi Diva requires Female');
+      if((hasDesiDiva(data.person2Course) || hasDesiDiva(data.person2Day)) && data.person2Gender !== 'Female') missing.push('Person 2 Desi Diva requires Female');
     }
-    if(data.enquiryType === 'Studio Space Rental'){
-      if(!data.rentalPurpose) missing.push('Rental purpose');
-      if(!data.expectedPeople) missing.push('Expected people');
-      if(!data.rentalDate) missing.push('Preferred date');
-      if(!data.rentalTime) missing.push('Preferred time');
-      if(!data.rentalDuration) missing.push('Duration');
-    }
-    if(data.enquiryType === 'Private Event / Workshop'){
-      if(!data.eventType) missing.push('Event type');
-      if(!data.eventPeople) missing.push('Number of people');
-      if(!data.eventDate) missing.push('Event date');
-      if(!data.eventLocation) missing.push('Location');
-    }
-    if(data.enquiryType === 'Not Sure — Need Guidance'){
-      if(!data.studentAge) missing.push('Student age / group');
-      if(!data.interest) missing.push('Interest');
-    }
+    if(data.enquiryType === 'Studio Space Rental'){ if(!data.rentalPurpose) missing.push('Rental purpose'); if(!data.expectedPeople) missing.push('Expected people'); if(!data.rentalDate) missing.push('Preferred date'); if(!data.rentalTime) missing.push('Preferred time'); if(!data.rentalDuration) missing.push('Duration'); }
+    if(data.enquiryType === 'Private Event / Workshop'){ if(!data.eventType) missing.push('Event type'); if(!data.eventPeople) missing.push('Number of people'); if(!data.eventDate) missing.push('Event date'); if(!data.eventLocation) missing.push('Location'); }
+    if(data.enquiryType === 'Not Sure — Need Guidance'){ if(!data.studentAge) missing.push('Student age / group'); if(!data.interest) missing.push('Interest'); }
     return missing;
   }
-
   function buildWhatsAppLink(data){
     const lines = ['Hi Chaitanya Master, I want to enquire/register from The Dansvilla Studio website.', ''];
-    addLine(lines, 'Enquiry Type', data.enquiryType);
-    addLine(lines, 'Name', data.name);
-    addLine(lines, 'Phone', data.phone);
-    if(data.email) addLine(lines, 'Email', data.email);
-
+    addLine(lines, 'Enquiry Type', data.enquiryType); addLine(lines, 'Name', data.name); addLine(lines, 'Phone', data.phone); if(data.email) addLine(lines, 'Email', data.email);
     if(data.enquiryType === 'Dance Class Registration'){
-      addLine(lines, 'Student Age', data.studentAge);
-      addLine(lines, 'Student Gender', data.studentGender);
-      addLine(lines, 'Course', data.course);
-      addLine(lines, 'Preferred Day', data.preferredDay);
-      addLine(lines, 'Preferred Batch', data.preferredBatch);
-      addLine(lines, 'Alternate Batch', data.alternateBatch);
-      addLine(lines, 'Pricing Interest', data.pricingInterest);
+      addLine(lines, 'Student Age', data.studentAge); addLine(lines, 'Student Gender', data.studentGender); addLine(lines, 'Course', data.course); addLine(lines, 'Preferred Day', data.preferredDay); addLine(lines, 'Preferred Batch', data.preferredBatch); addLine(lines, 'Batch Flexibility', data.batchFlexibility); addLine(lines, 'Pricing Interest', data.pricingInterest);
     } else if(data.enquiryType === '2-Course Combo'){
-      addLine(lines, 'Student Age', data.studentAge);
-      addLine(lines, 'Student Gender', data.studentGender);
-      addLine(lines, 'Course 1', data.course1);
-      addLine(lines, 'Course 1 Day', data.course1Day);
-      addLine(lines, 'Course 1 Batch', data.course1Batch);
-      addLine(lines, 'Course 2', data.course2);
-      addLine(lines, 'Course 2 Day', data.course2Day);
-      addLine(lines, 'Course 2 Batch', data.course2Batch);
-      addLine(lines, 'Pricing Interest', data.pricingInterest);
+      addLine(lines, 'Student Age', data.studentAge); addLine(lines, 'Student Gender', data.studentGender); addLine(lines, 'Course 1', data.course1); addLine(lines, 'Course 1 Day', data.course1Day); addLine(lines, 'Course 1 Batch', data.course1Batch); addLine(lines, 'Course 2', data.course2); addLine(lines, 'Course 2 Day', data.course2Day); addLine(lines, 'Course 2 Batch', data.course2Batch); addLine(lines, 'Pricing Interest', data.pricingInterest);
     } else if(data.enquiryType === 'Family / Duo Joining'){
-      addLine(lines, 'Person 1', [data.person1Name, data.person1Age, data.person1Gender].filter(Boolean).join(' - '));
-      addLine(lines, 'Person 2', [data.person2Name, data.person2Age, data.person2Gender].filter(Boolean).join(' - '));
-      addLine(lines, 'Relationship', data.relationship);
-      addLine(lines, 'Course Interest', data.courseInterest);
-      addLine(lines, 'Preferred Day', data.preferredDay);
-      addLine(lines, 'Pricing Interest', data.pricingInterest);
+      addLine(lines, 'Person 1', [data.person1Name, data.person1Age, data.person1Gender].filter(Boolean).join(' - ')); addLine(lines, 'Person 1 Course/Day/Batch', [data.person1Course, data.person1Day, data.person1Batch].filter(Boolean).join(' | ')); addLine(lines, 'Person 2', [data.person2Name, data.person2Age, data.person2Gender].filter(Boolean).join(' - ')); addLine(lines, 'Person 2 Course/Day/Batch', [data.person2Course, data.person2Day, data.person2Batch].filter(Boolean).join(' | ')); addLine(lines, 'Relationship', data.relationship); addLine(lines, 'Pricing Interest', data.pricingInterest);
     } else if(data.enquiryType === 'Studio Space Rental'){
-      addLine(lines, 'Rental Purpose', data.rentalPurpose);
-      addLine(lines, 'Expected People', data.expectedPeople);
-      addLine(lines, 'Preferred Date', data.rentalDate);
-      addLine(lines, 'Preferred Time', data.rentalTime);
-      addLine(lines, 'Duration', data.rentalDuration);
-      addLine(lines, 'Rate Interest', data.pricingInterest);
+      addLine(lines, 'Rental Purpose', data.rentalPurpose); addLine(lines, 'Expected People', data.expectedPeople); addLine(lines, 'Preferred Date', data.rentalDate); addLine(lines, 'Preferred Time', data.rentalTime); addLine(lines, 'Duration', data.rentalDuration); addLine(lines, 'Rate Interest', data.pricingInterest);
     } else if(data.enquiryType === 'Private Event / Workshop'){
-      addLine(lines, 'Event Type', data.eventType);
-      addLine(lines, 'Number of People', data.eventPeople);
-      addLine(lines, 'Event Date', data.eventDate);
-      addLine(lines, 'Location', data.eventLocation);
+      addLine(lines, 'Event Type', data.eventType); addLine(lines, 'Number of People', data.eventPeople); addLine(lines, 'Event Date', data.eventDate); addLine(lines, 'Location', data.eventLocation);
     } else if(data.enquiryType === 'Not Sure — Need Guidance'){
-      addLine(lines, 'Student Age / Group', data.studentAge);
-      addLine(lines, 'Interest', data.interest);
+      addLine(lines, 'Student Age / Group', data.studentAge); addLine(lines, 'Interest', data.interest);
     }
-
     if(data.message) addLine(lines, 'Message', data.message);
     return 'https://wa.me/' + masterPhone + '?text=' + encodeURIComponent(lines.join('\n'));
   }
-
   form.addEventListener('submit', async function(e){
     e.preventDefault();
     const rawData = Object.fromEntries(new FormData(form).entries());
     if(rawData.website){ form.reset(); return; }
     const data = getCleanLeadData(rawData);
     const missing = validateCleanData(data);
-    if(missing.length){
-      setStatus('error', 'Please complete: ' + missing.join(', ') + '. Email and message are optional.');
-      return;
-    }
-
+    if(missing.length){ setStatus('error', 'Please complete: ' + missing.join(', ') + '. Email and message are optional.'); return; }
     const waLink = buildWhatsAppLink(data);
     const submitBtn = form.querySelector('button[type="submit"]');
-
-    if(fallback){
-      fallback.href = waLink;
-      fallback.style.display = 'none';
-      fallback.textContent = 'Open WhatsApp Again';
-    }
-
-    if(submitBtn){
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Submitting...';
-    }
+    if(fallback){ fallback.href = waLink; fallback.style.display = 'none'; fallback.textContent = 'Open WhatsApp Again'; }
+    if(submitBtn){ submitBtn.disabled = true; submitBtn.textContent = 'Submitting...'; }
     setStatus('loading', 'Submitting your enquiry securely. WhatsApp will open next...');
-
     try{
-      const response = await fetch('/api/send-enquiry', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-
-      let result = {};
-      try { result = await response.json(); } catch(err) {}
-
-      if(!response.ok || result.success === false){
-        throw new Error(result.error || 'Unable to send enquiry right now.');
-      }
-
+      const response = await fetch('/api/send-enquiry', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)});
+      let result = {}; try { result = await response.json(); } catch(err) {}
+      if(!response.ok || result.success === false) throw new Error(result.error || 'Unable to send enquiry right now.');
       setStatus('success', '✅ Your form has been submitted. WhatsApp is opening now — please press Send there to notify Chaitanya Master instantly.');
-      let opened = false;
-      try {
-        const waWindow = window.open(waLink, '_blank', 'noopener');
-        opened = !!waWindow;
-      } catch(openErr) {}
-      if(fallback){
-        fallback.href = waLink;
-        fallback.style.display = 'inline-flex';
-        fallback.textContent = opened ? 'Open WhatsApp Again' : 'Open WhatsApp to Complete';
-      }
-      form.reset();
-      if(pageUrl) pageUrl.value = window.location.href;
-      setVisibleMode();
+      let opened = false; try { const waWindow = window.open(waLink, '_blank', 'noopener'); opened = !!waWindow; } catch(openErr) {}
+      if(fallback){ fallback.href = waLink; fallback.style.display = 'inline-flex'; fallback.textContent = opened ? 'Open WhatsApp Again' : 'Open WhatsApp to Complete'; }
+      form.reset(); if(pageUrl) pageUrl.value = window.location.href; setVisibleMode();
     } catch(error){
       setStatus('error', 'Email/Google Sheet submission did not complete. Please tap WhatsApp below to send the same details instantly. Error: ' + (error.message || 'Unknown error'));
-      if(fallback){
-        fallback.href = waLink;
-        fallback.style.display = 'inline-flex';
-        fallback.textContent = 'Send Details on WhatsApp';
-      }
-    } finally {
-      if(submitBtn){
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Submit & Continue to WhatsApp';
-      }
-    }
+      if(fallback){ fallback.href = waLink; fallback.style.display = 'inline-flex'; fallback.textContent = 'Send Details on WhatsApp'; }
+    } finally { if(submitBtn){ submitBtn.disabled = false; submitBtn.textContent = 'Submit & Continue to WhatsApp'; } }
   });
 })();
 </script>
