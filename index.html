@@ -2,6 +2,7 @@
 <!-- DANSVILLA UPDATE V27: V26 stable base + Studio Space Rentals section + rental WhatsApp CTA -->
 <!-- DANSVILLA UPDATE V37: submit continues to WhatsApp + studio Gmail + Instagram chooser popup -->
 <!-- DANSVILLA UPDATE V26: class detail focus lines + two-course combo chooser + simplified pricing help CTA -->
+<!-- DANSVILLA UPDATE V42: Google Ads base tag + Contact conversion event on successful website enquiry submission -->
 <!-- DANSVILLA UPDATE V39: keep $15 single class + add optional alternate batch for dance registrations; V38 base -->
 <!-- DANSVILLA UPDATE V38: professional form dependency audit + course/day/batch lock + SEO ready -->
 <!-- DANSVILLA UPDATE V24: V23 safe base + Sangeeth image changed to IMG_3201 + studio photos album link + preview.jpg support -->
@@ -16,6 +17,18 @@
   gtag('js', new Date());
 
   gtag('config', 'AW-17123814124');
+
+  // Google Ads Contact conversion helper.
+  // This fires only after the Dansvilla enquiry form is successfully submitted.
+  window.dansvillaTrackContactConversion = function(){
+    try {
+      if (typeof gtag === 'function') {
+        gtag('event', 'conversion', {'send_to': 'AW-17123814124/jd0sCM-c8dAaEOzVouU_'});
+      }
+    } catch (err) {
+      // Tracking should never block the form or WhatsApp flow.
+    }
+  };
 </script>
 
 <meta charset="UTF-8">
@@ -4842,6 +4855,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const response = await fetch('/api/send-enquiry', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)});
       let result = {}; try { result = await response.json(); } catch(err) {}
       if(!response.ok || result.success === false) throw new Error(result.error || 'Unable to send enquiry right now.');
+      if (typeof window.dansvillaTrackContactConversion === 'function') { window.dansvillaTrackContactConversion(); }
       setStatus('success', '✅ Your form has been submitted. WhatsApp is opening now — please press Send there to notify Chaitanya Master instantly.');
       let opened = false; try { const waWindow = window.open(waLink, '_blank', 'noopener'); opened = !!waWindow; } catch(openErr) {}
       if(fallback){ fallback.href = waLink; fallback.style.display = 'inline-flex'; fallback.textContent = opened ? 'Open WhatsApp Again' : 'Open WhatsApp to Complete'; }
