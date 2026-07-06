@@ -3637,15 +3637,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     <option value="" selected disabled>Select preferred day first</option>
                   </select>
                 </div>
-                <div class="enquiry-field">
-                  <label for="leadFlexibility">Batch Flexibility *</label>
-                  <select id="leadFlexibility" name="batchFlexibility">
-                    <option value="" selected disabled>Select flexibility</option>
-                    <option value="Preferred batch only">Preferred batch only</option>
-                    <option value="Flexible with another suitable batch">Flexible with another suitable batch</option>
-                    <option value="Need Master’s suggestion">Need Master’s suggestion</option>
-                  </select>
-                </div>
                 <div class="enquiry-field full">
                   <label for="leadPlan">Pricing Interest *</label>
                   <select id="leadPlan" name="pricingOption">
@@ -4512,7 +4503,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const leadAge = document.getElementById('leadAge');
   const leadDay = document.getElementById('leadDay');
   const leadBatch = document.getElementById('leadBatch');
-  const leadFlexibility = document.getElementById('leadFlexibility');
   const leadCourse = document.getElementById('leadCourse');
   const leadGender = document.getElementById('leadGender');
   const leadPlan = document.getElementById('leadPlan');
@@ -4553,7 +4543,7 @@ document.addEventListener('DOMContentLoaded', function () {
     'Not Sure — Need Guidance':'guidance'
   };
   const modeRequiredFields = {
-    dance:['leadAge','leadGender','leadCourse','leadDay','leadBatch','leadFlexibility','leadPlan'],
+    dance:['leadAge','leadGender','leadCourse','leadDay','leadBatch','leadPlan'],
     combo:['comboAge','comboGender','comboCourse1','comboDay1','comboBatch1','comboCourse2','comboDay2','comboBatch2'],
     family:['person1Name','person1Age','person1Gender','person1Course','person1Day','person1Batch','person2Name','person2Age','person2Gender','person2Course','person2Day','person2Batch','relationship'],
     rental:['rentalPurpose','rentalPeople','rentalDate','rentalTime','rentalDuration'],
@@ -4773,7 +4763,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }, true);
 
   leadType.addEventListener('change', setVisibleMode);
-  [leadAge, leadDay, leadBatch, leadFlexibility, leadCourse, leadGender, leadPlan, comboAge, comboCourse1, comboCourse2, comboDay1, comboDay2, comboBatch1, comboBatch2, comboGender, person1Age, person2Age, person1Course, person2Course, person1Day, person2Day, person1Batch, person2Batch, person1Gender, person2Gender].forEach(el => {
+  [leadAge, leadDay, leadBatch, leadCourse, leadGender, leadPlan, comboAge, comboCourse1, comboCourse2, comboDay1, comboDay2, comboBatch1, comboBatch2, comboGender, person1Age, person2Age, person1Course, person2Course, person1Day, person2Day, person1Batch, person2Batch, person1Gender, person2Gender].forEach(el => {
     if(el) el.addEventListener('change', function(){ updateAllDependentOptions(); updateFormRuleNote(); });
     if(el && (el.tagName === 'INPUT')) el.addEventListener('input', function(){ updateAllDependentOptions(); updateFormRuleNote(); });
   });
@@ -4784,7 +4774,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function getCleanLeadData(rawData){
     const type = rawData.enquiryType || '';
     const base = {enquiryType:type, name:rawData.name || '', phone:rawData.phone || '', email:rawData.email || '', message:rawData.message || '', pageUrl:rawData.pageUrl || window.location.href};
-    if(type === 'Dance Class Registration') return Object.assign(base, {studentAge:rawData.studentAge || '', studentGender:rawData.studentGender || '', course:rawData.course || '', preferredDay:rawData.preferredDay || '', preferredBatch:rawData.preferredBatch || '', batchFlexibility:rawData.batchFlexibility || '', pricingInterest:rawData.pricingOption || ''});
+    if(type === 'Dance Class Registration') return Object.assign(base, {studentAge:rawData.studentAge || '', studentGender:rawData.studentGender || '', course:rawData.course || '', preferredDay:rawData.preferredDay || '', preferredBatch:rawData.preferredBatch || '', pricingInterest:rawData.pricingOption || ''});
     if(type === '2-Course Combo') return Object.assign(base, {studentAge:rawData.comboStudentAge || '', studentGender:rawData.comboStudentGender || '', course1:rawData.comboCourse1 || '', course1Day:rawData.comboDay1 || '', course1Batch:rawData.comboBatch1 || '', course2:rawData.comboCourse2 || '', course2Day:rawData.comboDay2 || '', course2Batch:rawData.comboBatch2 || '', course:[rawData.comboCourse1, rawData.comboCourse2].filter(Boolean).join(' + '), preferredDay:[rawData.comboDay1, rawData.comboDay2].filter(Boolean).join(' / '), preferredBatch:[rawData.comboBatch1, rawData.comboBatch2].filter(Boolean).join(' / '), pricingInterest:'2-Course Combo - $100/month · $50 per course'});
     if(type === 'Family / Duo Joining') return Object.assign(base, {person1Name:rawData.person1Name || '', person1Age:rawData.person1Age || '', person1Gender:rawData.person1Gender || '', person1Course:rawData.person1Course || '', person1Day:rawData.person1Day || '', person1Batch:rawData.person1Batch || '', person2Name:rawData.person2Name || '', person2Age:rawData.person2Age || '', person2Gender:rawData.person2Gender || '', person2Course:rawData.person2Course || '', person2Day:rawData.person2Day || '', person2Batch:rawData.person2Batch || '', relationship:rawData.relationship || '', course:[rawData.person1Course, rawData.person2Course].filter(Boolean).join(' + '), preferredDay:[rawData.person1Day, rawData.person2Day].filter(Boolean).join(' / '), preferredBatch:[rawData.person1Batch, rawData.person2Batch].filter(Boolean).join(' / '), pricingInterest:'Family / Duo - $100 total/month · $50 per person'});
     if(type === 'Studio Space Rental') return Object.assign(base, {rentalPurpose:rawData.rentalPurpose || '', expectedPeople:rawData.rentalPeople || '', rentalDate:rawData.rentalDate || '', rentalTime:rawData.rentalTime || '', rentalDuration:rawData.rentalDuration || '', course:rawData.rentalPurpose || 'Studio Space Rental', preferredDay:rawData.rentalDate || '', preferredBatch:[rawData.rentalTime, rawData.rentalDuration].filter(Boolean).join(' · '), pricingInterest:'Studio rental rates - off-peak/peak/bulk as applicable'});
@@ -4796,7 +4786,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const missing = [];
     if(!data.name) missing.push('Name'); if(!data.phone) missing.push('Phone'); if(!data.enquiryType) missing.push('Enquiry type');
     if(data.enquiryType === 'Dance Class Registration'){
-      if(!data.studentAge) missing.push('Student age'); if(!data.studentGender) missing.push('Student gender'); if(!data.course) missing.push('Course'); if(!data.preferredDay) missing.push('Preferred day'); if(!data.preferredBatch) missing.push('Preferred batch'); if(!data.batchFlexibility) missing.push('Batch flexibility'); if(!data.pricingInterest) missing.push('Pricing interest');
+      if(!data.studentAge) missing.push('Student age'); if(!data.studentGender) missing.push('Student gender'); if(!data.course) missing.push('Course'); if(!data.preferredDay) missing.push('Preferred day'); if(!data.preferredBatch) missing.push('Preferred batch'); if(!data.pricingInterest) missing.push('Pricing interest');
       if(data.course && data.preferredDay && !courseMatchesDay(data.course, data.preferredDay)) missing.push('Preferred day must match selected course');
       if((hasDesiDiva(data.course) || hasDesiDiva(data.preferredDay)) && data.studentGender !== 'Female') missing.push('Desi Diva is ladies-only; student gender must be Female');
     }
@@ -4824,7 +4814,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const lines = ['Hi Chaitanya Master, I want to enquire/register from The Dansvilla Studio website.', ''];
     addLine(lines, 'Enquiry Type', data.enquiryType); addLine(lines, 'Name', data.name); addLine(lines, 'Phone', data.phone); if(data.email) addLine(lines, 'Email', data.email);
     if(data.enquiryType === 'Dance Class Registration'){
-      addLine(lines, 'Student Age', data.studentAge); addLine(lines, 'Student Gender', data.studentGender); addLine(lines, 'Course', data.course); addLine(lines, 'Preferred Day', data.preferredDay); addLine(lines, 'Preferred Batch', data.preferredBatch); addLine(lines, 'Batch Flexibility', data.batchFlexibility); addLine(lines, 'Pricing Interest', data.pricingInterest);
+      addLine(lines, 'Student Age', data.studentAge); addLine(lines, 'Student Gender', data.studentGender); addLine(lines, 'Course', data.course); addLine(lines, 'Preferred Day', data.preferredDay); addLine(lines, 'Preferred Batch', data.preferredBatch); addLine(lines, 'Pricing Interest', data.pricingInterest);
     } else if(data.enquiryType === '2-Course Combo'){
       addLine(lines, 'Student Age', data.studentAge); addLine(lines, 'Student Gender', data.studentGender); addLine(lines, 'Course 1', data.course1); addLine(lines, 'Course 1 Day', data.course1Day); addLine(lines, 'Course 1 Batch', data.course1Batch); addLine(lines, 'Course 2', data.course2); addLine(lines, 'Course 2 Day', data.course2Day); addLine(lines, 'Course 2 Batch', data.course2Batch); addLine(lines, 'Pricing Interest', data.pricingInterest);
     } else if(data.enquiryType === 'Family / Duo Joining'){
