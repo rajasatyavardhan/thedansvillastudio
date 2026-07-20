@@ -34,9 +34,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Dansvilla Studio | Bollywood & Freestyle Dance Classes in Barrhaven, Nepean</title>
-<meta name="description" content="Join The Dansvilla Studio in Barrhaven/Nepean for Bollywood Burst, Freestyle Freak, Desi Diva, kids, teens and adults dance classes, studio rentals, workshops and private event choreography in Ottawa.">
+<meta name="description" content="Join The Dansvilla Studio in Barrhaven/Nepean for Bollywood Burst, Freestyle Freak, Desi Diva, Mom & Me, kids, teens and adults dance classes, studio rentals, workshops and private event choreography in Ottawa.">
 <meta property="og:title" content="The Dansvilla Studio | Dance Classes in Barrhaven, Nepean">
-<meta property="og:description" content="Bollywood Burst, Freestyle Freak, Desi Diva, kids, teens and adults dance classes, studio rentals and private event choreography in Ottawa.">
+<meta property="og:description" content="Bollywood Burst, Freestyle Freak, Desi Diva, Mom & Me, kids, teens and adults dance classes, studio rentals and private event choreography in Ottawa.">
 <meta property="og:image" content="https://www.thedansvillastudio.com/preview.jpg">
 <meta property="og:url" content="https://www.thedansvillastudio.com/">
 <meta property="og:type" content="website">
@@ -2743,6 +2743,19 @@ nav{min-height:82px !important;}
 
 
 
+
+/* ── DANSVILLA UPDATE V45: Mom & Me Batch addition ── */
+.schedule-card.mom-me-card{
+  border-color:rgba(255,45,142,.32) !important;
+  box-shadow:0 0 30px rgba(255,45,142,.14),0 16px 42px rgba(0,0,0,.24);
+}
+.schedule-card.mom-me-card .schedule-header.mom-me-header{
+  background:linear-gradient(135deg,#7C2D12,#e91e8c,#ffd166) !important;
+}
+.schedule-card.mom-me-card .batch-row{border-left-color:#ffd166 !important;background:rgba(255,255,255,.065) !important;}
+.mom-me-note{margin-top:10px;font-size:.72rem;line-height:1.55;color:rgba(255,255,255,.72);padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.045);border:1px dashed rgba(255,209,102,.35);}
+.form-price-note.mom-me{border-color:rgba(255,209,102,.38);background:linear-gradient(135deg,rgba(255,209,102,.13),rgba(255,45,142,.08));}
+
 /* ── DANSVILLA UPDATE V28: split Thursday cards + premium pricing hierarchy ── */
 .schedule-card.freestyle-freak-card .schedule-header.freestyle{
   background:linear-gradient(135deg,#1a2980,#7c3aed,#ff2d8e) !important;
@@ -3387,6 +3400,27 @@ document.addEventListener('DOMContentLoaded', function () {
         </div>
       </div>
 
+
+      <!-- Thursday Mom & Me -->
+      <div class="schedule-card thursday-special mom-me-card">
+        <div class="schedule-header mom-me-header">
+          <div class="schedule-icon">👩‍👧</div>
+          <div>
+            <div class="schedule-day">THURSDAY</div>
+            <div class="schedule-style">MOM &amp; ME BATCH</div>
+          </div>
+        </div>
+        <div class="schedule-batches">
+          <div class="desi-diva-badge">🌞 Summer Special</div>
+          <div class="batch-row">
+            <div class="batch-time">6–7 PM</div>
+            <div class="batch-info"><div class="batch-name">Mom &amp; Me Dance Classes</div><div class="batch-age">Mother &amp; child only · Child ages 2–6 yrs</div></div>
+            <button type="button" class="wa-batch" data-enquiry-preset="mom-me">Register</button>
+          </div>
+          <div class="mom-me-note">Every Thursday · $50 per head for 4 classes · Bond with your child, dance together and create beautiful memories.</div>
+        </div>
+      </div>
+
       <!-- Saturday Weekend -->
       <div class="schedule-card">
         <div class="schedule-header weekend">
@@ -3463,6 +3497,20 @@ document.addEventListener('DOMContentLoaded', function () {
           <li>Easy monthly option</li>
         </ul>
         <button type="button" class="btn-outline" data-enquiry-preset="monthly" style="width:100%;justify-content:center;">Choose Monthly</button>
+      </div>
+
+      <div class="price-card mom-me-offer">
+        <div class="featured-tag">🌞 SUMMER SPECIAL</div>
+        <div class="price-name">Mom &amp; Me</div>
+        <div class="price-amount">$50</div>
+        <div class="price-period">per head · 4 classes</div>
+        <ul class="price-features">
+          <li>Every Thursday 6–7 PM</li>
+          <li>Strictly mother and child</li>
+          <li>Child age: 2–6 years</li>
+          <li>Bond, dance and create memories</li>
+        </ul>
+        <button type="button" class="btn-primary" data-enquiry-preset="mom-me" style="width:100%;justify-content:center;">Register Mom &amp; Me</button>
       </div>
 
       <div class="price-card combo-offer">
@@ -3544,15 +3592,16 @@ document.addEventListener('DOMContentLoaded', function () {
       <div class="enquiry-copy">
         <div class="enquiry-mini-tag">✨ Smart Enquiry Form</div>
         <h3>One form. Right details. Faster reply.</h3>
-        <p>The form changes based on what you choose: dance class, 2-course combo, family/duo, studio rental, private event, or guidance.</p>
+        <p>The form changes based on what you choose: dance class, Mom & Me batch, 2-course combo, family/duo, studio rental, private event, or guidance.</p>
         <div class="smart-form-intro">
           <span class="smart-form-pill">🎬 Classes</span>
+          <span class="smart-form-pill">👩‍👧 Mom & Me</span>
           <span class="smart-form-pill">🔥 Combos</span>
           <span class="smart-form-pill">👯 Family / Duo</span>
           <span class="smart-form-pill">🏢 Rentals</span>
         </div>
         <div class="enquiry-points">
-          <div class="enquiry-point"><span>🎬</span><div><strong>Class registration</strong><small>Bollywood Burst, Freestyle Freak and Desi Diva batch enquiries.</small></div></div>
+          <div class="enquiry-point"><span>🎬</span><div><strong>Class registration</strong><small>Bollywood Burst, Freestyle Freak, Desi Diva and Mom & Me batch enquiries.</small></div></div>
           <div class="enquiry-point"><span>🏆</span><div><strong>Plan guidance</strong><small>Monthly, 3-month best value, 2-course combo and family/duo options.</small></div></div>
           <div class="enquiry-point"><span>🏢</span><div><strong>Rentals & events</strong><small>Studio space rental, workshops, sangeeths and private choreography.</small></div></div>
         </div>
@@ -3570,6 +3619,7 @@ document.addEventListener('DOMContentLoaded', function () {
               <select id="leadType" name="enquiryType" required>
                 <option value="" selected disabled>Select enquiry type</option>
                 <option value="Dance Class Registration">Dance Class Registration</option>
+                <option value="Mom & Me Batch">Mom &amp; Me Batch</option>
                 <option value="2-Course Combo">2-Course Combo</option>
                 <option value="Family / Duo Joining">Family / Duo Joining</option>
                 <option value="Studio Space Rental">Studio Space Rental</option>
@@ -3646,6 +3696,42 @@ document.addEventListener('DOMContentLoaded', function () {
                     <option value="$60 monthly - single course">$60 monthly - single course</option>
                     <option value="$150 for 3 months - Best Value">$150 for 3 months - Best Value</option>
                   </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-mode-box" data-form-mode="mom">
+              <div class="form-mode-title">👩‍👧 Mom &amp; Me Batch</div>
+              <div class="form-mode-desc">Strictly for mother and child. Use the Name field above for the mother’s name.</div>
+              <div class="form-mode-grid">
+                <div class="form-price-note mom-me"><strong>Mom &amp; Me Batch</strong><br>Every Thursday 6–7 PM · Child age 2–6 yrs · Monthly fee: $50 per head for 4 classes.</div>
+                <div class="enquiry-field">
+                  <label for="momChildName">Child Name *</label>
+                  <input id="momChildName" name="momChildName" type="text" placeholder="Child name">
+                </div>
+                <div class="enquiry-field">
+                  <label for="momChildAge">Child Age *</label>
+                  <input id="momChildAge" name="momChildAge" type="text" placeholder="Example: 3 yrs">
+                </div>
+                <div class="enquiry-field">
+                  <label for="momChildGender">Child Gender *</label>
+                  <select id="momChildGender" name="momChildGender">
+                    <option value="" selected disabled>Select child gender</option>
+                    <option value="Female">Female</option>
+                    <option value="Male">Male</option>
+                    <option value="Prefer not to say">Prefer not to say</option>
+                  </select>
+                </div>
+                <div class="enquiry-field">
+                  <label for="momBatchFixed">Batch *</label>
+                  <input id="momBatchFixed" name="momBatchFixed" type="text" value="Mom &amp; Me · Thursday 6–7 PM" readonly>
+                </div>
+                <div class="enquiry-field full">
+                  <label for="momPricingFixed">Pricing *</label>
+                  <input id="momPricingFixed" name="momPricingFixed" type="text" value="$50 per head for 4 classes" readonly>
+                </div>
+                <div class="enquiry-field full">
+                  <div class="form-rule-note" style="display:block;">This batch is strictly for mother and child. Recommended child age limit: 2–6 years.</div>
                 </div>
               </div>
             </div>
@@ -4494,7 +4580,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 <script>
-/* DANSVILLA UPDATE V40: age-based batch filtering + family/duo person-specific course/day/batch */
+/* DANSVILLA UPDATE V45: age-based batch filtering + Mom & Me dedicated registration + family/duo person-specific course/day/batch */
 (function(){
   const form = document.getElementById('dansvillaLeadForm');
   if(!form) return;
@@ -4506,6 +4592,9 @@ document.addEventListener('DOMContentLoaded', function () {
   const leadCourse = document.getElementById('leadCourse');
   const leadGender = document.getElementById('leadGender');
   const leadPlan = document.getElementById('leadPlan');
+  const momChildName = document.getElementById('momChildName');
+  const momChildAge = document.getElementById('momChildAge');
+  const momChildGender = document.getElementById('momChildGender');
   const comboAge = document.getElementById('comboAge');
   const comboCourse1 = document.getElementById('comboCourse1');
   const comboCourse2 = document.getElementById('comboCourse2');
@@ -4536,6 +4625,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const modeByType = {
     'Dance Class Registration':'dance',
+    'Mom & Me Batch':'mom',
     '2-Course Combo':'combo',
     'Family / Duo Joining':'family',
     'Studio Space Rental':'rental',
@@ -4544,6 +4634,7 @@ document.addEventListener('DOMContentLoaded', function () {
   };
   const modeRequiredFields = {
     dance:['leadAge','leadGender','leadCourse','leadDay','leadBatch','leadPlan'],
+    mom:['momChildName','momChildAge','momChildGender','momBatchFixed','momPricingFixed'],
     combo:['comboAge','comboGender','comboCourse1','comboDay1','comboBatch1','comboCourse2','comboDay2','comboBatch2'],
     family:['person1Name','person1Age','person1Gender','person1Course','person1Day','person1Batch','person2Name','person2Age','person2Gender','person2Course','person2Day','person2Batch','relationship'],
     rental:['rentalPurpose','rentalPeople','rentalDate','rentalTime','rentalDuration'],
@@ -4674,6 +4765,11 @@ document.addEventListener('DOMContentLoaded', function () {
     if(!formRuleNote) return;
     let note = '';
     let isError = false;
+    if(leadType.value === 'Mom & Me Batch'){
+      note = '👩‍👧 Mom & Me is strictly for mother and child. Child age should be 2–6 years.';
+      const age = parseAge(momChildAge && momChildAge.value);
+      isError = !!(age !== null && (age < 2 || age > 6));
+    }
     if(leadType.value === 'Dance Class Registration' && (hasDesiDiva(leadCourse && leadCourse.value) || hasDesiDiva(leadDay && leadDay.value))){
       note = '💃 Desi Diva is currently a ladies-only batch. Please select Female as the student gender to continue.';
       isError = !!(leadGender && leadGender.value && !isFemale(leadGender.value));
@@ -4730,6 +4826,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const p = presetBtn.getAttribute('data-enquiry-preset');
       if(p === 'monthly') openForm('Dance Class Registration', {leadPlan:'$60 monthly - single course'}, 'Monthly plan selected. Add student details and preferred class.');
       if(p === 'three-months') openForm('Dance Class Registration', {leadPlan:'$150 for 3 months - Best Value'}, '3 Months Best Value selected. Add student details and preferred class.');
+      if(p === 'mom-me') openForm('Mom & Me Batch', {}, 'Mom & Me Batch selected. Add mother contact details and child details.');
       if(p === 'combo') openForm('2-Course Combo', {}, '2-Course Combo selected. Choose two different courses.');
       if(p === 'family') openForm('Family / Duo Joining', {}, 'Family / Duo selected. Add both participants below.');
       if(p === 'rental') openForm('Studio Space Rental', {}, 'Studio rental selected. Share date, time, duration and purpose.');
@@ -4763,7 +4860,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }, true);
 
   leadType.addEventListener('change', setVisibleMode);
-  [leadAge, leadDay, leadBatch, leadCourse, leadGender, leadPlan, comboAge, comboCourse1, comboCourse2, comboDay1, comboDay2, comboBatch1, comboBatch2, comboGender, person1Age, person2Age, person1Course, person2Course, person1Day, person2Day, person1Batch, person2Batch, person1Gender, person2Gender].forEach(el => {
+  [leadAge, leadDay, leadBatch, leadCourse, leadGender, leadPlan, momChildName, momChildAge, momChildGender, comboAge, comboCourse1, comboCourse2, comboDay1, comboDay2, comboBatch1, comboBatch2, comboGender, person1Age, person2Age, person1Course, person2Course, person1Day, person2Day, person1Batch, person2Batch, person1Gender, person2Gender].forEach(el => {
     if(el) el.addEventListener('change', function(){ updateAllDependentOptions(); updateFormRuleNote(); });
     if(el && (el.tagName === 'INPUT')) el.addEventListener('input', function(){ updateAllDependentOptions(); updateFormRuleNote(); });
   });
@@ -4775,6 +4872,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const type = rawData.enquiryType || '';
     const base = {enquiryType:type, name:rawData.name || '', phone:rawData.phone || '', email:rawData.email || '', message:rawData.message || '', pageUrl:rawData.pageUrl || window.location.href};
     if(type === 'Dance Class Registration') return Object.assign(base, {studentAge:rawData.studentAge || '', studentGender:rawData.studentGender || '', course:rawData.course || '', preferredDay:rawData.preferredDay || '', preferredBatch:rawData.preferredBatch || '', pricingInterest:rawData.pricingOption || ''});
+    if(type === 'Mom & Me Batch') return Object.assign(base, {childName:rawData.momChildName || '', childAge:rawData.momChildAge || '', childGender:rawData.momChildGender || '', course:'Mom & Me Batch', preferredDay:'Thursday — Mom & Me Batch', preferredBatch:rawData.momBatchFixed || 'Mom & Me · Thursday 6–7 PM', pricingInterest:rawData.momPricingFixed || '$50 per head for 4 classes'});
     if(type === '2-Course Combo') return Object.assign(base, {studentAge:rawData.comboStudentAge || '', studentGender:rawData.comboStudentGender || '', course1:rawData.comboCourse1 || '', course1Day:rawData.comboDay1 || '', course1Batch:rawData.comboBatch1 || '', course2:rawData.comboCourse2 || '', course2Day:rawData.comboDay2 || '', course2Batch:rawData.comboBatch2 || '', course:[rawData.comboCourse1, rawData.comboCourse2].filter(Boolean).join(' + '), preferredDay:[rawData.comboDay1, rawData.comboDay2].filter(Boolean).join(' / '), preferredBatch:[rawData.comboBatch1, rawData.comboBatch2].filter(Boolean).join(' / '), pricingInterest:'2-Course Combo - $100/month · $50 per course'});
     if(type === 'Family / Duo Joining') return Object.assign(base, {person1Name:rawData.person1Name || '', person1Age:rawData.person1Age || '', person1Gender:rawData.person1Gender || '', person1Course:rawData.person1Course || '', person1Day:rawData.person1Day || '', person1Batch:rawData.person1Batch || '', person2Name:rawData.person2Name || '', person2Age:rawData.person2Age || '', person2Gender:rawData.person2Gender || '', person2Course:rawData.person2Course || '', person2Day:rawData.person2Day || '', person2Batch:rawData.person2Batch || '', relationship:rawData.relationship || '', course:[rawData.person1Course, rawData.person2Course].filter(Boolean).join(' + '), preferredDay:[rawData.person1Day, rawData.person2Day].filter(Boolean).join(' / '), preferredBatch:[rawData.person1Batch, rawData.person2Batch].filter(Boolean).join(' / '), pricingInterest:'Family / Duo - $100 total/month · $50 per person'});
     if(type === 'Studio Space Rental') return Object.assign(base, {rentalPurpose:rawData.rentalPurpose || '', expectedPeople:rawData.rentalPeople || '', rentalDate:rawData.rentalDate || '', rentalTime:rawData.rentalTime || '', rentalDuration:rawData.rentalDuration || '', course:rawData.rentalPurpose || 'Studio Space Rental', preferredDay:rawData.rentalDate || '', preferredBatch:[rawData.rentalTime, rawData.rentalDuration].filter(Boolean).join(' · '), pricingInterest:'Studio rental rates - off-peak/peak/bulk as applicable'});
@@ -4789,6 +4887,12 @@ document.addEventListener('DOMContentLoaded', function () {
       if(!data.studentAge) missing.push('Student age'); if(!data.studentGender) missing.push('Student gender'); if(!data.course) missing.push('Course'); if(!data.preferredDay) missing.push('Preferred day'); if(!data.preferredBatch) missing.push('Preferred batch'); if(!data.pricingInterest) missing.push('Pricing interest');
       if(data.course && data.preferredDay && !courseMatchesDay(data.course, data.preferredDay)) missing.push('Preferred day must match selected course');
       if((hasDesiDiva(data.course) || hasDesiDiva(data.preferredDay)) && data.studentGender !== 'Female') missing.push('Desi Diva is ladies-only; student gender must be Female');
+    }
+    if(data.enquiryType === 'Mom & Me Batch'){
+      if(!data.childName) missing.push('Child name'); if(!data.childAge) missing.push('Child age'); if(!data.childGender) missing.push('Child gender');
+      const momAge = parseAge(data.childAge);
+      if(momAge === null) missing.push('Please enter a valid child age');
+      else if(momAge < 2 || momAge > 6) missing.push('Mom & Me child age should be 2–6 years');
     }
     if(data.enquiryType === '2-Course Combo'){
       if(!data.studentAge) missing.push('Student age'); if(!data.studentGender) missing.push('Student gender'); if(!data.course1) missing.push('Course 1'); if(!data.course1Day) missing.push('Course 1 day'); if(!data.course1Batch) missing.push('Course 1 batch'); if(!data.course2) missing.push('Course 2'); if(!data.course2Day) missing.push('Course 2 day'); if(!data.course2Batch) missing.push('Course 2 batch');
@@ -4815,6 +4919,8 @@ document.addEventListener('DOMContentLoaded', function () {
     addLine(lines, 'Enquiry Type', data.enquiryType); addLine(lines, 'Name', data.name); addLine(lines, 'Phone', data.phone); if(data.email) addLine(lines, 'Email', data.email);
     if(data.enquiryType === 'Dance Class Registration'){
       addLine(lines, 'Student Age', data.studentAge); addLine(lines, 'Student Gender', data.studentGender); addLine(lines, 'Course', data.course); addLine(lines, 'Preferred Day', data.preferredDay); addLine(lines, 'Preferred Batch', data.preferredBatch); addLine(lines, 'Pricing Interest', data.pricingInterest);
+    } else if(data.enquiryType === 'Mom & Me Batch'){
+      addLine(lines, 'Mother Name', data.name); addLine(lines, 'Child Name', data.childName); addLine(lines, 'Child Age', data.childAge); addLine(lines, 'Child Gender', data.childGender); addLine(lines, 'Course', data.course); addLine(lines, 'Preferred Day', data.preferredDay); addLine(lines, 'Preferred Batch', data.preferredBatch); addLine(lines, 'Pricing Interest', data.pricingInterest);
     } else if(data.enquiryType === '2-Course Combo'){
       addLine(lines, 'Student Age', data.studentAge); addLine(lines, 'Student Gender', data.studentGender); addLine(lines, 'Course 1', data.course1); addLine(lines, 'Course 1 Day', data.course1Day); addLine(lines, 'Course 1 Batch', data.course1Batch); addLine(lines, 'Course 2', data.course2); addLine(lines, 'Course 2 Day', data.course2Day); addLine(lines, 'Course 2 Batch', data.course2Batch); addLine(lines, 'Pricing Interest', data.pricingInterest);
     } else if(data.enquiryType === 'Family / Duo Joining'){
