@@ -40,12 +40,14 @@
     -webkit-background-clip:text;
     background-clip:text;
     color:transparent;
+    filter:drop-shadow(0 0 18px rgba(0,229,255,.35)) drop-shadow(0 0 18px rgba(255,45,142,.25));
   }
   .brand p{
     font-family:'Dancing Script',cursive;
     color:var(--gold);
     font-size:20px;
     margin:4px 0 0;
+    text-shadow:0 0 16px rgba(255,215,0,.55);
   }
   .subtitle{
     text-align:center;
@@ -75,6 +77,7 @@
     color:var(--cyan);
     padding:0;
     margin-bottom:12px;
+    text-shadow:0 0 10px rgba(0,229,255,.55),0 0 22px rgba(0,229,255,.25);
   }
   label{
     display:block;
@@ -110,6 +113,12 @@
   input:focus,select:focus,textarea:focus{
     outline:none;
     border-color:var(--cyan);
+    box-shadow:0 0 0 3px rgba(0,229,255,.15),0 0 16px rgba(0,229,255,.25);
+  }
+  .dob-row{
+    display:grid;
+    grid-template-columns:1fr 1.4fr 1fr;
+    gap:8px;
   }
   .checkrow{
     display:flex;
@@ -166,6 +175,60 @@
   .upload-feedback.ok{color:#4ade80;}
   .upload-feedback.warn{color:var(--pink);}
   .honeypot{position:absolute;left:-9999px;opacity:0;}
+  .photo-category{
+    background:#0c1220;
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:12px;
+    padding:14px;
+    margin-bottom:14px;
+  }
+  .photo-category-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+  }
+  .photo-category-title{
+    font-family:'Bebas Neue',sans-serif;
+    letter-spacing:1px;
+    font-size:16px;
+    color:var(--gold);
+    text-shadow:0 0 10px rgba(255,215,0,.4);
+  }
+  .photo-category-title .req{color:var(--pink);font-family:'Montserrat',sans-serif;}
+  .example-box{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:#070a14;
+    border:1px dashed rgba(255,255,255,0.2);
+    border-radius:8px;
+    padding:8px 10px;
+    margin-bottom:10px;
+  }
+  .example-box img{
+    width:52px;
+    height:52px;
+    object-fit:cover;
+    border-radius:6px;
+    flex-shrink:0;
+  }
+  .example-icon{
+    width:52px;
+    height:52px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    background:#111827;
+    border-radius:6px;
+    flex-shrink:0;
+  }
+  .example-caption{
+    font-size:11px;
+    color:var(--muted);
+    line-height:1.4;
+  }
   button[type=submit]{
     width:100%;
     margin-top:8px;
@@ -178,8 +241,9 @@
     font-size:18px;
     padding:15px;
     cursor:pointer;
+    box-shadow:0 0 20px rgba(0,229,255,.25),0 0 30px rgba(255,45,142,.2);
   }
-  button[type=submit]:disabled{opacity:0.6;cursor:not-allowed;}
+  button[type=submit]:disabled{opacity:0.6;cursor:not-allowed;box-shadow:none;}
   #statusMsg{
     text-align:center;
     margin-top:16px;
@@ -215,10 +279,14 @@
       <input type="text" name="studentName" required>
 
       <label>Date of Birth <span class="req">*</span></label>
-      <input type="date" name="dob" required>
+      <div class="dob-row">
+        <select id="dobDay" required><option value="">Day</option></select>
+        <select id="dobMonth" required><option value="">Month</option></select>
+        <select id="dobYear" required><option value="">Year</option></select>
+      </div>
 
       <label>Gender</label>
-      <select name="gender">
+      <select name="gender" id="genderSelect">
         <option value="">Select</option>
         <option value="Female">Female</option>
         <option value="Male">Male</option>
@@ -236,14 +304,15 @@
       <legend>Class Info</legend>
 
       <label>Batch / Course you're currently in <span class="req">*</span></label>
-      <select name="batch" required>
+      <select name="batch" id="batchSelect" required>
         <option value="">Select</option>
         <option value="Bollywood Burst 🎬">Bollywood Burst 🎬</option>
-        <option value="Desi Diva 💃">Desi Diva 💃</option>
+        <option value="Desi Diva 💃" data-ladies-only="true">Desi Diva 💃 (Ladies Batch)</option>
         <option value="Freestyle Freak ⚡">Freestyle Freak ⚡</option>
         <option value="Mom & Me Batch">Mom & Me Batch</option>
         <option value="Not sure / multiple batches">Not sure / multiple batches</option>
       </select>
+      <div id="batchHint" class="upload-feedback"></div>
 
       <label>When did you join?
         <span class="hint">Approximate month/year is fine</span>
@@ -255,7 +324,7 @@
       </label>
       <div class="style-grid">
         <label><input type="checkbox" name="stylesLiked" value="Bollywood"> Bollywood</label>
-        <label><input type="checkbox" name="stylesLiked" value="Freestyle"> Freestyle</label>
+        <label><input type="checkbox" name="stylesLiked" value="Freestyle / Hip-Hop"> Freestyle / Hip-Hop</label>
         <label><input type="checkbox" name="stylesLiked" value="Bhangra / Folk"> Bhangra / Folk</label>
         <label><input type="checkbox" name="stylesLiked" value="Semi-Classical"> Semi-Classical</label>
         <label><input type="checkbox" name="stylesLiked" value="Western / Contemporary"> Western / Contemporary</label>
@@ -295,13 +364,60 @@
     </fieldset>
 
     <fieldset>
-      <legend>Photos &amp; Videos of You Dancing</legend>
+      <legend>Photos of You Dancing</legend>
+      <p class="hint" style="margin:-4px 0 14px;">Only Solo is required — add the others if you have them.</p>
 
-      <label>Upload photos
-        <span class="hint">Up to 3 photos, 5MB each max</span>
-      </label>
-      <input type="file" id="photoInput" name="photos" accept="image/*" multiple>
-      <div id="photoFeedback" class="upload-feedback"></div>
+      <div class="photo-category">
+        <div class="photo-category-head">
+          <span class="photo-category-title">Solo <span class="req">*</span></span>
+        </div>
+        <div class="example-box" data-example="solo">
+          <span class="example-icon">💃</span>
+          <span class="example-caption">Example: a clear photo of just you dancing. (Real example photo coming soon.)</span>
+        </div>
+        <input type="file" id="photoSoloInput" accept="image/*" required>
+        <div id="photoSoloFeedback" class="upload-feedback"></div>
+      </div>
+
+      <div class="photo-category">
+        <div class="photo-category-head">
+          <span class="photo-category-title">Family</span>
+        </div>
+        <div class="example-box" data-example="family">
+          <span class="example-icon">👨‍👩‍👧‍👦</span>
+          <span class="example-caption">Example: you with your family. (Real example photo coming soon.)</span>
+        </div>
+        <input type="file" id="photoFamilyInput" accept="image/*">
+        <div id="photoFamilyFeedback" class="upload-feedback"></div>
+      </div>
+
+      <div class="photo-category">
+        <div class="photo-category-head">
+          <span class="photo-category-title">Mom &amp; Me</span>
+        </div>
+        <div class="example-box" data-example="mom">
+          <span class="example-icon">👩‍👧</span>
+          <span class="example-caption">Example: you dancing with mom. (Real example photo coming soon.)</span>
+        </div>
+        <input type="file" id="photoMomMeInput" accept="image/*">
+        <div id="photoMomMeFeedback" class="upload-feedback"></div>
+      </div>
+
+      <div class="photo-category">
+        <div class="photo-category-head">
+          <span class="photo-category-title">Dad &amp; Me</span>
+        </div>
+        <div class="example-box" data-example="dad">
+          <span class="example-icon">👨‍👦</span>
+          <span class="example-caption">Example: you dancing with dad. (Real example photo coming soon.)</span>
+        </div>
+        <input type="file" id="photoDadMeInput" accept="image/*">
+        <div id="photoDadMeFeedback" class="upload-feedback"></div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Videos of You Dancing</legend>
 
       <label>Upload a video
         <span class="hint">Short clips only, 15MB max. If your video is bigger, use the link field below instead.</span>
@@ -338,18 +454,15 @@
 
 <script>
   // Paste your deployed Google Apps Script Web App URL below (see setup instructions).
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwVH7bGhTojrRXTMLjO2DKlb67XxoFUXjQ3K3liiR3MzHa2UEu0PY_UAvDhR0yJ0ca2/exec";
+  const SCRIPT_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
 
   const form = document.getElementById('profileForm');
   const statusMsg = document.getElementById('statusMsg');
   const submitBtn = document.getElementById('submitBtn');
-  const photoInput = document.getElementById('photoInput');
   const videoInput = document.getElementById('videoInput');
-  const photoFeedback = document.getElementById('photoFeedback');
   const videoFeedback = document.getElementById('videoFeedback');
 
   const MAX_PHOTO_BYTES = 5 * 1024 * 1024;   // 5MB per photo
-  const MAX_PHOTOS = 3;
   const MAX_VIDEO_BYTES = 15 * 1024 * 1024;  // 15MB for the video
 
   function fileToBase64(file){
@@ -361,28 +474,72 @@
     });
   }
 
-  // Live feedback as they pick files, so they know before hitting submit
-  photoInput.addEventListener('change', function(){
-    const files = Array.from(photoInput.files || []);
-    if (files.length > MAX_PHOTOS) {
-      photoFeedback.textContent = 'Please choose at most ' + MAX_PHOTOS + ' photos.';
-      photoFeedback.className = 'upload-feedback warn';
-      photoInput.value = '';
-      return;
-    }
-    const tooBig = files.find(f => f.size > MAX_PHOTO_BYTES);
-    if (tooBig) {
-      photoFeedback.textContent = '"' + tooBig.name + '" is over 5MB. Please pick a smaller photo.';
-      photoFeedback.className = 'upload-feedback warn';
-      photoInput.value = '';
-      return;
-    }
-    if (files.length) {
-      photoFeedback.textContent = files.length + ' photo(s) ready to upload.';
-      photoFeedback.className = 'upload-feedback ok';
+  /* ---------- Date of Birth dropdowns ---------- */
+  const dobDay = document.getElementById('dobDay');
+  const dobMonth = document.getElementById('dobMonth');
+  const dobYear = document.getElementById('dobYear');
+  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  for (let d = 1; d <= 31; d++) {
+    const opt = document.createElement('option');
+    opt.value = String(d).padStart(2, '0');
+    opt.textContent = d;
+    dobDay.appendChild(opt);
+  }
+  MONTHS.forEach((name, i) => {
+    const opt = document.createElement('option');
+    opt.value = String(i + 1).padStart(2, '0');
+    opt.textContent = name;
+    dobMonth.appendChild(opt);
+  });
+  const thisYear = new Date().getFullYear();
+  for (let y = thisYear; y >= thisYear - 90; y--) {
+    const opt = document.createElement('option');
+    opt.value = String(y);
+    opt.textContent = y;
+    dobYear.appendChild(opt);
+  }
+
+  /* ---------- Gender-based batch filtering (Desi Diva is a Ladies Batch) ---------- */
+  const genderSelect = document.getElementById('genderSelect');
+  const batchSelect = document.getElementById('batchSelect');
+  const batchHint = document.getElementById('batchHint');
+  const ladiesOnlyOption = batchSelect.querySelector('option[data-ladies-only="true"]');
+
+  genderSelect.addEventListener('change', function(){
+    const isMale = genderSelect.value === 'Male';
+    ladiesOnlyOption.hidden = isMale;
+    ladiesOnlyOption.disabled = isMale;
+    if (isMale && batchSelect.value === ladiesOnlyOption.value) {
+      batchSelect.value = '';
+      batchHint.textContent = 'Desi Diva is a Ladies Batch, so it\'s hidden for the gender you selected. Please choose another batch.';
+      batchHint.className = 'upload-feedback warn';
     } else {
-      photoFeedback.textContent = '';
+      batchHint.textContent = '';
     }
+  });
+
+  /* ---------- Photo category uploads ---------- */
+  const photoCategories = [
+    { key: 'photoSolo', input: document.getElementById('photoSoloInput'), feedback: document.getElementById('photoSoloFeedback'), required: true },
+    { key: 'photoFamily', input: document.getElementById('photoFamilyInput'), feedback: document.getElementById('photoFamilyFeedback'), required: false },
+    { key: 'photoMomMe', input: document.getElementById('photoMomMeInput'), feedback: document.getElementById('photoMomMeFeedback'), required: false },
+    { key: 'photoDadMe', input: document.getElementById('photoDadMeInput'), feedback: document.getElementById('photoDadMeFeedback'), required: false }
+  ];
+
+  photoCategories.forEach(function(cat){
+    cat.input.addEventListener('change', function(){
+      const file = cat.input.files && cat.input.files[0];
+      if (!file) { cat.feedback.textContent = ''; return; }
+      if (file.size > MAX_PHOTO_BYTES) {
+        cat.feedback.textContent = '"' + file.name + '" is over 5MB. Please pick a smaller photo.';
+        cat.feedback.className = 'upload-feedback warn';
+        cat.input.value = '';
+        return;
+      }
+      cat.feedback.textContent = 'Ready to upload.';
+      cat.feedback.className = 'upload-feedback ok';
+    });
   });
 
   videoInput.addEventListener('change', function(){
@@ -412,7 +569,7 @@
       if (key === 'stylesLiked') {
         if (!data.stylesLiked) data.stylesLiked = [];
         data.stylesLiked.push(value);
-      } else if (key !== 'photos' && key !== 'video') {
+      } else if (key !== 'video') {
         data[key] = value;
       }
     });
@@ -420,6 +577,7 @@
     data.photoConsent = form.photoConsent.checked ? 'Yes' : 'No / not answered';
     data.pageUrl = window.location.href;
     data.formType = 'Student Profile';
+    data.dob = dobYear.value + '-' + dobMonth.value + '-' + dobDay.value;
 
     submitBtn.disabled = true;
     submitBtn.textContent = 'Uploading...';
@@ -427,13 +585,17 @@
     statusMsg.style.display = 'none';
 
     try {
-      // Convert selected photos to base64
-      const photoFiles = Array.from(photoInput.files || []);
-      data.photos = await Promise.all(photoFiles.map(async (f) => ({
-        name: f.name,
-        mimeType: f.type,
-        base64: await fileToBase64(f)
-      })));
+      // Convert each category photo to base64 (if provided)
+      for (const cat of photoCategories) {
+        const file = cat.input.files && cat.input.files[0];
+        if (file) {
+          data[cat.key] = {
+            name: file.name,
+            mimeType: file.type,
+            base64: await fileToBase64(file)
+          };
+        }
+      }
 
       // Convert selected video to base64 (if any)
       const videoFile = videoInput.files && videoInput.files[0];
@@ -455,8 +617,11 @@
       const result = await res.json();
       if (result.success) {
         form.reset();
-        photoFeedback.textContent = '';
+        photoCategories.forEach(cat => { cat.feedback.textContent = ''; });
         videoFeedback.textContent = '';
+        batchHint.textContent = '';
+        ladiesOnlyOption.hidden = false;
+        ladiesOnlyOption.disabled = false;
         statusMsg.textContent = "Thank you! Your profile has been sent to Master.";
         statusMsg.className = 'success';
       } else {
