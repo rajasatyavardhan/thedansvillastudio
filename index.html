@@ -3062,9 +3062,159 @@ nav{min-height:82px !important;}
 .instagram-choice-link span{display:block; font-size:.73rem; color:var(--muted); margin-top:4px; line-height:1.4;}
 .instagram-choice-arrow{font-size:1.25rem; color:var(--pink);}
 
+/* ── JOSH: THE DANCETROTTER — SHOWCASE CAMPAIGN (popup + sticky banner + floating button) ── */
+:root{ --josh-banner-h: 44px; }
+
+/* Sticky top banner */
+.josh-banner{
+  position:fixed; top:0; left:0; right:0; z-index:10001;
+  background:linear-gradient(90deg, #1a1300, #241a00 40%, #1a1300);
+  border-bottom:1px solid rgba(255,215,0,.35);
+  box-shadow:0 2px 18px rgba(0,0,0,.4);
+}
+.josh-banner.josh-banner-hidden{display:none;}
+.josh-banner-inner{
+  max-width:1240px; margin:0 auto;
+  display:flex; align-items:center; justify-content:center; gap:14px;
+  padding:9px 44px 9px 16px; flex-wrap:wrap; text-align:center;
+}
+.josh-banner-badge{
+  background:var(--pink); color:white; font-family:'Bebas Neue',sans-serif;
+  font-size:.68rem; letter-spacing:2px; padding:3px 9px; border-radius:999px; flex:0 0 auto;
+}
+.josh-banner-text{ color:var(--gold); font-size:.74rem; letter-spacing:.3px; line-height:1.5; }
+.josh-banner-text strong{ color:#fff; }
+.josh-banner-btn{
+  flex:0 0 auto; text-decoration:none; background:var(--gold); color:#1a1300;
+  font-weight:800; font-size:.68rem; letter-spacing:1.5px; text-transform:uppercase;
+  padding:6px 14px; border-radius:999px; transition:.2s;
+}
+.josh-banner-btn:hover{ transform:translateY(-1px); box-shadow:0 4px 16px rgba(255,215,0,.4); }
+.josh-banner-close{
+  position:absolute; right:10px; top:50%; transform:translateY(-50%);
+  width:26px; height:26px; border-radius:50%; border:1px solid rgba(255,215,0,.3);
+  background:rgba(255,255,255,.06); color:var(--gold); cursor:pointer; font-size:1rem; line-height:1;
+}
+@media(max-width:640px){
+  .josh-banner-inner{ padding:8px 40px 8px 12px; gap:8px; }
+  .josh-banner-text{ font-size:.68rem; }
+}
+
+/* Nav + hero get pushed down by the banner's real (measured) height */
+nav{ top:var(--josh-banner-h, 0px); }
+.mobile-menu{ top:calc(65px + var(--josh-banner-h, 0px)); }
+body{ padding-top:var(--josh-banner-h, 0px); transition:padding-top .25s ease; }
+nav{ transition:top .25s ease; }
+
+/* Floating register button */
+.josh-float-btn{
+  position:fixed; right:18px; bottom:18px; z-index:9997;
+  display:flex; align-items:center; gap:8px;
+  background:linear-gradient(135deg, var(--gold), #ffb300); color:#1a1300;
+  border:0; border-radius:999px; cursor:pointer;
+  padding:12px 18px 12px 14px; box-shadow:0 8px 26px rgba(255,215,0,.4), 0 2px 10px rgba(0,0,0,.35);
+  font-family:'Montserrat',sans-serif; text-align:left; transition:.22s;
+}
+.josh-float-btn:hover{ transform:translateY(-2px); box-shadow:0 12px 32px rgba(255,215,0,.55); }
+.josh-float-icon{ font-size:1.3rem; line-height:1; }
+.josh-float-label{ font-weight:800; font-size:.72rem; letter-spacing:.5px; line-height:1.3; }
+.josh-float-label small{ display:block; font-weight:700; font-size:.6rem; letter-spacing:1px; text-transform:uppercase; opacity:.75; }
+@media(max-width:640px){
+  .josh-float-btn{ right:12px; bottom:12px; padding:11px 14px; }
+  .josh-float-label small{ display:none; }
+}
+
+/* Popup modal */
+.josh-modal{ position:fixed; inset:0; z-index:10050; display:none; align-items:center; justify-content:center; padding:18px; }
+.josh-modal.open{ display:flex; }
+.josh-modal-backdrop{ position:absolute; inset:0; background:rgba(2,6,23,.82); backdrop-filter:blur(8px); }
+.josh-modal-card{
+  position:relative; z-index:2; width:min(880px, 100%); max-height:92vh; overflow:auto;
+  background:linear-gradient(135deg, rgba(24,18,0,.98), rgba(7,10,20,.98));
+  border:1px solid rgba(255,215,0,.32); border-radius:24px;
+  box-shadow:0 0 50px rgba(255,215,0,.16), 0 28px 90px rgba(0,0,0,.6);
+  padding:28px;
+}
+.josh-modal-close{
+  position:absolute; top:14px; right:14px; width:36px; height:36px; border-radius:999px;
+  border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.06); color:white;
+  font-size:1.5rem; line-height:1; cursor:pointer; z-index:3;
+}
+.josh-modal-close:hover{ background:var(--pink); }
+.josh-kicker{
+  background:linear-gradient(135deg, rgba(255,215,0,.2), rgba(255,45,142,.12));
+  border-color:rgba(255,215,0,.34); color:var(--gold);
+}
+.josh-step-announce{ display:grid; grid-template-columns:minmax(0,280px) 1fr; gap:26px; align-items:center; }
+.josh-flyer-wrap{ position:relative; border-radius:16px; overflow:hidden; border:1px solid rgba(255,215,0,.25); }
+.josh-flyer-img, .josh-flyer-video{ width:100%; height:auto; display:block; }
+.josh-play-btn{
+  position:absolute; left:50%; bottom:14px; transform:translateX(-50%);
+  background:rgba(0,0,0,.65); color:var(--gold); border:1px solid rgba(255,215,0,.5);
+  border-radius:999px; padding:8px 16px; font-size:.72rem; font-weight:800; letter-spacing:1px;
+  cursor:pointer; backdrop-filter:blur(4px);
+}
+.josh-announce-body h3{
+  font-family:'Bebas Neue',sans-serif; font-size:clamp(2.2rem, 5.5vw, 3.4rem); letter-spacing:2px; line-height:.95; color:#fff; margin-bottom:6px;
+}
+.josh-announce-body h3 span{ color:var(--gold); }
+.josh-tagline{ color:rgba(255,255,255,.7); font-style:italic; font-size:.85rem; margin-bottom:10px; }
+.josh-meta{ color:var(--gold); }
+.josh-announce-actions{ display:flex; gap:12px; flex-wrap:wrap; margin-top:18px; }
+@media(max-width:768px){
+  .josh-modal{ align-items:flex-end; padding:0; }
+  .josh-modal-card{ width:100%; max-height:92vh; border-radius:22px 22px 0 0; padding:22px 18px; }
+  .josh-step-announce{ grid-template-columns:1fr; gap:18px; }
+}
+
+/* Registration form (step 2) */
+.josh-back-btn{ background:none; border:0; color:var(--muted); cursor:pointer; font-size:.78rem; margin-bottom:10px; padding:0; }
+.josh-back-btn:hover{ color:var(--gold); }
+.josh-form-title{ font-family:'Bebas Neue',sans-serif; font-size:2.2rem; letter-spacing:2px; color:#fff; margin-bottom:6px; }
+#joshForm{ margin-top:14px; display:flex; flex-direction:column; gap:14px; }
+.josh-field{ display:flex; flex-direction:column; gap:6px; }
+.josh-field-row{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+@media(max-width:640px){ .josh-field-row{ grid-template-columns:1fr; } }
+.josh-field label{ font-size:.72rem; font-weight:700; letter-spacing:.5px; color:rgba(255,255,255,.75); text-transform:uppercase; }
+.josh-field input, .josh-field select, .josh-field textarea{
+  background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.15); border-radius:10px;
+  padding:11px 12px; color:#fff; font-family:'Montserrat',sans-serif; font-size:.88rem;
+}
+.josh-field input:focus, .josh-field select:focus, .josh-field textarea:focus{
+  outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(255,215,0,.15);
+}
+.josh-field select{ appearance:auto; }
+.josh-honeypot{ position:absolute; left:-9999px; opacity:0; height:0; width:0; }
+.josh-status{ font-size:.8rem; line-height:1.5; min-height:1em; }
+.josh-status-loading{ color:var(--cyan); }
+.josh-status-success{ color:#4ade80; }
+.josh-status-error{ color:var(--pink); }
+.josh-form-actions{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+.josh-btn-primary{ border:0; cursor:pointer; font-family:'Montserrat',sans-serif; }
+.josh-btn-primary:disabled{ opacity:.6; cursor:default; }
+.josh-btn-outline{ cursor:pointer; }
+.josh-btn-outline:hover{ background:var(--gold); border-color:var(--gold); color:#1a1300; }
+.josh-btn-outline{ border-color:var(--gold); color:var(--gold); }
+
 </style>
 </head>
 <body>
+
+<!-- ── JOSH: THE DANCETROTTER — sticky announcement banner ── -->
+<div class="josh-banner" id="joshBanner">
+  <div class="josh-banner-inner">
+    <span class="josh-banner-badge">New</span>
+    <span class="josh-banner-text"><strong>JOSH — The Dancetrotter</strong> · Our Students' Dance Showcase · Sat, Jan 30, 2027 · Batches start September</span>
+    <a href="#" class="josh-banner-btn" data-josh-open="form">Register Now</a>
+  </div>
+  <button type="button" class="josh-banner-close" id="joshBannerClose" aria-label="Hide this announcement">×</button>
+</div>
+
+<!-- ── JOSH: THE DANCETROTTER — floating register button ── -->
+<button type="button" class="josh-float-btn" id="joshFloatBtn" data-josh-open="form" aria-label="Register for JOSH — The Dancetrotter showcase">
+  <span class="josh-float-icon">🎬</span>
+  <span class="josh-float-label">Register<br><small>JOSH Showcase</small></span>
+</button>
 
 <!-- ── NAVBAR ── -->
 <nav>
@@ -5002,6 +5152,269 @@ document.addEventListener('DOMContentLoaded', function () {
   if(closeBtn) closeBtn.addEventListener('click', closeModal);
   modal.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
+</script>
+
+<!-- ── JOSH: THE DANCETROTTER — popup + registration form ── -->
+<div class="josh-modal" id="joshModal" aria-hidden="true">
+  <div class="josh-modal-backdrop" data-josh-close></div>
+  <div class="josh-modal-card" role="dialog" aria-modal="true" aria-labelledby="joshModalTitle">
+    <button type="button" class="josh-modal-close" data-josh-close aria-label="Close">×</button>
+
+    <!-- STEP 1: Announcement -->
+    <div class="josh-step josh-step-announce" id="joshStepAnnounce">
+      <div class="josh-flyer-wrap">
+        <img src="assets/josh-dancetrotter/josh-dancetrotter-flyer.jpg" alt="JOSH — The Dancetrotter: Dansvilla Students' Dance Showcase, Saturday January 30, 2027, batches start September" class="josh-flyer-img" id="joshFlyerImg">
+        <video class="josh-flyer-video" id="joshTeaserVideo" playsinline controls poster="assets/josh-dancetrotter/josh-dancetrotter-flyer.jpg" style="display:none;">
+          <source src="assets/josh-dancetrotter/josh-dancetrotter-teaser.mp4" type="video/mp4">
+        </video>
+        <button type="button" class="josh-play-btn" id="joshPlayBtn">▶ Watch Teaser</button>
+      </div>
+      <div class="josh-announce-body">
+        <div class="modal-kicker josh-kicker" id="joshModalTitle">🎬 Batches Start September</div>
+        <h3>JOSH <span>— The Dancetrotter</span></h3>
+        <p class="josh-tagline">A Dance Journey Through Indian Culture &amp; Cinema</p>
+        <p class="modal-meta josh-meta">📅 Saturday, January 30, 2027 &nbsp;·&nbsp; Our Students. Our Stars.</p>
+        <p class="modal-desc">Chaitanya Master is putting our students centre stage — a full showcase celebrating Bollywood and Indian cinema through dance. Join a batch starting this September and be part of the show.</p>
+        <div class="josh-announce-actions">
+          <button type="button" class="btn-primary josh-btn-primary" data-josh-step="form">⚡ Register Now</button>
+          <button type="button" class="btn-outline josh-btn-outline" data-josh-close>Maybe Later</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: Registration form -->
+    <div class="josh-step josh-step-form" id="joshStepForm" style="display:none;">
+      <button type="button" class="josh-back-btn" id="joshBackBtn">← Back</button>
+      <div class="modal-kicker josh-kicker">🎬 JOSH — The Dancetrotter</div>
+      <h3 class="josh-form-title">Register Your Interest</h3>
+      <p class="modal-desc">Batches start September · Showcase on Jan 30, 2027 · Master will confirm your batch on WhatsApp.</p>
+      <form id="joshForm" novalidate>
+        <input type="text" name="website" class="josh-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="josh-field">
+          <label for="joshName">Full Name*</label>
+          <input type="text" id="joshName" name="name" autocomplete="name" required>
+        </div>
+        <div class="josh-field-row">
+          <div class="josh-field">
+            <label for="joshPhone">Phone / WhatsApp*</label>
+            <input type="tel" id="joshPhone" name="phone" autocomplete="tel" required>
+          </div>
+          <div class="josh-field">
+            <label for="joshEmail">Email (optional)</label>
+            <input type="email" id="joshEmail" name="email" autocomplete="email">
+          </div>
+        </div>
+        <div class="josh-field-row">
+          <div class="josh-field">
+            <label for="joshAgeGroup">Dancer's Age Group*</label>
+            <select id="joshAgeGroup" name="ageGroup" required>
+              <option value="">Select...</option>
+              <option>Kids 4–7</option>
+              <option>Kids 8–12</option>
+              <option>Teens 13–17</option>
+              <option>Adults 18+</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+          <div class="josh-field">
+            <label for="joshCurrentStudent">Already Training With Dansvilla?*</label>
+            <select id="joshCurrentStudent" name="currentStudent" required>
+              <option value="">Select...</option>
+              <option>Yes, currently enrolled</option>
+              <option>No, new here</option>
+            </select>
+          </div>
+        </div>
+        <div class="josh-field">
+          <label for="joshMessage">Anything else? (optional)</label>
+          <textarea id="joshMessage" name="message" rows="2"></textarea>
+        </div>
+        <input type="hidden" name="pageUrl" id="joshPageUrl">
+        <div class="josh-status" id="joshStatus" role="status"></div>
+        <div class="josh-form-actions">
+          <button type="submit" class="btn-primary josh-btn-primary" id="joshSubmitBtn">Register My Interest</button>
+          <a href="#" target="_blank" rel="noopener" class="btn-outline josh-btn-outline" id="joshWaFallback" style="display:none;">Send on WhatsApp</a>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  // PASTE the /exec URL from deploying google_apps_script_josh_dancetrotter.js as a Web App here:
+  var JOSH_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyfMz-QxH3NsVDm5B9x7gCX9Ibk-c4o-CTc_lW983HJHHC80QPY9GptaZ7K5D3LsHwY/exec";
+  var JOSH_WHATSAPP_NUMBER = "16132189417";
+  var JOSH_SEEN_KEY = "joshDancetrotterPopupSeenV1";
+  var JOSH_BANNER_HIDDEN_KEY = "joshDancetrotterBannerHiddenSession";
+
+  var modal = document.getElementById('joshModal');
+  if(!modal) return;
+
+  var stepAnnounce = document.getElementById('joshStepAnnounce');
+  var stepForm = document.getElementById('joshStepForm');
+  var banner = document.getElementById('joshBanner');
+  var bannerClose = document.getElementById('joshBannerClose');
+  var backBtn = document.getElementById('joshBackBtn');
+  var playBtn = document.getElementById('joshPlayBtn');
+  var flyerImg = document.getElementById('joshFlyerImg');
+  var teaserVideo = document.getElementById('joshTeaserVideo');
+  var form = document.getElementById('joshForm');
+  var statusEl = document.getElementById('joshStatus');
+  var waFallback = document.getElementById('joshWaFallback');
+  var pageUrlField = document.getElementById('joshPageUrl');
+  var nav = document.querySelector('nav');
+
+  function showStep(step){
+    if(step === 'form'){
+      stepAnnounce.style.display = 'none';
+      stepForm.style.display = 'block';
+    } else {
+      stepForm.style.display = 'none';
+      stepAnnounce.style.display = 'grid';
+    }
+  }
+
+  function openModal(step){
+    showStep(step || 'announce');
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    try{ localStorage.setItem(JOSH_SEEN_KEY, '1'); }catch(e){}
+  }
+
+  function closeModal(){
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if(teaserVideo){ teaserVideo.pause(); }
+  }
+
+  document.querySelectorAll('[data-josh-open]').forEach(function(el){
+    el.addEventListener('click', function(e){
+      e.preventDefault();
+      openModal(el.getAttribute('data-josh-open'));
+    });
+  });
+
+  document.querySelectorAll('[data-josh-close]').forEach(function(el){
+    el.addEventListener('click', closeModal);
+  });
+
+  document.querySelectorAll('[data-josh-step]').forEach(function(el){
+    el.addEventListener('click', function(){ showStep(el.getAttribute('data-josh-step')); });
+  });
+
+  if(backBtn) backBtn.addEventListener('click', function(){ showStep('announce'); });
+
+  modal.addEventListener('click', function(e){ if(e.target === modal || e.target.classList.contains('josh-modal-backdrop')) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+
+  if(playBtn && teaserVideo && flyerImg){
+    playBtn.addEventListener('click', function(){
+      flyerImg.style.display = 'none';
+      teaserVideo.style.display = 'block';
+      playBtn.style.display = 'none';
+      teaserVideo.play().catch(function(){});
+    });
+  }
+
+  // Banner sits above the fixed nav — push nav (and body/hero) down by the banner's real, measured height.
+  function layoutBanner(){
+    if(!banner) return;
+    var hidden = banner.classList.contains('josh-banner-hidden');
+    var h = hidden ? 0 : banner.offsetHeight;
+    document.documentElement.style.setProperty('--josh-banner-h', h + 'px');
+  }
+
+  if(banner){
+    try{
+      if(sessionStorage.getItem(JOSH_BANNER_HIDDEN_KEY) === '1'){
+        banner.classList.add('josh-banner-hidden');
+      }
+    }catch(e){}
+    layoutBanner();
+    window.addEventListener('resize', layoutBanner);
+    if(bannerClose){
+      bannerClose.addEventListener('click', function(){
+        banner.classList.add('josh-banner-hidden');
+        layoutBanner();
+        try{ sessionStorage.setItem(JOSH_BANNER_HIDDEN_KEY, '1'); }catch(e){}
+      });
+    }
+  }
+
+  // Auto-open the popup once per visitor (never again on this device once seen/closed).
+  try{
+    if(!localStorage.getItem(JOSH_SEEN_KEY)){
+      setTimeout(function(){ openModal('announce'); }, 1400);
+    }
+  }catch(e){
+    setTimeout(function(){ openModal('announce'); }, 1400);
+  }
+
+  if(pageUrlField) pageUrlField.value = window.location.href;
+
+  function setStatus(kind, msg){
+    if(!statusEl) return;
+    statusEl.className = 'josh-status josh-status-' + kind;
+    statusEl.textContent = msg;
+  }
+
+  function buildJoshWaLink(data){
+    var lines = [
+      "Hi Chaitanya Master, I want to register interest for JOSH — The Dancetrotter (Jan 30, 2027 showcase).",
+      "",
+      "Name: " + data.name,
+      "Phone: " + data.phone
+    ];
+    if(data.email) lines.push("Email: " + data.email);
+    lines.push("Dancer's Age Group: " + data.ageGroup);
+    lines.push("Already Training With Dansvilla: " + data.currentStudent);
+    if(data.message) lines.push("Message: " + data.message);
+    return "https://wa.me/" + JOSH_WHATSAPP_NUMBER + "?text=" + encodeURIComponent(lines.join("\n"));
+  }
+
+  if(form){
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var raw = Object.fromEntries(new FormData(form).entries());
+      if(raw.website){ form.reset(); return; } // honeypot
+      var missing = [];
+      if(!raw.name) missing.push('Name');
+      if(!raw.phone) missing.push('Phone');
+      if(!raw.ageGroup) missing.push("Dancer's age group");
+      if(!raw.currentStudent) missing.push('Already training with Dansvilla?');
+      if(missing.length){ setStatus('error', 'Please complete: ' + missing.join(', ') + '.'); return; }
+
+      var waLink = buildJoshWaLink(raw);
+      var submitBtn = document.getElementById('joshSubmitBtn');
+      if(submitBtn){ submitBtn.disabled = true; submitBtn.textContent = 'Submitting...'; }
+      setStatus('loading', 'Submitting your registration...');
+
+      var backendReady = JOSH_SCRIPT_URL && JOSH_SCRIPT_URL.indexOf('PASTE_YOUR') !== 0;
+      var sendPromise = backendReady
+        ? fetch(JOSH_SCRIPT_URL, { method: 'POST', body: JSON.stringify(raw) }).then(function(res){ return res.json().catch(function(){ return {}; }); })
+        : Promise.reject(new Error('Registration backend not connected yet.'));
+
+      sendPromise.then(function(result){
+        if(result && result.success === false) throw new Error(result.error || 'Could not save registration.');
+        setStatus('success', "✅ You're registered! WhatsApp is opening now — please press Send so Master can confirm your batch.");
+        var opened = false;
+        try{ var w = window.open(waLink, '_blank', 'noopener'); opened = !!w; }catch(err){}
+        if(waFallback){ waFallback.href = waLink; waFallback.style.display = 'inline-flex'; waFallback.textContent = opened ? 'Open WhatsApp Again' : 'Open WhatsApp to Confirm'; }
+        form.reset();
+        if(pageUrlField) pageUrlField.value = window.location.href;
+      }).catch(function(){
+        setStatus('error', "Couldn't save your registration automatically. Please tap WhatsApp below to send the same details instantly.");
+        if(waFallback){ waFallback.href = waLink; waFallback.style.display = 'inline-flex'; waFallback.textContent = 'Send on WhatsApp'; }
+      }).finally(function(){
+        if(submitBtn){ submitBtn.disabled = false; submitBtn.textContent = 'Register My Interest'; }
+      });
+    });
+  }
 })();
 </script>
 
