@@ -3195,6 +3195,10 @@ body{ padding-top:var(--campaign-banner-h, 0px); transition:padding-top .25s eas
 .campaign-field input:focus, .campaign-field select:focus, .campaign-field textarea:focus{
   outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(255,215,0,.15);
 }
+/* The select box itself is styled above, but the dropdown LIST that pops open uses its
+   own rendering in most browsers — without this, its background defaults to white while
+   the text stays white (inherited), making every option invisible until highlighted. */
+.campaign-field select option{ background:#1a1300; color:#fff; }
 .campaign-honeypot{ position:absolute; left:-9999px; opacity:0; height:0; width:0; }
 .campaign-status{ font-size:.8rem; line-height:1.5; min-height:1em; }
 .campaign-status-loading{ color:var(--cyan); }
@@ -5216,7 +5220,7 @@ document.addEventListener('DOMContentLoaded', function () {
       metaLabel: '📍 Ron Kolbus Lakeside Centre, 102 Greenview Avenue, Ottawa · Showtime 3:00 PM',
       mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Ron+Kolbus+Lakeside+Centre+102+Greenview+Avenue+Ottawa+ON+K2B+8J8',
       description: "Our students take the summer stage for a free, family-friendly showcase — bring the whole crew and come cheer them on. Free entry, but seats are limited, so book yours now.",
-      flyerImg: 'assets/hai-garmi/hai-garmi-flyer.jpg',
+      flyerImg: 'hai-garmi-flyer.jpg',
       videoSrc: null,
       bannerText: '<strong>Hai Garmi! — Summer Dance Showcase</strong> · Free Entry · Sat, Sep 19, 2026 · Ron Kolbus Lakeside Centre',
       bannerCta: 'Book Your Seats',
@@ -5226,7 +5230,7 @@ document.addEventListener('DOMContentLoaded', function () {
       formTitle: 'Book Your Seats',
       formSubtitle: 'Free entry · Saturday, September 19, 2026 · 3:00 PM · Master will confirm on WhatsApp.',
       submitLabel: 'Book My Seats',
-      scriptUrl: 'PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE',
+      scriptUrl: 'https://script.google.com/macros/s/AKfycbxgtJSqKmPyBPzLmxxCKIuFdfxYF5yrKLVxNcoqfx1A0XUlb3lfbSi1Tc_ZW_Fmjd0Tcw/exec',
       waNumber: '16132189417',
       waIntro: "Hi Chaitanya Master, I'd like to book seats for Hai Garmi! Summer Dance Showcase (Sat, Sep 19, 2026).",
       fields: [
@@ -5253,8 +5257,8 @@ document.addEventListener('DOMContentLoaded', function () {
       metaLabel: '📅 Our Students. Our Stars. · Batches Start September',
       mapsUrl: null,
       description: "Chaitanya Master is putting our students centre stage — a full showcase celebrating Bollywood and Indian cinema through dance. Join a batch starting this September and be part of the show.",
-      flyerImg: 'assets/josh-dancetrotter/josh-dancetrotter-flyer.jpg',
-      videoSrc: 'assets/josh-dancetrotter/josh-dancetrotter-teaser.mp4',
+      flyerImg: 'josh-dancetrotter-flyer.jpg',
+      videoSrc: 'josh-dancetrotter-teaser.mp4',
       bannerText: "<strong>JOSH — The Dancetrotter</strong> · Our Students' Dance Showcase · Sat, Jan 30, 2027 · Batches start September",
       bannerCta: 'Register Now',
       floatIcon: '🎬',
@@ -5263,7 +5267,7 @@ document.addEventListener('DOMContentLoaded', function () {
       formTitle: 'Register Your Interest',
       formSubtitle: 'Batches start September · Showcase on Jan 30, 2027 · Master will confirm your batch on WhatsApp.',
       submitLabel: 'Register My Interest',
-      scriptUrl: 'https://script.google.com/macros/s/AKfycbxgtJSqKmPyBPzLmxxCKIuFdfxYF5yrKLVxNcoqfx1A0XUlb3lfbSi1Tc_ZW_Fmjd0Tcw/exec',
+      scriptUrl: 'https://script.google.com/macros/s/AKfycbyfMz-QxH3NsVDm5B9x7gCX9Ibk-c4o-CTc_lW983HJHHC80QPY9GptaZ7K5D3LsHwY/exec',
       waNumber: '16132189417',
       waIntro: "Hi Chaitanya Master, I want to register interest for JOSH — The Dancetrotter (Jan 30, 2027 showcase).",
       fields: [
@@ -5440,6 +5444,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (missing.length) { setStatus('error', 'Please complete: ' + missing.join(', ') + '.'); return; }
 
       raw.pageUrl = window.location.href;
+      raw.campaignId = campaign.id; // lets the backend confirm this URL is wired to the right event
       var waLink = buildWaLink(campaign, raw);
       if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Submitting...'; }
       setStatus('loading', 'Submitting...');
