@@ -3165,6 +3165,12 @@ body{ padding-top:var(--campaign-banner-h, 0px); transition:padding-top .25s eas
   border-radius:999px; padding:8px 16px; font-size:.72rem; font-weight:800; letter-spacing:1px;
   cursor:pointer; backdrop-filter:blur(4px);
 }
+.campaign-mute-btn{
+  position:absolute; right:14px; bottom:14px;
+  background:rgba(0,0,0,.65); color:var(--gold); border:1px solid rgba(255,215,0,.5);
+  border-radius:999px; width:38px; height:38px; font-size:1rem; line-height:1;
+  cursor:pointer; backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center;
+}
 .campaign-announce-body h3{
   font-family:'Bebas Neue',sans-serif; font-size:clamp(2.2rem, 5.5vw, 3.4rem); letter-spacing:2px; line-height:.95; color:#fff; margin-bottom:6px;
 }
@@ -3218,6 +3224,7 @@ body{ padding-top:var(--campaign-banner-h, 0px); transition:padding-top .25s eas
 }
 .campaign-picker-card:hover{ border-color:var(--gold); background:rgba(255,215,0,.08); transform:translateY(-2px); }
 .campaign-picker-thumb{ width:56px; height:56px; border-radius:10px; object-fit:cover; flex:0 0 auto; border:1px solid rgba(255,215,0,.25); }
+.campaign-picker-explore-icon{ display:flex; align-items:center; justify-content:center; font-size:1.6rem; background:rgba(255,215,0,.1); }
 .campaign-picker-info strong{ display:block; font-size:.86rem; }
 .campaign-picker-info span{ display:block; font-size:.72rem; color:var(--muted); margin-top:3px; }
 .campaign-picker-list{ display:flex; flex-direction:column; gap:10px; margin-top:14px; }
@@ -5220,8 +5227,9 @@ document.addEventListener('DOMContentLoaded', function () {
       metaLabel: '📍 Ron Kolbus Lakeside Centre, 102 Greenview Avenue, Ottawa · Showtime 3:00 PM',
       mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Ron+Kolbus+Lakeside+Centre+102+Greenview+Avenue+Ottawa+ON+K2B+8J8',
       description: "Our students take the summer stage for a free, family-friendly showcase — bring the whole crew and come cheer them on. Free entry, but seats are limited, so book yours now.",
-      flyerImg: 'hai-garmi-flyer.jpg',
-      videoSrc: 'hai-garmi-teaser.mp4',
+      flyerImg: 'hai-garmi-flyer.jpg?v=2',
+      videoSrc: 'hai-garmi-teaser.mp4?v=2',
+      videoAutoplay: true,
       bannerText: '<strong>Hai Garmi! — Summer Dance Showcase</strong> · Free Entry · Sat, Sep 19, 2026 · Ron Kolbus Lakeside Centre',
       bannerCta: 'Book Your Seats',
       floatIcon: '🌞',
@@ -5230,12 +5238,18 @@ document.addEventListener('DOMContentLoaded', function () {
       formTitle: 'Book Your Seats',
       formSubtitle: 'Free entry · Saturday, September 19, 2026 · 3:00 PM · Master will confirm on WhatsApp.',
       submitLabel: 'Book My Seats',
-      scriptUrl: 'https://script.google.com/macros/s/AKfycbxgtJSqKmPyBPzLmxxCKIuFdfxYF5yrKLVxNcoqfx1A0XUlb3lfbSi1Tc_ZW_Fmjd0Tcw/exec',
+      scriptUrl: 'PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE',
       waNumber: '16132189417',
       waIntro: "Hi Chaitanya Master, I'd like to book seats for Hai Garmi! Summer Dance Showcase (Sat, Sep 19, 2026).",
       fields: [
-        { name: 'name', label: 'Full Name (Person Booking)', type: 'text', required: true },
-        { name: 'bookingAs', label: 'You Are Booking As', type: 'select', required: true, options: ['Myself (attending)', 'Parent/Guardian (booking for my family)', 'Other (booking for someone else)'] },
+        { name: 'relationWithDansvilla', label: 'Relation With Dansvilla?', type: 'select', required: true, options: [
+            'I am the student (booking for my family)',
+            "I am student's parent (booking for my family)",
+            'I am the guest (booking for myself and family)'
+          ] },
+        { name: 'name', label: 'Full Name', type: 'text', required: true, hideIf: { field: 'relationWithDansvilla', equals: "I am student's parent (booking for my family)" } },
+        { name: 'studentName', label: "Student's Full Name", type: 'text', required: true, showIf: { field: 'relationWithDansvilla', equals: "I am student's parent (booking for my family)" } },
+        { name: 'parentName', label: 'Parent Full Name (Person Booking)', type: 'text', required: true, showIf: { field: 'relationWithDansvilla', equals: "I am student's parent (booking for my family)" } },
         [
           { name: 'phone', label: 'Phone / WhatsApp', type: 'tel', required: true },
           { name: 'email', label: 'Email (optional)', type: 'email', required: false }
@@ -5258,8 +5272,8 @@ document.addEventListener('DOMContentLoaded', function () {
       metaLabel: '📅 Our Students. Our Stars. · Batches Start September',
       mapsUrl: null,
       description: "Chaitanya Master is putting our students centre stage — a full showcase celebrating Bollywood and Indian cinema through dance. Join a batch starting this September and be part of the show.",
-      flyerImg: 'josh-dancetrotter-flyer.jpg',
-      videoSrc: 'josh-dancetrotter-teaser.mp4',
+      flyerImg: 'josh-dancetrotter-flyer.jpg?v=2',
+      videoSrc: 'josh-dancetrotter-teaser.mp4?v=2',
       bannerText: "<strong>JOSH — The Dancetrotter</strong> · Our Students' Dance Showcase · Sat, Jan 30, 2027 · Batches start September",
       bannerCta: 'Register Now',
       floatIcon: '🎬',
@@ -5268,7 +5282,7 @@ document.addEventListener('DOMContentLoaded', function () {
       formTitle: 'Register Your Interest',
       formSubtitle: 'Batches start September · Showcase on Jan 30, 2027 · Master will confirm your batch on WhatsApp.',
       submitLabel: 'Register My Interest',
-      scriptUrl: 'https://script.google.com/macros/s/AKfycbyfMz-QxH3NsVDm5B9x7gCX9Ibk-c4o-CTc_lW983HJHHC80QPY9GptaZ7K5D3LsHwY/exec',
+      scriptUrl: 'PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE',
       waNumber: '16132189417',
       waIntro: "Hi Chaitanya Master, I want to register interest for JOSH — The Dancetrotter (Jan 30, 2027 showcase).",
       fields: [
@@ -5287,6 +5301,7 @@ document.addEventListener('DOMContentLoaded', function () {
   ];
 
   var BANNER_HIDDEN_KEY = 'dansvillaCampaignBannerHiddenSession';
+  var GATE_SEEN_KEY = 'dansvillaGateSeen';
   var ROTATE_MS = 6000;
 
   var modal = document.getElementById('campaignModal');
@@ -5328,7 +5343,33 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function fieldBlockHtml(f) {
-    return '<div class="campaign-field"><label for="cf_' + f.name + '">' + f.label + (f.required ? '*' : '') + '</label>' + fieldInputHtml(f) + '</div>';
+    var condAttr = '';
+    if (f.showIf) { condAttr = ' data-show-if-field="' + f.showIf.field + '" data-show-if-value="' + f.showIf.equals + '"'; }
+    else if (f.hideIf) { condAttr = ' data-hide-if-field="' + f.hideIf.field + '" data-hide-if-value="' + f.hideIf.equals + '"'; }
+    return '<div class="campaign-field"' + condAttr + '><label for="cf_' + f.name + '">' + f.label + (f.required ? '*' : '') + '</label>' + fieldInputHtml(f) + '</div>';
+  }
+
+  // Shows/hides fields whose visibility depends on another field's value (e.g. Hai Garmi's
+  // Student/Parent name fields only appear when "Relation With Dansvilla?" is the parent option).
+  // Hidden fields are also disabled so they're excluded from FormData and skip required-validation.
+  function setupConditionalFields(form) {
+    function evaluate() {
+      form.querySelectorAll('[data-show-if-field], [data-hide-if-field]').forEach(function (wrap) {
+        var showField = wrap.getAttribute('data-show-if-field');
+        var hideField = wrap.getAttribute('data-hide-if-field');
+        var fieldName = showField || hideField;
+        var targetVal = wrap.getAttribute(showField ? 'data-show-if-value' : 'data-hide-if-value');
+        var input = form.elements[fieldName];
+        var currentVal = input ? input.value : '';
+        var matches = currentVal === targetVal;
+        var shouldShow = showField ? matches : !matches;
+        wrap.style.display = shouldShow ? '' : 'none';
+        var innerInput = wrap.querySelector('input, select, textarea');
+        if (innerInput) { innerInput.disabled = !shouldShow; }
+      });
+    }
+    form.addEventListener('change', evaluate);
+    evaluate();
   }
 
   function fieldsHtml(campaign) {
@@ -5341,10 +5382,18 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function announceStepHtml(campaign) {
-    var mediaHtml = '<img src="' + campaign.flyerImg + '" alt="' + campaign.title + ' ' + campaign.titleAccent + '" class="campaign-flyer-img" data-role="flyer-img">';
+    var autoplay = campaign.videoSrc && campaign.videoAutoplay;
+    var mediaHtml = '<img src="' + campaign.flyerImg + '" alt="' + campaign.title + ' ' + campaign.titleAccent + '" class="campaign-flyer-img" data-role="flyer-img"' + (autoplay ? ' style="display:none;"' : '') + '>';
     if (campaign.videoSrc) {
-      mediaHtml += '<video class="campaign-flyer-video" data-role="flyer-video" playsinline controls poster="' + campaign.flyerImg + '" style="display:none;"><source src="' + campaign.videoSrc + '" type="video/mp4"></video>' +
-        '<button type="button" class="campaign-play-btn" data-role="play-btn">▶ Watch Teaser</button>';
+      if (autoplay) {
+        // Starts playing the moment the popup opens (muted, since no browser allows audio to
+        // autoplay before the visitor has interacted with the page) with a tap-to-unmute button.
+        mediaHtml += '<video class="campaign-flyer-video" data-role="flyer-video" playsinline autoplay muted loop poster="' + campaign.flyerImg + '"><source src="' + campaign.videoSrc + '" type="video/mp4"></video>' +
+          '<button type="button" class="campaign-mute-btn" data-role="mute-btn" aria-label="Unmute">🔇</button>';
+      } else {
+        mediaHtml += '<video class="campaign-flyer-video" data-role="flyer-video" playsinline controls poster="' + campaign.flyerImg + '" style="display:none;"><source src="' + campaign.videoSrc + '" type="video/mp4"></video>' +
+          '<button type="button" class="campaign-play-btn" data-role="play-btn">▶ Watch Teaser</button>';
+      }
     }
     var mapHtml = campaign.mapsUrl ? '<p style="margin-top:8px;"><a class="campaign-map-link" href="' + campaign.mapsUrl + '" target="_blank" rel="noopener">📍 Get Directions</a></p>' : '';
     return '' +
@@ -5397,6 +5446,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var flyerImg = modalBody.querySelector('[data-role="flyer-img"]');
     var flyerVideo = modalBody.querySelector('[data-role="flyer-video"]');
     var playBtn = modalBody.querySelector('[data-role="play-btn"]');
+    var muteBtn = modalBody.querySelector('[data-role="mute-btn"]');
     if (playBtn && flyerVideo && flyerImg) {
       playBtn.addEventListener('click', function () {
         flyerImg.style.display = 'none';
@@ -5405,18 +5455,26 @@ document.addEventListener('DOMContentLoaded', function () {
         flyerVideo.play().catch(function () {});
       });
     }
+    if (muteBtn && flyerVideo) {
+      flyerVideo.play().catch(function () {}); // the autoplay attribute should already start it; this is a safety net for browsers that need a nudge
+      muteBtn.addEventListener('click', function () {
+        flyerVideo.muted = !flyerVideo.muted;
+        muteBtn.textContent = flyerVideo.muted ? '🔇' : '🔊';
+        muteBtn.setAttribute('aria-label', flyerVideo.muted ? 'Unmute' : 'Mute');
+      });
+    }
     modalBody.querySelectorAll('[data-campaign-step]').forEach(function (el) {
       el.addEventListener('click', function () { showStep(el.getAttribute('data-campaign-step')); });
     });
     var form = modalBody.querySelector('[data-campaign-form]');
-    if (form) wireForm(form, campaign);
+    if (form) { wireForm(form, campaign); setupConditionalFields(form); }
   }
 
   function buildWaLink(campaign, data) {
     var lines = [campaign.waIntro, '', 'Name: ' + data.name, 'Phone: ' + data.phone];
     if (data.email) lines.push('Email: ' + data.email);
     flattenFields(campaign).forEach(function (f) {
-      if (['name', 'phone', 'email', 'message'].indexOf(f.name) !== -1) return;
+      if (['name', 'phone', 'email', 'message', 'parentName'].indexOf(f.name) !== -1) return;
       if (data[f.name]) lines.push(f.label.replace(' (optional)', '').replace('*', '') + ': ' + data[f.name]);
     });
     if (data.message) lines.push('Message: ' + data.message);
@@ -5438,8 +5496,16 @@ document.addEventListener('DOMContentLoaded', function () {
       e.preventDefault();
       var raw = Object.fromEntries(new FormData(form).entries());
       if (raw.website) { form.reset(); return; }
+
+      // Some campaigns (e.g. Hai Garmi's Relation With Dansvilla split) swap the single "name"
+      // field for a parent/student pair when hidden. Normalize so "name" always holds the
+      // primary booking contact's name for the WhatsApp text, Sheet, and email downstream.
+      if (!raw.name) { raw.name = raw.parentName || raw.studentName || ''; }
+
       var missing = [];
       flattenFields(campaign).forEach(function (f) {
+        var el = form.elements[f.name];
+        if (el && el.disabled) return; // hidden by conditional logic, not applicable right now
         if (f.required && !String(raw[f.name] || '').trim()) missing.push(f.label.replace('*', ''));
       });
       if (missing.length) { setStatus('error', 'Please complete: ' + missing.join(', ') + '.'); return; }
@@ -5500,19 +5566,34 @@ document.addEventListener('DOMContentLoaded', function () {
         '<img class="campaign-picker-thumb" src="' + c.flyerImg + '" alt="">' +
         '<span class="campaign-picker-info"><strong>' + c.title + ' ' + c.titleAccent + '</strong><span>' + c.dateLabel + '</span></span>' +
         '</button>';
-    }).join('');
+    }).join('') +
+      '<button type="button" class="campaign-picker-card" data-picker-explore="1">' +
+        '<span class="campaign-picker-thumb campaign-picker-explore-icon">🏠</span>' +
+        '<span class="campaign-picker-info"><strong>Explore Dansvilla</strong><span>See classes, programs &amp; more</span></span>' +
+        '</button>';
     pickerList.querySelectorAll('[data-picker-id]').forEach(function (btn) {
       btn.addEventListener('click', function () {
         var c = CAMPAIGNS.filter(function (x) { return x.id === btn.getAttribute('data-picker-id'); })[0];
         if (c) openCampaignModal(c, 'announce');
       });
     });
+    var exploreBtn = pickerList.querySelector('[data-picker-explore]');
+    if (exploreBtn) {
+      exploreBtn.addEventListener('click', function () {
+        closePicker();
+        var aboutSection = document.getElementById('about');
+        if (aboutSection) aboutSection.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
     pickerModal.classList.add('open');
     pickerModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    try { localStorage.setItem(GATE_SEEN_KEY, '1'); } catch (e) {}
   }
   function closePicker() {
     pickerModal.classList.remove('open');
     pickerModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
   }
   pickerModal.querySelectorAll('[data-campaign-picker-close]').forEach(function (el) { el.addEventListener('click', closePicker); });
   pickerModal.addEventListener('click', function (e) { if (e.target === pickerModal || e.target.classList.contains('campaign-modal-backdrop')) closePicker(); });
@@ -5530,41 +5611,56 @@ document.addEventListener('DOMContentLoaded', function () {
     document.documentElement.style.setProperty('--campaign-banner-h', hidden ? '0px' : banner.offsetHeight + 'px');
   }
 
+  var EXPLORE_SLIDE = {
+    id: '__explore__',
+    badge: 'Explore',
+    bannerText: '<strong>Explore Dansvilla</strong> · Classes, programs & more — see what we offer',
+    bannerCta: 'Explore Site'
+  };
+
   function renderBanner(active) {
     var sessionHidden = false;
     try { sessionHidden = sessionStorage.getItem(BANNER_HIDDEN_KEY) === '1'; } catch (e) {}
     if (!active.length || sessionHidden) { banner.classList.remove('show'); layoutBanner(); return; }
 
+    var slides = active.concat([EXPLORE_SLIDE]);
+
     banner.classList.add('show');
-    bannerInner.innerHTML = active.map(function (c, i) {
+    bannerInner.innerHTML = slides.map(function (c, i) {
       return '<div class="campaign-banner-slide' + (i === 0 ? '' : ' fade-out') + '" style="' + (i === 0 ? '' : 'position:absolute; top:0; left:0; right:0;') + '" data-slide-index="' + i + '">' +
         '<span class="campaign-banner-badge">' + c.badge + '</span>' +
         '<span class="campaign-banner-text">' + c.bannerText + '</span>' +
         '<button type="button" class="campaign-banner-btn" data-banner-open="' + c.id + '">' + c.bannerCta + '</button>' +
         '</div>';
-    }).join('') + (active.length > 1 ? '<span class="campaign-banner-dots">' + active.map(function (_, i) { return '<span class="campaign-banner-dot' + (i === 0 ? ' active' : '') + '"></span>'; }).join('') + '</span>' : '');
+    }).join('') + '<span class="campaign-banner-dots">' + slides.map(function (_, i) { return '<span class="campaign-banner-dot' + (i === 0 ? ' active' : '') + '"></span>'; }).join('') + '</span>';
 
     bannerInner.querySelectorAll('[data-banner-open]').forEach(function (btn) {
       btn.addEventListener('click', function (e) {
         e.preventDefault();
-        var c = CAMPAIGNS.filter(function (x) { return x.id === btn.getAttribute('data-banner-open'); })[0];
+        var id = btn.getAttribute('data-banner-open');
+        if (id === '__explore__') {
+          var aboutSection = document.getElementById('about');
+          if (aboutSection) aboutSection.scrollIntoView({ behavior: 'smooth' });
+          return;
+        }
+        var c = CAMPAIGNS.filter(function (x) { return x.id === id; })[0];
         if (c) openCampaignModal(c, 'announce');
       });
     });
 
     layoutBanner();
 
-    if (active.length > 1) {
+    if (slides.length > 1) {
       var idx = 0;
-      var slides = bannerInner.querySelectorAll('.campaign-banner-slide');
+      var slideEls = bannerInner.querySelectorAll('.campaign-banner-slide');
       var dots = bannerInner.querySelectorAll('.campaign-banner-dot');
       setInterval(function () {
-        slides[idx].classList.add('fade-out');
-        slides[idx].style.position = 'absolute'; slides[idx].style.top = '0'; slides[idx].style.left = '0'; slides[idx].style.right = '0';
+        slideEls[idx].classList.add('fade-out');
+        slideEls[idx].style.position = 'absolute'; slideEls[idx].style.top = '0'; slideEls[idx].style.left = '0'; slideEls[idx].style.right = '0';
         if (dots[idx]) dots[idx].classList.remove('active');
-        idx = (idx + 1) % slides.length;
-        slides[idx].classList.remove('fade-out');
-        slides[idx].style.position = 'static';
+        idx = (idx + 1) % slideEls.length;
+        slideEls[idx].classList.remove('fade-out');
+        slideEls[idx].style.position = 'static';
         if (dots[idx]) dots[idx].classList.add('active');
         layoutBanner();
       }, ROTATE_MS);
@@ -5598,14 +5694,15 @@ document.addEventListener('DOMContentLoaded', function () {
   renderBanner(active);
   renderFloatButton(active);
 
+  // First-visit gate: show the events choice screen (all active campaigns + "Explore
+  // Dansvilla") immediately, before the visitor sees the homepage. Picking an event opens
+  // its form; picking "Explore Dansvilla" (or dismissing the gate) reveals the site as normal.
+  // Shown once per visitor/browser via GATE_SEEN_KEY.
   if (active.length) {
-    var primary = active[0];
-    try {
-      if (!localStorage.getItem('dansvillaCampaignSeen_' + primary.id)) {
-        setTimeout(function () { openCampaignModal(primary, 'announce'); }, 1400);
-      }
-    } catch (e) {
-      setTimeout(function () { openCampaignModal(primary, 'announce'); }, 1400);
+    var gateSeen = false;
+    try { gateSeen = localStorage.getItem(GATE_SEEN_KEY) === '1'; } catch (e) {}
+    if (!gateSeen) {
+      setTimeout(function () { openPicker(active); }, 300);
     }
   }
 })();
