@@ -1,4 +1,4 @@
-<!-- DANSVILLA UPDATE V56: Hai Garmi opens first, corrected Hai Garmi/JOSH top buttons, and return shows event picker -->
+<!-- DANSVILLA UPDATE V57: Hai Garmi teaser opens first; close shows event picker; clean registration buttons -->
 <!-- DANSVILLA UPDATE V33: V32 live form + clean conditional submissions + required fields + mobile form-first polish -->
 <!-- DANSVILLA UPDATE V27: V26 stable base + Studio Space Rentals section + rental WhatsApp CTA -->
 <!-- DANSVILLA UPDATE V37: submit continues to WhatsApp + studio Gmail + Instagram chooser popup -->
@@ -5012,9 +5012,9 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<!-- DANSVILLA UPDATE V56: Hai Garmi opens first + correct Hai Garmi/JOSH campaign routing -->
+<!-- DANSVILLA UPDATE V57: Hai Garmi teaser first, then event picker on close; clean registration buttons + fixed event routing -->
 <style>
-  .dv-v56-campaign-bar{
+  .dv-v57-campaign-bar{
     position:fixed; top:66px; left:50%; transform:translateX(-50%); z-index:9997;
     display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap;
     padding:8px 10px; border-radius:999px;
@@ -5022,53 +5022,59 @@ document.addEventListener('DOMContentLoaded', function () {
     border:1px solid rgba(255,215,0,.35);
     box-shadow:0 10px 34px rgba(0,0,0,.45),0 0 25px rgba(255,215,0,.18);
   }
-  .dv-v56-campaign-bar button{
+  .dv-v57-campaign-bar button{
     border:0; cursor:pointer; border-radius:999px; padding:9px 14px;
     font-family:'Montserrat',system-ui,sans-serif; font-weight:900; font-size:.72rem; letter-spacing:.8px;
     text-transform:uppercase; color:#111827;
     background:linear-gradient(135deg,#fff2a6,#ffd700,#ff9f1c);
     box-shadow:0 0 16px rgba(255,215,0,.28); transition:transform .18s ease,filter .18s ease;
   }
-  .dv-v56-campaign-bar button:hover{transform:translateY(-1px);filter:brightness(1.08)}
-  .dv-v56-campaign-bar .dv-v56-explore{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.18)}
-  .dv-v56-modal{position:fixed;inset:0;z-index:9998;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.78);backdrop-filter:blur(10px)}
-  .dv-v56-modal.show{display:flex}
-  .dv-v56-shell{width:min(1080px,100%);max-height:92vh;overflow:auto;border-radius:24px;background:linear-gradient(145deg,#0b1020,#111827 55%,#170a10);border:1px solid rgba(255,215,0,.35);box-shadow:0 30px 90px rgba(0,0,0,.75),0 0 45px rgba(255,215,0,.16);color:#fff;position:relative}
-  .dv-v56-close{position:absolute;right:14px;top:12px;z-index:2;width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font-size:1.3rem;cursor:pointer}
-  .dv-v56-back{position:absolute;left:14px;top:12px;z-index:2;border:1px solid rgba(255,215,0,.45);background:rgba(255,215,0,.12);color:#ffd700;border-radius:999px;padding:9px 13px;font-weight:900;font-size:.72rem;letter-spacing:.8px;text-transform:uppercase;cursor:pointer}
-  .dv-v56-event{display:grid;grid-template-columns:1.05fr .95fr;gap:0;min-height:620px}
-  .dv-v56-media{padding:58px 24px 24px;background:radial-gradient(circle at top left,rgba(255,215,0,.25),transparent 34%),radial-gradient(circle at bottom right,rgba(255,45,142,.16),transparent 35%)}
-  .dv-v56-pill{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,215,0,.4);background:rgba(255,215,0,.12);color:#ffd700;border-radius:999px;padding:8px 12px;font-size:.72rem;font-weight:900;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px}
-  .dv-v56-title{font-family:'Bebas Neue',Impact,sans-serif;font-size:clamp(2.4rem,6vw,4.9rem);line-height:.9;letter-spacing:2px;color:#ffd700;text-shadow:0 0 30px rgba(255,215,0,.35);margin:0 0 12px}
-  .dv-v56-sub{font-size:.92rem;line-height:1.65;color:rgba(255,255,255,.82);margin-bottom:18px}
-  .dv-v56-video{width:100%;border-radius:18px;display:block;background:#000;border:1px solid rgba(255,255,255,.13);box-shadow:0 18px 45px rgba(0,0,0,.45);max-height:380px;object-fit:cover}
-  .dv-v56-flyer{width:100%;border-radius:18px;display:block;border:1px solid rgba(255,255,255,.13);box-shadow:0 18px 45px rgba(0,0,0,.45);max-height:450px;object-fit:contain;background:#000}
-  .dv-v56-formbox{padding:58px 26px 26px;border-left:1px solid rgba(255,215,0,.16);background:rgba(255,255,255,.035)}
-  .dv-v56-formbox h3{font-family:'Bebas Neue',Impact,sans-serif;font-size:2rem;letter-spacing:1.5px;color:#fff;margin:0 0 6px}
-  .dv-v56-formbox p{font-size:.82rem;color:rgba(255,255,255,.72);line-height:1.55;margin:0 0 14px}
-  .dv-v56-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .dv-v56-field{margin-bottom:10px}.dv-v56-field label{display:block;font-size:.68rem;color:#ffd700;font-weight:900;letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px}
-  .dv-v56-field input,.dv-v56-field select,.dv-v56-field textarea{width:100%;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:#0b1020;color:#fff;padding:11px 12px;font-family:'Montserrat',system-ui,sans-serif;font-size:.86rem;outline:none}
-  .dv-v56-field option{background:#0b1020;color:#fff}.dv-v56-field textarea{min-height:82px;resize:vertical}.dv-v56-full{grid-column:1/-1}
-  .dv-v56-submit{width:100%;border:0;border-radius:12px;margin-top:4px;padding:14px 16px;background:linear-gradient(135deg,#ff2d8e,#ff7a00,#ffd700);color:#111827;font-weight:1000;text-transform:uppercase;letter-spacing:1px;cursor:pointer;box-shadow:0 0 25px rgba(255,122,0,.25)}
-  .dv-v56-status{font-size:.78rem;margin-top:10px;color:#bfdbfe;line-height:1.45;min-height:20px}.dv-v56-status.ok{color:#86efac}.dv-v56-status.err{color:#fecaca}
-  .dv-v56-picker{padding:58px 24px 28px;text-align:center}.dv-v56-picker h3{font-family:'Bebas Neue',Impact,sans-serif;color:#ffd700;font-size:3rem;letter-spacing:2px;margin:0 0 8px}.dv-v56-picker p{color:rgba(255,255,255,.76);margin-bottom:18px}
-  .dv-v56-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.dv-v56-card{border:1px solid rgba(255,215,0,.28);background:rgba(255,255,255,.05);border-radius:18px;padding:14px;text-align:left;cursor:pointer;color:#fff;transition:.2s}.dv-v56-card:hover{transform:translateY(-3px);border-color:#ffd700;background:rgba(255,215,0,.09)}
-  .dv-v56-card img,.dv-v56-card .dv-v56-emoji{width:100%;height:155px;border-radius:14px;object-fit:cover;background:rgba(255,215,0,.08);display:flex;align-items:center;justify-content:center;font-size:3rem;margin-bottom:12px}.dv-v56-card strong{display:block;color:#ffd700;font-size:1rem;margin-bottom:4px}.dv-v56-card span{display:block;color:rgba(255,255,255,.7);font-size:.78rem;line-height:1.45}
-  @media(max-width:820px){.dv-v56-campaign-bar{top:58px;width:calc(100% - 20px);border-radius:18px}.dv-v56-campaign-bar button{font-size:.66rem;padding:8px 10px}.dv-v56-event{grid-template-columns:1fr}.dv-v56-formbox{border-left:0;border-top:1px solid rgba(255,215,0,.16);padding-top:24px}.dv-v56-media{padding-top:58px}.dv-v56-grid{grid-template-columns:1fr}.dv-v56-cards{grid-template-columns:1fr}.dv-v56-card img,.dv-v56-card .dv-v56-emoji{height:125px}.dv-v56-shell{max-height:94vh}.dv-v56-video{max-height:260px}}
+  .dv-v57-campaign-bar button:hover{transform:translateY(-1px);filter:brightness(1.08)}
+  .dv-v57-campaign-bar .dv-v57-explore{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.18)}
+
+  .dv-v57-modal{position:fixed;inset:0;z-index:9998;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.80);backdrop-filter:blur(10px)}
+  .dv-v57-modal.show{display:flex}
+  .dv-v57-shell{width:min(980px,100%);max-height:92vh;overflow:auto;border-radius:24px;background:linear-gradient(145deg,#0b1020,#111827 58%,#170a10);border:1px solid rgba(255,215,0,.35);box-shadow:0 30px 90px rgba(0,0,0,.75),0 0 45px rgba(255,215,0,.16);color:#fff;position:relative}
+  .dv-v57-close{position:absolute;right:14px;top:12px;z-index:5;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:rgba(0,0,0,.62);color:#fff;font-size:1.35rem;cursor:pointer}
+
+  .dv-v57-teaser{display:grid;grid-template-columns:1.1fr .9fr;gap:0;min-height:560px}
+  .dv-v57-media{padding:58px 24px 24px;background:radial-gradient(circle at top left,rgba(255,215,0,.25),transparent 34%),radial-gradient(circle at bottom right,rgba(255,45,142,.16),transparent 35%)}
+  .dv-v57-video{width:100%;border-radius:18px;display:block;background:#000;border:1px solid rgba(255,255,255,.13);box-shadow:0 18px 45px rgba(0,0,0,.45);max-height:430px;object-fit:contain}
+  .dv-v57-sound{margin-top:12px;width:100%;border:1px solid rgba(0,245,255,.38);background:rgba(0,245,255,.12);color:#e0fbff;border-radius:12px;padding:12px 14px;font-weight:900;letter-spacing:.7px;cursor:pointer;text-transform:uppercase}
+  .dv-v57-info{padding:62px 26px 28px;border-left:1px solid rgba(255,215,0,.16);background:rgba(255,255,255,.035);display:flex;flex-direction:column;justify-content:center}
+  .dv-v57-pill{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;border:1px solid rgba(255,215,0,.4);background:rgba(255,215,0,.12);color:#ffd700;border-radius:999px;padding:8px 12px;font-size:.72rem;font-weight:900;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px}
+  .dv-v57-title{font-family:'Bebas Neue',Impact,sans-serif;font-size:clamp(2.4rem,6vw,4.9rem);line-height:.9;letter-spacing:2px;color:#ffd700;text-shadow:0 0 30px rgba(255,215,0,.35);margin:0 0 12px}
+  .dv-v57-sub{font-size:.92rem;line-height:1.65;color:rgba(255,255,255,.82);margin-bottom:22px}
+  .dv-v57-actions{display:flex;flex-direction:column;gap:12px}
+  .dv-v57-register,.dv-v57-secondary{display:flex;align-items:center;justify-content:center;text-align:center;border-radius:13px;padding:14px 16px;font-weight:1000;text-transform:uppercase;letter-spacing:1px;text-decoration:none;cursor:pointer;font-family:'Montserrat',system-ui,sans-serif;font-size:.86rem}
+  .dv-v57-register{border:0;background:linear-gradient(135deg,#ff2d8e,#ff7a00,#ffd700);color:#111827;box-shadow:0 0 25px rgba(255,122,0,.25)}
+  .dv-v57-secondary{border:1px solid rgba(255,255,255,.20);background:rgba(255,255,255,.07);color:#fff}
+
+  .dv-v57-picker{padding:58px 24px 28px;text-align:center}
+  .dv-v57-picker h3{font-family:'Bebas Neue',Impact,sans-serif;color:#ffd700;font-size:3rem;letter-spacing:2px;margin:0 0 8px}
+  .dv-v57-picker p{color:rgba(255,255,255,.76);margin-bottom:18px}
+  .dv-v57-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .dv-v57-card{border:1px solid rgba(255,215,0,.28);background:rgba(255,255,255,.05);border-radius:18px;padding:14px;text-align:left;cursor:pointer;color:#fff;transition:.2s;font-family:'Montserrat',system-ui,sans-serif}
+  .dv-v57-card:hover{transform:translateY(-3px);border-color:#ffd700;background:rgba(255,215,0,.09)}
+  .dv-v57-card img,.dv-v57-card .dv-v57-emoji{width:100%;height:155px;border-radius:14px;object-fit:cover;background:rgba(255,215,0,.08);display:flex;align-items:center;justify-content:center;font-size:3rem;margin-bottom:12px}
+  .dv-v57-card strong{display:block;color:#ffd700;font-size:1rem;margin-bottom:4px}.dv-v57-card span{display:block;color:rgba(255,255,255,.7);font-size:.78rem;line-height:1.45}
+
+  @media(max-width:820px){
+    .dv-v57-campaign-bar{top:58px;width:calc(100% - 20px);border-radius:18px}.dv-v57-campaign-bar button{font-size:.66rem;padding:8px 10px}
+    .dv-v57-teaser{grid-template-columns:1fr;min-height:auto}.dv-v57-info{border-left:0;border-top:1px solid rgba(255,215,0,.16);padding-top:24px}.dv-v57-media{padding-top:58px}.dv-v57-shell{max-height:94vh}.dv-v57-video{max-height:300px}.dv-v57-cards{grid-template-columns:1fr}.dv-v57-card img,.dv-v57-card .dv-v57-emoji{height:125px}
+  }
 </style>
 
-<div class="dv-v56-campaign-bar" aria-label="Dansvilla event shortcuts">
-  <button type="button" id="dvV56HaiTop">🌞 Hai Garmi</button>
-  <button type="button" id="dvV56JoshTop">🎬 JOSH</button>
-  <button type="button" class="dv-v56-explore" id="dvV56ExploreTop">Explore Website</button>
+<div class="dv-v57-campaign-bar" aria-label="Dansvilla event shortcuts">
+  <button type="button" id="dvV57HaiTop">🌞 Hai Garmi</button>
+  <button type="button" id="dvV57JoshTop">🎬 JOSH</button>
+  <button type="button" class="dv-v57-explore" id="dvV57ExploreTop">Explore Website</button>
 </div>
 
-<div class="dv-v56-modal" id="dvV56Modal" aria-hidden="true">
-  <div class="dv-v56-shell" role="dialog" aria-modal="true" aria-label="Dansvilla events">
-    <button class="dv-v56-back" type="button" id="dvV56Back" style="display:none">← Events</button>
-    <button class="dv-v56-close" type="button" id="dvV56Close" aria-label="Close">×</button>
-    <div id="dvV56Content"></div>
+<div class="dv-v57-modal" id="dvV57Modal" aria-hidden="true">
+  <div class="dv-v57-shell" role="dialog" aria-modal="true" aria-label="Dansvilla events">
+    <button class="dv-v57-close" type="button" id="dvV57Close" aria-label="Close">×</button>
+    <div id="dvV57Content"></div>
   </div>
 </div>
 
@@ -5076,161 +5082,112 @@ document.addEventListener('DOMContentLoaded', function () {
 (function(){
   const HAI_SCRIPT='https://script.google.com/macros/s/AKfycbxgtJSqKmPyBPzLmxxCKIuFdfxYF5yrKLVxNcoqfx1A0XUlb3lfbSi1Tc_ZW_Fmjd0Tcw/exec';
   const JOSH_SCRIPT='https://script.google.com/macros/s/AKfycbyfMz-QxH3NsVDm5B9x7gCX9Ibk-c4o-CTc_lW983HJHHC80QPY9GptaZ7K5D3LsHwY/exec';
-  const WA='16132189417';
-  const modal=document.getElementById('dvV56Modal');
-  const content=document.getElementById('dvV56Content');
-  const back=document.getElementById('dvV56Back');
-  const close=document.getElementById('dvV56Close');
+  const modal=document.getElementById('dvV57Modal');
+  const content=document.getElementById('dvV57Content');
+  const close=document.getElementById('dvV57Close');
+  let currentView='';
 
   const EVENTS={
     hai:{
-      id:'hai-garmi-2026', label:'Hai Garmi! Summer Dance Showcase', short:'Hai Garmi', icon:'🌞',
+      label:'Hai Garmi! Summer Dance Showcase', short:'Hai Garmi', icon:'🌞',
       date:'Saturday, September 19, 2026 · 3:00 PM', place:'Ron Kolbus Lakeside Centre, 102 Greenview Avenue, Ottawa',
       title:'Hai Garmi! Summer Dance Showcase', pill:'Free Entry · Seat Booking Open',
-      desc:'Master wants everyone to see this first — watch the music video, book your family seats, and come cheer for our Dansvilla students.',
-      video:'hai-garmi-teaser.mp4?v=56', flyer:'hai-garmi-flyer.jpg?v=56', script:HAI_SCRIPT
+      desc:'Watch the Hai Garmi teaser and book your free seats for the summer dance showcase.',
+      video:'hai-garmi-teaser.mp4?v=57', flyer:'hai-garmi-flyer.jpg?v=57', script:HAI_SCRIPT,
+      registerText:'Register for Hai Garmi'
     },
     josh:{
-      id:'josh-dancetrotter-2027', label:'JOSH — The Dancetrotter', short:'JOSH', icon:'🎬',
+      label:'JOSH — The Dancetrotter', short:'JOSH', icon:'🎬',
       date:'Batches start September · Showcase January 30, 2027', place:'The Dansvilla Studio',
       title:'JOSH — The Dancetrotter', pill:'Student Showcase · Register Interest',
-      desc:'Our students. Our stars. Register interest for JOSH and Master will confirm the right batch on WhatsApp.',
-      video:'josh-dancetrotter-teaser.mp4?v=56', flyer:'josh-dancetrotter-flyer.jpg?v=56', script:JOSH_SCRIPT
+      desc:'Watch the JOSH teaser and register your interest for the upcoming student showcase journey.',
+      video:'josh-dancetrotter-teaser.mp4?v=57', flyer:'josh-dancetrotter-flyer.jpg?v=57', script:JOSH_SCRIPT,
+      registerText:'Register for JOSH'
     }
   };
 
-  function showModal(){ modal.classList.add('show'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
-  function hideModal(){ modal.classList.remove('show'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; stopVideos(); }
-  function stopVideos(){ modal.querySelectorAll('video').forEach(v=>{ try{v.pause(); v.currentTime=0;}catch(e){} }); }
-  function waLink(text){ return 'https://wa.me/'+WA+'?text='+encodeURIComponent(text); }
   function esc(v){ return String(v||'').replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m])); }
+  function showModal(){ modal.classList.add('show'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+  function hideModal(){ modal.classList.remove('show'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; stopVideos(); currentView=''; }
+  function stopVideos(){ modal.querySelectorAll('video').forEach(v=>{ try{v.pause(); v.currentTime=0;}catch(e){} }); }
 
   function showPicker(){
-    stopVideos(); back.style.display='none';
+    stopVideos(); currentView='picker';
     content.innerHTML=`
-      <div class="dv-v56-picker">
-        <h3>Choose Your Next Step</h3>
-        <p>Pick an event or continue exploring the Dansvilla website.</p>
-        <div class="dv-v56-cards">
-          <button type="button" class="dv-v56-card" data-open-event="hai">
-            <img src="hai-garmi-flyer.jpg?v=56" alt="Hai Garmi flyer" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=&quot;dv-v56-emoji&quot;>🌞</div>')">
-            <strong>Hai Garmi</strong><span>Free summer showcase. Book seats and watch the music video.</span>
+      <div class="dv-v57-picker">
+        <h3>Upcoming at Dansvilla</h3>
+        <p>Choose an event or continue exploring the website.</p>
+        <div class="dv-v57-cards">
+          <button type="button" class="dv-v57-card" data-open-event="hai">
+            <img src="hai-garmi-flyer.jpg?v=57" alt="Hai Garmi flyer" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=&quot;dv-v57-emoji&quot;>🌞</div>')">
+            <strong>Hai Garmi</strong><span>Watch the teaser and book your free seats.</span>
           </button>
-          <button type="button" class="dv-v56-card" data-open-event="josh">
-            <img src="josh-dancetrotter-flyer.jpg?v=56" alt="JOSH flyer" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=&quot;dv-v56-emoji&quot;>🎬</div>')">
-            <strong>JOSH — The Dancetrotter</strong><span>Register interest for the student showcase batches.</span>
+          <button type="button" class="dv-v57-card" data-open-event="josh">
+            <img src="josh-dancetrotter-flyer.jpg?v=57" alt="JOSH flyer" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=&quot;dv-v57-emoji&quot;>🎬</div>')">
+            <strong>JOSH — The Dancetrotter</strong><span>Watch the teaser and register your interest.</span>
           </button>
-          <button type="button" class="dv-v56-card" data-explore="1">
-            <div class="dv-v56-emoji">✨</div>
-            <strong>Explore Website</strong><span>Go back to classes, pricing, rentals, photos, reviews, and enquiries.</span>
+          <button type="button" class="dv-v57-card" data-explore="1">
+            <div class="dv-v57-emoji">✨</div>
+            <strong>Explore Website</strong><span>Go to classes, pricing, rentals, photos, reviews, and enquiries.</span>
           </button>
         </div>
       </div>`;
     showModal();
   }
 
-  function formHtml(kind){
-    if(kind==='hai'){
-      return `
-        <form class="dv-v56-form" data-kind="hai">
-          <div class="dv-v56-field dv-v56-full"><label>Relation With Dansvilla?</label><select name="relationWithDansvilla" required><option value="">Select one</option><option>I am the student booking for my family</option><option>I am student's parent booking for my family</option><option>I am the guest booking for myself and family</option></select></div>
-          <div class="dv-v56-grid">
-            <div class="dv-v56-field"><label>Full Name / Parent Name</label><input name="name" type="text" required></div>
-            <div class="dv-v56-field"><label>Student Name, if applicable</label><input name="studentName" type="text"></div>
-            <div class="dv-v56-field"><label>Phone / WhatsApp</label><input name="phone" type="tel" required></div>
-            <div class="dv-v56-field"><label>Email optional</label><input name="email" type="email"></div>
-            <div class="dv-v56-field"><label>Adults</label><input name="adults" type="number" min="0" value="1" required></div>
-            <div class="dv-v56-field"><label>Kids</label><input name="kids" type="number" min="0" value="0" required></div>
-            <div class="dv-v56-field dv-v56-full"><label>Message / Notes optional</label><textarea name="message" placeholder="Any note for Master?"></textarea></div>
-          </div>
-          <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
-          <button class="dv-v56-submit" type="submit">Book My Seats + Continue to WhatsApp</button><div class="dv-v56-status"></div>
-        </form>`;
-    }
-    return `
-      <form class="dv-v56-form" data-kind="josh">
-        <div class="dv-v56-grid">
-          <div class="dv-v56-field"><label>Full Name</label><input name="name" type="text" required></div>
-          <div class="dv-v56-field"><label>Phone / WhatsApp</label><input name="phone" type="tel" required></div>
-          <div class="dv-v56-field"><label>Email optional</label><input name="email" type="email"></div>
-          <div class="dv-v56-field"><label>Dancer's Age Group</label><select name="ageGroup" required><option value="">Select age group</option><option>Ages 3–7</option><option>Ages 8–12</option><option>Ages 13+</option><option>Adult</option><option>Not sure</option></select></div>
-          <div class="dv-v56-field dv-v56-full"><label>Already Training With Dansvilla?</label><select name="currentStudent" required><option value="">Select one</option><option>Yes, current student</option><option>Previous student</option><option>New to Dansvilla</option><option>Not sure</option></select></div>
-          <div class="dv-v56-field dv-v56-full"><label>Message / Notes optional</label><textarea name="message" placeholder="Any preferred batch, age, or note for Master?"></textarea></div>
-        </div>
-        <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
-        <button class="dv-v56-submit" type="submit">Register Interest + Continue to WhatsApp</button><div class="dv-v56-status"></div>
-      </form>`;
-  }
-
   function openEvent(kind){
     const ev=EVENTS[kind]; if(!ev) return;
-    stopVideos(); back.style.display='inline-block';
-    const media = kind==='hai'
-      ? `<video class="dv-v56-video" src="${ev.video}" poster="${ev.flyer}" autoplay muted playsinline controls></video>`
-      : `<video class="dv-v56-video" src="${ev.video}" poster="${ev.flyer}" muted playsinline controls></video>`;
+    stopVideos(); currentView='event';
+    const autoplay = kind==='hai' ? 'autoplay' : '';
     content.innerHTML=`
-      <div class="dv-v56-event">
-        <div class="dv-v56-media">
-          <div class="dv-v56-pill">${ev.icon} ${esc(ev.pill)}</div>
-          <h2 class="dv-v56-title">${esc(ev.title)}</h2>
-          <div class="dv-v56-sub"><strong>${esc(ev.date)}</strong><br>${esc(ev.place)}<br><br>${esc(ev.desc)}</div>
-          ${media}
+      <div class="dv-v57-teaser">
+        <div class="dv-v57-media">
+          <video class="dv-v57-video" src="${ev.video}" poster="${ev.flyer}" ${autoplay} muted playsinline loop controls></video>
+          <button type="button" class="dv-v57-sound" data-sound>🔊 Tap for Sound</button>
         </div>
-        <div class="dv-v56-formbox">
-          <h3>${kind==='hai'?'Book Your Seats':'Register Your Interest'}</h3>
-          <p>${kind==='hai'?'Free entry. Master will confirm on WhatsApp.':'Batches start September. Master will confirm your batch on WhatsApp.'}</p>
-          ${formHtml(kind)}
+        <div class="dv-v57-info">
+          <div class="dv-v57-pill">${ev.icon} ${esc(ev.pill)}</div>
+          <h2 class="dv-v57-title">${esc(ev.title)}</h2>
+          <div class="dv-v57-sub"><strong>${esc(ev.date)}</strong><br>${esc(ev.place)}<br><br>${esc(ev.desc)}</div>
+          <div class="dv-v57-actions">
+            <a class="dv-v57-register" href="${ev.script}" target="_blank" rel="noopener">${esc(ev.registerText)}</a>
+            <button type="button" class="dv-v57-secondary" data-show-picker>Close</button>
+          </div>
         </div>
       </div>`;
     showModal();
     setTimeout(()=>{ const v=modal.querySelector('video'); if(v && kind==='hai'){ v.play().catch(()=>{}); } },80);
   }
 
-  async function submitCampaign(form){
-    const kind=form.getAttribute('data-kind'); const ev=EVENTS[kind]; const btn=form.querySelector('button[type="submit"]'); const status=form.querySelector('.dv-v56-status');
-    const fd=new FormData(form); const data={campaignId:ev.id,campaignName:ev.label,pageUrl:location.href,submittedAt:new Date().toISOString()};
-    fd.forEach((v,k)=>data[k]=String(v||'').trim());
-    if(kind==='hai'){
-      const total=(parseInt(data.adults,10)||0)+(parseInt(data.kids,10)||0);
-      if(total<1){ status.textContent='Please enter at least 1 seat.'; status.className='dv-v56-status err'; return; }
-      data.totalSeats=String(total);
-    }
-    btn.disabled=true; btn.textContent='Submitting...'; status.textContent='Saving your details...'; status.className='dv-v56-status';
-    try{
-      await fetch(ev.script,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(data)});
-      status.textContent='Done. WhatsApp will open now — please press Send there too.'; status.className='dv-v56-status ok';
-      const msg = kind==='hai'
-        ? `Hi Chaitanya Master, I booked seats for Hai Garmi!\nName: ${data.name}\nPhone: ${data.phone}\nAdults: ${data.adults}\nKids: ${data.kids}\nStudent: ${data.studentName||'N/A'}\nNote: ${data.message||'N/A'}`
-        : `Hi Chaitanya Master, I want to register interest for JOSH — The Dancetrotter.\nName: ${data.name}\nPhone: ${data.phone}\nAge Group: ${data.ageGroup}\nAlready training: ${data.currentStudent}\nNote: ${data.message||'N/A'}`;
-      setTimeout(()=>window.open(waLink(msg),'_blank'),500);
-      btn.textContent= kind==='hai' ? 'Submitted — Open WhatsApp Again' : 'Submitted — Open WhatsApp Again';
-      btn.disabled=false;
-      btn.onclick=function(e){e.preventDefault(); window.open(waLink(msg),'_blank');};
-    }catch(err){
-      status.textContent='Something blocked the form. WhatsApp will open so Master still gets the details.'; status.className='dv-v56-status err';
-      const msg=`Hi Chaitanya Master, I am trying to submit ${ev.label}. Name: ${data.name||''}, Phone: ${data.phone||''}`;
-      window.open(waLink(msg),'_blank'); btn.disabled=false; btn.textContent='Try Again';
-    }
+  function handleClose(){
+    if(currentView==='event') showPicker();
+    else hideModal();
   }
 
   document.addEventListener('click',function(e){
-    const openBtn=e.target.closest('[data-open-event]'); if(openBtn){ e.preventDefault(); openEvent(openBtn.getAttribute('data-open-event')); return; }
+    const openBtn=e.target.closest('[data-open-event]');
+    if(openBtn){ e.preventDefault(); openEvent(openBtn.getAttribute('data-open-event')); return; }
     if(e.target.closest('[data-explore]')){ e.preventDefault(); hideModal(); return; }
-    const el=e.target.closest('a,button'); if(!el) return;
-    const txt=(el.textContent||'').toLowerCase();
-    if(txt.includes('hai garmi')){ e.preventDefault(); e.stopPropagation(); openEvent('hai'); }
-    else if(txt.includes('josh')){ e.preventDefault(); e.stopPropagation(); openEvent('josh'); }
-  },true);
-  document.addEventListener('submit',function(e){ const f=e.target.closest('.dv-v56-form'); if(f){ e.preventDefault(); submitCampaign(f); } });
-  back.addEventListener('click',showPicker); close.addEventListener('click',hideModal);
-  modal.addEventListener('click',e=>{ if(e.target===modal) hideModal(); });
-  document.getElementById('dvV56HaiTop').addEventListener('click',()=>openEvent('hai'));
-  document.getElementById('dvV56JoshTop').addEventListener('click',()=>openEvent('josh'));
-  document.getElementById('dvV56ExploreTop').addEventListener('click',hideModal);
+    if(e.target.closest('[data-show-picker]')){ e.preventDefault(); showPicker(); return; }
+    const soundBtn=e.target.closest('[data-sound]');
+    if(soundBtn){
+      e.preventDefault();
+      const v=modal.querySelector('video');
+      if(v){ v.muted=false; v.volume=1; v.play().catch(()=>{}); soundBtn.textContent='🔊 Sound On'; }
+      return;
+    }
+  });
 
-  window.dansvillaV56OpenHaiGarmi=()=>openEvent('hai');
-  window.dansvillaV56OpenJosh=()=>openEvent('josh');
-  window.dansvillaV56OpenEventPicker=showPicker;
+  close.addEventListener('click',handleClose);
+  modal.addEventListener('click',e=>{ if(e.target===modal) handleClose(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape' && modal.classList.contains('show')) handleClose(); });
+  document.getElementById('dvV57HaiTop').addEventListener('click',()=>openEvent('hai'));
+  document.getElementById('dvV57JoshTop').addEventListener('click',()=>openEvent('josh'));
+  document.getElementById('dvV57ExploreTop').addEventListener('click',hideModal);
+
+  window.dansvillaV57OpenHaiGarmi=()=>openEvent('hai');
+  window.dansvillaV57OpenJosh=()=>openEvent('josh');
+  window.dansvillaV57OpenEventPicker=showPicker;
   setTimeout(()=>openEvent('hai'),750);
 })();
 </script>
