@@ -5109,7 +5109,7 @@ document.addEventListener('DOMContentLoaded', function () {
       date:'Saturday, September 19, 2026 · 3:00 PM', place:'Ron Kolbus Lakeside Centre, 102 Greenview Avenue, Ottawa',
       title:'Hai Garmi! Summer Dance Showcase', pill:'Free Entry · Seat Booking Open',
       desc:'Watch the Hai Garmi teaser and book your free seats without leaving this page.',
-      video:'hai-garmi-teaser.mp4?v=58', flyer:'hai-garmi-flyer.jpg?v=58', script:HAI_SCRIPT,
+      video:'hai-garmi-teaser.mp4?v=59', flyer:'hai-garmi-flyer.jpg?v=59', script:HAI_SCRIPT,
       submitText:'Book Free Seats'
     },
     josh:{
@@ -5118,7 +5118,7 @@ document.addEventListener('DOMContentLoaded', function () {
       date:'Batches start September · Showcase January 30, 2027', place:'The Dansvilla Studio',
       title:'JOSH — The Dancetrotter', pill:'Student Showcase · Register Interest',
       desc:'Watch the JOSH teaser and register your interest without leaving this page.',
-      video:'josh-dancetrotter-teaser.mp4?v=58', flyer:'josh-dancetrotter-flyer.jpg?v=58', script:JOSH_SCRIPT,
+      video:'josh-dancetrotter-teaser.mp4?v=59', flyer:'josh-dancetrotter-flyer.jpg?v=59', script:JOSH_SCRIPT,
       submitText:'Register Interest'
     }
   };
@@ -5136,11 +5136,11 @@ document.addEventListener('DOMContentLoaded', function () {
         <p>Choose an event or continue exploring the website.</p>
         <div class="dv-v58-cards">
           <button type="button" class="dv-v58-card" data-open-event="hai">
-            <img src="hai-garmi-flyer.jpg?v=58" alt="Hai Garmi flyer" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=&quot;dv-v58-emoji&quot;>🌞</div>')">
+            <img src="hai-garmi-flyer.jpg?v=59" alt="Hai Garmi flyer" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=&quot;dv-v58-emoji&quot;>🌞</div>')">
             <strong>Hai Garmi</strong><span>Watch the teaser and book your free seats.</span>
           </button>
           <button type="button" class="dv-v58-card" data-open-event="josh">
-            <img src="josh-dancetrotter-flyer.jpg?v=58" alt="JOSH flyer" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=&quot;dv-v58-emoji&quot;>🎬</div>')">
+            <img src="josh-dancetrotter-flyer.jpg?v=59" alt="JOSH flyer" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=&quot;dv-v58-emoji&quot;>🎬</div>')">
             <strong>JOSH — The Dancetrotter</strong><span>Watch the teaser and register your interest.</span>
           </button>
           <button type="button" class="dv-v58-card" data-explore="1">
@@ -5156,11 +5156,21 @@ document.addEventListener('DOMContentLoaded', function () {
     if(kind==='hai'){
       return `
         <div class="dv-v58-form-row">
+          <div class="dv-v58-field"><label>Who is registering? *</label><select name="registrantRole" required><option value="">Select one</option><option>Parent / Guardian</option><option>Dancer / Student</option><option>Family Member</option><option>Friend / Guest</option><option>Other</option></select></div>
+          <div class="dv-v58-field"><label>Registering for whom? *</label><select name="registrationFor" required><option value="">Select one</option><option>Myself</option><option>My child / children</option><option>My family</option><option>My friend / guest</option><option>Dance group / multiple guests</option></select></div>
+        </div>
+        <div class="dv-v58-field"><label>Participant / Guest Names</label><input name="participantNames" type="text" placeholder="Example: Raja, Amma, 2 kids / guest names"></div>
+        <div class="dv-v58-form-row">
           <div class="dv-v58-field"><label>Adults *</label><input name="adults" type="number" min="0" inputmode="numeric" value="1" required></div>
           <div class="dv-v58-field"><label>Kids *</label><input name="kids" type="number" min="0" inputmode="numeric" value="0" required></div>
         </div>`;
     }
     return `
+      <div class="dv-v58-form-row">
+        <div class="dv-v58-field"><label>Who is registering? *</label><select name="registrantRole" required><option value="">Select one</option><option>Parent / Guardian</option><option>Dancer / Student</option><option>Family Member</option><option>Friend / Guest</option><option>Other</option></select></div>
+        <div class="dv-v58-field"><label>Registering for whom? *</label><select name="registrationFor" required><option value="">Select one</option><option>Myself</option><option>My child</option><option>My child + myself</option><option>My friend / relative</option><option>Group / Family</option></select></div>
+      </div>
+      <div class="dv-v58-field"><label>Dancer / Participant Name *</label><input name="participantNames" type="text" placeholder="Name of dancer / child / participant" required></div>
       <div class="dv-v58-form-row">
         <div class="dv-v58-field"><label>Dancer's Age Group *</label><select name="ageGroup" required><option value="">Select age group</option><option>3–7 years</option><option>8–12 years</option><option>13–17 years</option><option>18+ years</option></select></div>
         <div class="dv-v58-field"><label>Already Training With Dansvilla? *</label><select name="currentStudent" required><option value="">Select one</option><option>Yes</option><option>No</option><option>Not sure / Need guidance</option></select></div>
@@ -5208,6 +5218,18 @@ document.addEventListener('DOMContentLoaded', function () {
     box.textContent=msg;
   }
 
+  function addRegistrationDetailsToMessage(data){
+    const originalNotes=String(data.message||'').trim();
+    const lines=[];
+    if(data.registrantRole) lines.push('Who is registering: '+data.registrantRole);
+    if(data.registrationFor) lines.push('Registering for: '+data.registrationFor);
+    if(data.participantNames) lines.push('Participant / guest names: '+data.participantNames);
+    if(originalNotes) lines.push('Notes: '+originalNotes);
+    data.originalMessage=originalNotes;
+    data.message=lines.join('\n');
+    return data;
+  }
+
   async function submitEventForm(form){
     const kind=form.getAttribute('data-event-form');
     const ev=EVENTS[kind]; if(!ev) return;
@@ -5223,6 +5245,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if(adults+kids<1){ showStatus(form,'err','Please enter at least 1 seat.'); return; }
       data.adults=String(adults); data.kids=String(kids);
     }
+    addRegistrationDetailsToMessage(data);
     data.campaignId=ev.campaignId;
     data.eventName=ev.label;
     data.pageUrl=window.location.href;
