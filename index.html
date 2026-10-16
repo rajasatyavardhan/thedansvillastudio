@@ -1,3 +1,5 @@
+<!-- DANSVILLA UPDATE V64: JOSH auto-opens every load; permanent Hai Garmi past-event feedback; V63 footer preserved -->
+<!-- DANSVILLA UPDATE V63: final TRSVR 3.2 creator signature footer -->
 <!-- DANSVILLA UPDATE V62: Hai Garmi thank-you feedback popup uses final custom thank-you poster; JOSH remains active registration -->
 <!-- DANSVILLA UPDATE V33: V32 live form + clean conditional submissions + required fields + mobile form-first polish -->
 <!-- DANSVILLA UPDATE V27: V26 stable base + Studio Space Rentals section + rental WhatsApp CTA -->
@@ -3066,6 +3068,25 @@ nav{min-height:82px !important;}
 .instagram-choice-arrow{font-size:1.25rem; color:var(--pink);}
 
 </style>
+<style>
+/* V64: JOSH leads; Hai Garmi remains a permanent past event. */
+.dv-v64-events{max-width:1120px;margin:0 auto;padding:80px 24px;scroll-margin-top:130px}
+.dv-v64-events h2{font-family:'Bebas Neue',Impact,sans-serif;font-size:clamp(2.5rem,5vw,4rem);color:#ffd700;letter-spacing:2px;margin:0 0 24px}
+.dv-v64-event{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:28px;align-items:center;border:1px solid rgba(255,215,0,.5);border-radius:22px;padding:24px;background:linear-gradient(135deg,rgba(255,215,0,.12),rgba(255,45,142,.08));box-shadow:0 12px 40px rgba(255,215,0,.1)}
+.dv-v64-event img{width:100%;max-height:360px;object-fit:contain;border-radius:14px;background:#080b14}
+.dv-v64-event h3{font-family:'Bebas Neue',Impact,sans-serif;font-size:clamp(2rem,4vw,3rem);color:#ffd700;margin:8px 0 12px;letter-spacing:1px}
+.dv-v64-event p{line-height:1.7;color:rgba(255,255,255,.82);margin:0 0 16px}
+.dv-v64-event .dv-v60-submit{width:100%}
+.dv-v64-past{margin-top:28px;border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.035);box-shadow:none}
+.dv-v64-past h3{color:#fff;font-size:2rem}
+.dv-v64-past img{max-height:260px}
+.dv-v64-label{font-size:.72rem;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;color:#ffd700}
+.dv-v64-past .dv-v64-label{color:rgba(255,255,255,.65)}
+.dv-v64-events button:focus-visible,.dv-v60-card:focus-visible{outline:3px solid #00f5ff;outline-offset:4px}
+.dv-v60-card.dv-v64-active{border:2px solid #ffd700;background:rgba(255,215,0,.12)}
+.dv-v60-card img{object-fit:contain}
+@media(max-width:820px){.dv-v64-events{padding:54px 18px}.dv-v64-event{grid-template-columns:1fr;gap:18px;padding:18px}.dv-v64-event img{max-height:280px}}
+</style>
 </head>
 <body>
 
@@ -3082,6 +3103,7 @@ nav{min-height:82px !important;}
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#enquiry">Register</a></li>
     <li><a href="#gallery">Albums</a></li>
+    <li><a href="#showcase-events">Events</a></li>
     <li><a href="#events">Occasions</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#studio-rentals">Rentals</a></li>
@@ -3106,6 +3128,7 @@ nav{min-height:82px !important;}
   <a href="#pricing" onclick="document.getElementById('mobileMenu').classList.remove('open')">Pricing</a>
   <a href="#enquiry" onclick="document.getElementById('mobileMenu').classList.remove('open')">Register</a>
   <a href="#gallery" onclick="document.getElementById('mobileMenu').classList.remove('open')">Albums</a>
+  <a href="#showcase-events" onclick="document.getElementById('mobileMenu').classList.remove('open')">Events</a>
   <a href="#events" onclick="document.getElementById('mobileMenu').classList.remove('open')">Occasions</a>
   <a href="#about" onclick="document.getElementById('mobileMenu').classList.remove('open')">About</a>
   <a href="#studio-rentals" onclick="document.getElementById('mobileMenu').classList.remove('open')">Rentals</a>
@@ -4065,6 +4088,27 @@ document.addEventListener('DOMContentLoaded', function () {
   </div>
 </section>
 
+
+<section id="showcase-events" class="dv-v64-events" aria-labelledby="dvV64EventsTitle">
+  <h2 id="dvV64EventsTitle">Events at Dansvilla</h2>
+  <article class="dv-v64-event" aria-labelledby="dvV64JoshTitle">
+    <img src="josh-dancetrotter-flyer.jpg?v=60" alt="JOSH — The Dancetrotter showcase flyer" loading="lazy">
+    <div><span class="dv-v64-label">Upcoming · Student Showcase</span>
+      <h3 id="dvV64JoshTitle">JOSH — The Dancetrotter</h3>
+      <p><strong>January 30, 2027 · The Dansvilla Studio</strong><br>Our next student showcase. Watch the teaser and register your interest.</p>
+      <button type="button" class="dv-v60-submit" data-open-event="josh">Watch Teaser / Register Interest</button>
+    </div>
+  </article>
+  <article class="dv-v64-event dv-v64-past" aria-labelledby="dvV64HaiTitle">
+    <img src="hai-garmi-thank-you-feedback.png?v=62" alt="Hai Garmi thank-you poster" loading="lazy">
+    <div><span class="dv-v64-label">Past Event · Thank You</span>
+      <h3 id="dvV64HaiTitle">Hai Garmi — Thank You ❤️</h3>
+      <p>Our first big showcase became something special because of everyone who joined us. Thank you for the cheers, smiles, and unforgettable memories.</p>
+      <button type="button" class="dv-v60-secondary" data-open-event="hai">Share Feedback</button>
+    </div>
+  </article>
+</section>
+
 <section id="events">
   <div class="container">
     <div class="section-label">Occasions</div>
@@ -4308,6 +4352,96 @@ document.addEventListener('DOMContentLoaded', function () {
   </div>
 </section>
 
+
+<style>
+/* ── DANSVILLA UPDATE V63: Raja creator signature footer ── */
+.creator-signature-v63{
+  width:min(920px,92vw);
+  margin:24px auto 0;
+  padding:18px 20px;
+  border-top:1px solid rgba(255,215,0,.22);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  flex-wrap:wrap;
+  color:rgba(255,255,255,.78);
+  font-size:.78rem;
+  letter-spacing:.35px;
+}
+.creator-signature-v63 .crafted{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  white-space:nowrap;
+}
+.creator-signature-v63 .heart{
+  color:#ff304f;
+  font-size:1.05rem;
+  filter:drop-shadow(0 0 7px rgba(255,48,79,.38));
+  transform:translateY(-1px);
+}
+.creator-signature-v63 .mark-wrap{
+  width:42px;
+  height:42px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 auto;
+}
+.creator-signature-v63 .mark{
+  width:38px;
+  height:38px;
+  object-fit:contain;
+  display:block;
+  filter:drop-shadow(0 0 8px rgba(255,196,88,.18));
+  transition:transform .25s ease, filter .25s ease;
+}
+.creator-signature-v63:hover .mark{
+  transform:translateY(-1px) scale(1.04);
+  filter:drop-shadow(0 0 12px rgba(255,196,88,.34));
+}
+.creator-signature-v63 .sep{
+  width:1px;
+  height:28px;
+  background:linear-gradient(180deg,transparent,rgba(255,215,0,.48),transparent);
+}
+.creator-signature-v63 .creator-name{
+  color:#f8f2e8;
+  text-decoration:none;
+  font-weight:600;
+  letter-spacing:.25px;
+  position:relative;
+  padding-bottom:2px;
+}
+.creator-signature-v63 .creator-name::after{
+  content:"";
+  position:absolute;
+  left:0; right:100%; bottom:-2px;
+  height:1px;
+  background:linear-gradient(90deg,#d8a84c,#fff1b8);
+  transition:right .25s ease;
+}
+.creator-signature-v63 .creator-name:hover,
+.creator-signature-v63 .creator-name:focus-visible{
+  color:#ffe6a1;
+}
+.creator-signature-v63 .creator-name:hover::after,
+.creator-signature-v63 .creator-name:focus-visible::after{
+  right:0;
+}
+@media (max-width:640px){
+  .creator-signature-v63{
+    gap:10px;
+    padding:16px 14px 8px;
+    font-size:.72rem;
+  }
+  .creator-signature-v63 .sep{display:none;}
+  .creator-signature-v63 .mark-wrap{width:38px;height:38px;}
+  .creator-signature-v63 .mark{width:34px;height:34px;}
+}
+</style>
+
 <!-- ── FOOTER ── -->
 <footer>
   <div class="footer-media-v18" aria-label="The Dansvilla Studio footer brand">
@@ -4332,6 +4466,21 @@ document.addEventListener('DOMContentLoaded', function () {
     <a href="https://maps.app.goo.gl/Zdo8BycCBqZErtNn8" target="_blank" rel="noopener">Google Reviews</a>
   </div>
   <div class="footer-copy">© 2026 The Dansvilla Studio · Barrhaven, Ottawa · All rights reserved.</div>
+
+  <div class="creator-signature-v63" aria-label="Website creator credit">
+    <span class="crafted">Crafted with <span class="heart" aria-label="love">❤️</span> by</span>
+    <span class="mark-wrap" aria-hidden="true">
+      <img class="mark" src="data:image/png;base64,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" alt="">
+    </span>
+    <span class="sep" aria-hidden="true"></span>
+    <a class="creator-name"
+       href="https://raja-ai-portfolio.vercel.app/"
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="Open T. Raja Satya Vardhana Reddy portfolio">
+      T. Raja Satya Vardhana Reddy
+    </a>
+  </div>
 </footer>
 
 
@@ -5089,8 +5238,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </style>
 
 <div class="dv-v60-campaign-bar" aria-label="Dansvilla event shortcuts">
-  <button type="button" id="dvV60HaiTop">🌞 Hai Garmi Thank You</button>
-  <button type="button" id="dvV60JoshTop">🎬 JOSH</button>
+  <button type="button" id="dvV60JoshTop">🎬 JOSH · Register Interest</button>
   <button type="button" class="dv-v60-explore" id="dvV60ExploreTop">Explore Website</button>
 </div>
 
@@ -5113,8 +5261,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const JOSH={
     label:'JOSH — The Dancetrotter', short:'JOSH', icon:'🎬',
     campaignId:'josh-dancetrotter-2027',
-    date:'Batches start September · Showcase January 30, 2027', place:'The Dansvilla Studio',
-    title:'JOSH — The Dancetrotter', pill:'Student Showcase · Register Interest',
+    date:'Showcase January 30, 2027', place:'The Dansvilla Studio',
+    title:'JOSH — The Dancetrotter', pill:'Upcoming · Student Showcase · Register Interest',
     desc:'Watch the JOSH teaser and register your interest without leaving this page.',
     video:'josh-dancetrotter-teaser.mp4?v=60', flyer:'josh-dancetrotter-flyer.jpg?v=60', script:JOSH_SCRIPT,
     submitText:'Register Interest'
@@ -5129,16 +5277,16 @@ document.addEventListener('DOMContentLoaded', function () {
     stopVideos(); currentView='picker';
     content.innerHTML=`
       <div class="dv-v60-picker">
-        <h3>Upcoming at Dansvilla</h3>
+        <h3>Events at Dansvilla</h3>
         <p>Choose where you want to go next.</p>
         <div class="dv-v60-cards">
+          <button type="button" class="dv-v60-card dv-v64-active" data-open-event="josh">
+            <img src="josh-dancetrotter-flyer.jpg?v=60" alt="JOSH flyer" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=&quot;dv-v60-emoji&quot;>🎬</div>')">
+            <span class="dv-v64-label">Upcoming · Student Showcase</span><strong>JOSH — The Dancetrotter</strong><span>Watch the teaser and register your interest for the upcoming showcase.</span>
+          </button>
           <button type="button" class="dv-v60-card" data-open-event="hai">
             <img src="hai-garmi-thank-you-feedback.png?v=62" alt="Hai Garmi memories" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=&quot;dv-v60-emoji&quot;>🌞</div>')">
-            <strong>Hai Garmi — Thank You</strong><span>Read our thank-you note and share one quick memory or rating.</span>
-          </button>
-          <button type="button" class="dv-v60-card" data-open-event="josh">
-            <img src="josh-dancetrotter-flyer.jpg?v=60" alt="JOSH flyer" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=&quot;dv-v60-emoji&quot;>🎬</div>')">
-            <strong>JOSH — The Dancetrotter</strong><span>Watch the teaser and register your interest for the upcoming showcase.</span>
+            <span class="dv-v64-label">Past Event</span><strong>Hai Garmi — Thank You</strong><span>Thank you for being part of it. Share Feedback.</span>
           </button>
           <button type="button" class="dv-v60-card" data-explore="1">
             <div class="dv-v60-emoji">✨</div>
@@ -5157,7 +5305,7 @@ document.addEventListener('DOMContentLoaded', function () {
           <img class="dv-v60-photo" src="hai-garmi-thank-you-feedback.png?v=62" alt="Hai Garmi event memories" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=&quot;dv-v60-photo&quot; style=&quot;display:flex;align-items:center;justify-content:center;min-height:280px;font-size:4rem;&quot;>🌞</div>')">
         </div>
         <div class="dv-v60-info">
-          <div class="dv-v60-pill">🌞 Thank You · Hai Garmi</div>
+          <div class="dv-v60-pill">🌞 Past Event · Thank You · Hai Garmi</div>
           <h2 class="dv-v60-title">Thank You for making Hai Garmi what it became.</h2>
           <div class="dv-v60-thanks">
             <p><strong>Hai Garmi was not just a show — it became a memory because of you.</strong></p>
@@ -5182,7 +5330,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <div class="dv-v60-status" data-status></div>
             <button type="submit" class="dv-v60-submit">Send Hai Garmi Feedback</button>
           </form>
-          <button type="button" class="dv-v60-secondary" data-show-picker>Close / See Events</button>
+          <button type="button" class="dv-v60-secondary" data-show-picker>See All Events</button>
         </div>
       </div>`;
     showModal();
@@ -5227,7 +5375,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <div class="dv-v60-status" data-status></div>
             <button type="submit" class="dv-v60-submit">${esc(ev.submitText)}</button>
           </form>
-          <button type="button" class="dv-v60-secondary" data-show-picker>Close / See Events</button>
+          <button type="button" class="dv-v60-secondary" data-show-picker>See All Events</button>
         </div>
       </div>`;
     showModal();
@@ -5359,7 +5507,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  function handleClose(){ if(currentView==='event') showPicker(); else hideModal(); }
+  function handleClose(){ hideModal(); }
 
   document.addEventListener('click',function(e){
     const openBtn=e.target.closest('[data-open-event]');
@@ -5385,14 +5533,13 @@ document.addEventListener('DOMContentLoaded', function () {
   close.addEventListener('click',handleClose);
   modal.addEventListener('click',e=>{ if(e.target===modal) handleClose(); });
   document.addEventListener('keydown',e=>{ if(e.key==='Escape' && modal.classList.contains('show')) handleClose(); });
-  document.getElementById('dvV60HaiTop').addEventListener('click',()=>openEvent('hai'));
   document.getElementById('dvV60JoshTop').addEventListener('click',()=>openEvent('josh'));
   document.getElementById('dvV60ExploreTop').addEventListener('click',hideModal);
 
   window.dansvillaV60OpenHaiGarmi=()=>openEvent('hai');
   window.dansvillaV60OpenJosh=()=>openEvent('josh');
   window.dansvillaV60OpenEventPicker=showPicker;
-  setTimeout(()=>openEvent('hai'),750);
+  setTimeout(()=>openEvent('josh'),750);
 })();
 </script>
 
