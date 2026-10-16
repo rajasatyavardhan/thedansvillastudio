@@ -1,7 +1,14 @@
-# Dansvilla website deployment
+# Dansvilla deployment
 
-Vercel project `dansville` deploys `website/` as its Root Directory, with Framework Preset Other, empty install/build commands, and output directory `.`. This contains the V64 HTML website, media, student profile, and existing enquiry endpoint. The endpoint still uses GOOGLE_SCRIPT_URL.
+The authoritative public website entry is root `index.html`. Root `vercel.json`
+selects the static preset and runs `node build-static.mjs` without third-party
+packages. It copies the explicit public file list into `dist/`; existing
+`api/send-enquiry.js` remains the Vercel endpoint and uses GOOGLE_SCRIPT_URL.
 
-The older React/TanStack scaffold remains at the repository root for reference. It is not installed, built, or served by this deployment. Upgrade and validate its dependencies before using that separate application. Do not enable the vulnerable TanStack override.
+The second Vercel project `dansville` also deploys the matching `website/` copy.
+Keep root and website/index.html synchronized while both projects are connected.
 
-For future updates, edit `website/index.html` and adjacent assets. Keep the root HTML copy synchronized for the existing root-based hosting workflow.
+The original TanStack scaffold remains in src/ with its original dependency
+manifest and lockfile archived as non-active files in legacy-tanstack/.
+It is not installed or built as part of the public HTML website.
+Upgrade and validate that separate app before restoring its package manifest.

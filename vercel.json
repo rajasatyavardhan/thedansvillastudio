@@ -1,4 +1,9 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "echo \"No dependencies required for Dansvilla HTML website\"",
+  "buildCommand": "node build-static.mjs",
+  "outputDirectory": "dist",
   "cleanUrls": true,
   "trailingSlash": false
 }
